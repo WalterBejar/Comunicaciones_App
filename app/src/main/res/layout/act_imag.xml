@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/act_imag"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActImag"
+    android:orientation="vertical"
+    >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+
+    />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_alignTop="@+id/icon_image"
+            android:layout_toRightOf="@+id/icon_image"
+            android:id="@+id/imag_titulo2"
+            android:textStyle="normal|bold"
+            android:textSize="12sp"
+            android:layout_alignEnd="@+id/grid_imag" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txfecha2"
+            android:layout_alignLeft="@+id/imag_titulo2"
+            android:layout_alignStart="@+id/imag_titulo2"
+            android:layout_below="@+id/imag_titulo2"
+            android:textColor="@color/background_footer"
+
+            />
+
+
+        <GridView
+            android:id="@+id/grid_imag"
+            android:columnWidth="120dp"
+            android:horizontalSpacing="@dimen/espacio_grilla"
+            android:numColumns="auto_fit"
+            android:padding="@dimen/espacio_grilla"
+            android:verticalSpacing="@dimen/espacio_grilla"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/icon_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/icon_image"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/grid_imag"
+            android:layout_alignStart="@+id/grid_imag" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="layout.FragmentVideos">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@+id/recycler_vid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="8dp"
+        android:elevation="10dp"
+        android:background="@color/colorplaystore"
+
+        />
+
+
+</FrameLayout>

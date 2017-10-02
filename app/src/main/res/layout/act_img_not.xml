@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/act_img_not"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".ActImgNot"
+    android:background="@color/colornegro"
+    >
+
+    <com.pango.comunicaciones.TouchImageView
+        android:id="@+id/not_img_z"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="imagen_compartida"
+        >
+    </com.pango.comunicaciones.TouchImageView>
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_noticias"
+            android:icon="@drawable/ic_menu_noticias"
+            android:title="Noticias" />
+        <item
+            android:id="@+id/nav_publicaciones"
+            android:icon="@drawable/ic_menu_publicaciones"
+            android:title="Comunicados" />
+        <item
+            android:id="@+id/nav_imagenes"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Imagenes" />
+        <item
+            android:id="@+id/nav_videos"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Videos" />
+        <item
+            android:id="@+id/nav_tickets"
+            android:icon="@drawable/ic_menu_tickets"
+            android:title="Reserva de Tickets" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_notificaciones"
+                android:icon="@drawable/ic_menu_comunicados"
+                android:title="Notificaciones" />
+            <item
+                android:id="@+id/nav_configuracion"
+                android:icon="@drawable/ic_menu_configuracion"
+                android:title="Configuración" />
+        </menu>
+    </item>
+
+</menu>

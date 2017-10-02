@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="200dp">
+
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgvid_adap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:transitionName="imagen_compartida" />
+
+    <ImageView
+        android:layout_width="76dp"
+        android:layout_height="69dp"
+        android:src="@drawable/button_play"
+
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
+</FrameLayout>
+
+
+<!--
+<VideoView
+android:id="@+id/vid_adap"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+    />-->
