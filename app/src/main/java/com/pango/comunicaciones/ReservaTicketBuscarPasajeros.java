@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -46,7 +47,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
     boolean[] listaCheckBoxPasajeros;
     BuscarAdapter buscarAdapter;
     ListView listaBuscarPasajeros;
-
+    Button botonAgregar;
     String strDNI = "-", strNombre = "-", strEmpresa = "-";
     EditText editTextDNI, editTextNombre, editTextEmpresa;
 
@@ -54,7 +55,8 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_buscar_pasajeros);
-
+        setTitle("Reserva de Buses");
+        botonAgregar=(Button) findViewById(R.id.botonAgregarPasajeroALista) ;
         editTextDNI = (EditText) findViewById(R.id.textboxPasajeroDNI);
         editTextNombre = (EditText) findViewById(R.id.textboxPasajeroNombre);
         editTextEmpresa = (EditText) findViewById(R.id.textboxPasajeroEmpresa);
@@ -196,7 +198,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                 HttpPost httpPost;
                 httpPost = new HttpPost(Utils.getUrlForAgregarReserva());
 
-                StringEntity postString = new StringEntity(gson.toJson(listaPasajerosAAgregar.toArray()));
+                StringEntity postString = new StringEntity( "{\"Data\":"+gson.toJson(listaPasajerosAAgregar.toArray())+"}");
                 httpPost.setEntity(postString);
                 httpPost.setHeader("Content-type", "application/json");
                 httpPost.setHeader("Authorization", "Bearer " + Utils.token );
@@ -270,6 +272,14 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     listaCheckBoxPasajeros[position] = !listaCheckBoxPasajeros[position];
+                    boolean flag=false;
+                    for(int i=0;i<listaCheckBoxPasajeros.length;i++){
+                        if(listaCheckBoxPasajeros[i]){
+                            flag=true;
+                        }
+                    }
+                    botonAgregar.setEnabled(flag);
+
                 }
             });
 

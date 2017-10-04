@@ -60,6 +60,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_filtro);
+        setTitle("Reserva de Buses");
 
         botonBuscarTickets = (Button) findViewById(R.id.botonBuscarTickets);
         botonEscogerFecha = (Button) findViewById(R.id.botonEscogerFecha);

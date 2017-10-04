@@ -1,0 +1,177 @@
+<android.support.constraint.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    tools:context="layout.FragmentInicio2"
+    android:background="@color/colorfondoP"
+    >
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="42dp"
+
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="15dp"
+        card_view:contentPadding="10dp"
+        android:backgroundTint="@color/colorNaranja"
+        >
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/icon_not"
+            android:layout_width="match_parent"
+            android:layout_height="106dp"
+            card_view:srcCompat="@drawable/ic_menu_noticias2"
+
+            />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/icon_not"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="NOTICIAS"
+
+        android:textAlignment="center"
+        android:textColor="@color/colorBlanco"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        tools:layout_editor_absoluteX="200dp"
+        tools:layout_editor_absoluteY="42dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="15dp"
+        card_view:contentPadding="10dp"
+        android:backgroundTint="@color/colorAmarillo"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/icon_comun"
+                android:layout_width="match_parent"
+                android:layout_height="106dp"
+                card_view:srcCompat="@drawable/ic_menu_publicaciones2"
+
+                />
+
+            <TextView
+                android:id="@+id/txcom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon_comun"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="COMUNICADOS"
+
+                android:textAlignment="center"
+                android:textColor="@color/colorBlanco"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="242dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="15dp"
+        card_view:contentPadding="10dp"
+        android:backgroundTint="@color/colorVerdeImg"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/icon_img"
+                android:layout_width="match_parent"
+                android:layout_height="106dp"
+                card_view:srcCompat="@drawable/ic_menu_gallery2"
+
+                />
+
+            <TextView
+                android:id="@+id/tximg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon_img"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="IMAGENES"
+
+                android:textAlignment="center"
+                android:textColor="@color/colorBlanco"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="15dp"
+        card_view:contentPadding="10dp"
+        tools:layout_editor_absoluteX="198dp"
+        tools:layout_editor_absoluteY="242dp"
+        android:backgroundTint="@color/colorAzulVid"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/icon_video"
+                android:layout_width="match_parent"
+                android:layout_height="106dp"
+                card_view:srcCompat="@drawable/ic_menu_slideshow2"
+
+                />
+
+            <TextView
+                android:id="@+id/txvid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon_video"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="VIDEOS"
+
+                android:textAlignment="center"
+                android:textColor="@color/colorBlanco"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

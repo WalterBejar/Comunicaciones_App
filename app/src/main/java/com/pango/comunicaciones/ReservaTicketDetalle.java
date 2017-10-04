@@ -52,6 +52,7 @@ public class ReservaTicketDetalle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_detalle);
+        setTitle("Reserva de Buses");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Conectándose al servidor");
@@ -212,6 +213,9 @@ public class ReservaTicketDetalle extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
+
+
+
                 PersonaPostReservaModel[] persona = {Utils.getPersonaPostReservaModel(ticket.Codigo)};
                 Gson gson = new Gson();
 
@@ -221,12 +225,17 @@ public class ReservaTicketDetalle extends AppCompatActivity {
                     httpPost = new HttpPost(Utils.getUrlForEliminarReserva());
                 else
                     httpPost = new HttpPost(Utils.getUrlForAgregarReserva());
-                StringEntity postString = new StringEntity(gson.toJson(persona));
+                StringEntity postString = new StringEntity("{\"Data\":"+gson.toJson(persona)+"}");
                 httpPost.setEntity(postString);
                 httpPost.setHeader("Content-type", "application/json");
                 httpPost.setHeader("Authorization", "Bearer " + Utils.token );
 
                 HttpResponse response = httpClient.execute(httpPost);
+
+
+
+
+
 
 
                 switch (response.getStatusLine().getStatusCode()) {

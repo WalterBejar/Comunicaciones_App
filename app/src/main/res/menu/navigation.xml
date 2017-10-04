@@ -17,7 +17,7 @@
     <item
         android:id="@+id/navigation_publicaciones"
         android:icon="@drawable/ic_menu_publicaciones"
-        android:title="Comunicados"
+        android:title="Eventos"
         app:showAsAction="ifRoom|withText"/>
 
     <item

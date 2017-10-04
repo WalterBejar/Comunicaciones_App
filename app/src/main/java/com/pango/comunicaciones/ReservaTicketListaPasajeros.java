@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
     ProgressDialog progressDialog;
     AlertDialog alertDialog;
     AlertDialog.Builder builder;
+    Button botonEliminar;
 
     ListaAdapter listaAdapter;
 
@@ -50,7 +52,9 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_lista_pasajeros);
+        setTitle("Reserva de Buses");
 
+        botonEliminar=(Button) findViewById(R.id.botonEliminarPasajero);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Conectándose al servidor");
         progressDialog.setMessage("Por favor, espere...");
@@ -208,7 +212,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                 HttpPost httpPost;
                 httpPost = new HttpPost(Utils.getUrlForEliminarReserva());
 
-                StringEntity postString = new StringEntity(gson.toJson(listaPasajerosAEliminar.toArray()));
+                StringEntity postString = new StringEntity("{\"Data\":"+ gson.toJson(listaPasajerosAEliminar.toArray())+"}");
                 httpPost.setEntity(postString);
                 httpPost.setHeader("Content-type", "application/json");
                 httpPost.setHeader("Authorization", "Bearer " + Utils.token );
@@ -282,6 +286,13 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     listaCheckBoxPasajeros[position] = !listaCheckBoxPasajeros[position];
+                    boolean flag=false;
+                    for(int i=0;i<listaCheckBoxPasajeros.length;i++){
+                        if(listaCheckBoxPasajeros[i]){
+                            flag=true;
+                        }
+                    }
+                    botonEliminar.setEnabled(flag);
                 }
             });
             return convertView;

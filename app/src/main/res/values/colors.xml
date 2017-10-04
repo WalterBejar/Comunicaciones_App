@@ -11,7 +11,21 @@
     <color name="colornegro">#000000</color>
     <color name="colorverde">#27e15c</color>
 
+    <color name="colorTitulo">#3f51b5</color>
+    <color name="colorNotificacion">#303f9f</color>
+    <color name="colorItemSecond">#919ef4</color>
 
-    colorBlanco
+
+    <color name="colorNaranja">#f27d23</color>
+
+    <color name="colorAmarillo">#f2bd3d</color>
+    <color name="colorVerdeImg">#83ad69</color>
+    <color name="colorAzulVid">#4b9fc2</color>
+    <color name="colorfondoP">#E8EAF6</color>
+
+
+
+    E8EAF6
+
 
 </resources>

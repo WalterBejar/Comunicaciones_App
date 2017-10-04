@@ -20,11 +20,11 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
-        android:text="SISTEMA DE COMUNICACIONES"
-        android:textSize="30dp"
         android:layout_marginTop="30dp"
+        android:text="RESERVA DE BUSES"
 
-        />
+        android:textAlignment="center"
+        android:textSize="30dp" />
 
     <LinearLayout
         android:id="@+id/email_login_form"
