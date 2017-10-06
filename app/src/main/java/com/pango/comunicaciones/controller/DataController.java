@@ -110,8 +110,11 @@ int varcant;
         }
     }
 
-public void obtener_noticia(String a, String b){
-    try {
+
+
+
+    public void obtener_noticia(String a, String b){
+        try {
         HttpResponse response;
 
         if(opcion=="get"){

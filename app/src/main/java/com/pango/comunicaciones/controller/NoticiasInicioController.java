@@ -1,5 +1,7 @@
 package com.pango.comunicaciones.controller;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,6 +44,7 @@ public class NoticiasInicioController
         this.v = v;
         listViewNoticias = (RecyclerView) v.findViewById(R.id.listViewNoticias);
        listViewNoticias.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onGlobalLayout() {
                 // Primer render de la noticia

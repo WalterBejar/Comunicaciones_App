@@ -10,7 +10,6 @@ android {
         versionCode 7
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary=true
     }
     buildTypes {
         release {
@@ -25,7 +24,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.google.code.gson:gson:2.6.2'
@@ -39,6 +37,5 @@ dependencies {
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.github.allenxuan:xuanimageview:0.4.0'
-    compile 'de.codecrafters.tableview:tableview:2.2.0'
     testCompile 'junit:junit:4.12'
 }

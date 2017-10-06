@@ -42,7 +42,7 @@
             android:layout_marginStart="18dp"
             android:id="@+id/notific_titulo"
             tools:text="bfbvgesrhvbhsvbufhfhfhffhhfhgfhfghgshgfhsgfgshfg"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="normal|bold"
             android:maxLines="1"
             android:ellipsize="end"

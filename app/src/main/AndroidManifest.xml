@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcherlogofinal"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcherlogofinal"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -18,11 +18,13 @@
             android:name=".SplashScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
 
@@ -40,6 +42,8 @@
             android:screenOrientation="portrait"
 
             android:theme="@style/AppTheme.NoActionBar">
+
+
 
         </activity>
 

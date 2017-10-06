@@ -1,6 +1,12 @@
 package com.pango.comunicaciones;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -9,8 +15,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.controller.DataController;
+import com.pango.comunicaciones.controller.getToken;
 
 public class SplashScreenActivity extends AppCompatActivity {
     //private static final long SPLASH_SCREEN_DELAY = 3000;
@@ -25,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.splash_screen_activity);
         //GlobalVariables.Urlbase=Recuperar_data();
 
-       // GlobalVariables.Urlbase="https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/";
+        // GlobalVariables.Urlbase="https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/";
 /*
 if(GlobalVariables.Urlbase.equals(null)) {
     Intent mainIntent = new Intent()
@@ -48,27 +56,54 @@ if(GlobalVariables.Urlbase.equals(null)) {
 
 
 
-        final DataController obj = new DataController("url","get", SplashScreenActivity.this);
-        obj.execute(String.valueOf(1),String.valueOf(10));
-
-       // String a=obj.getStatus().toString();
-       // String b= AsyncTask.Status.FINISHED.toString();
 
 
+        final DataController obj = new DataController("url", "get", SplashScreenActivity.this);
+        obj.execute(String.valueOf(1), String.valueOf(10));
+
+        // String a=obj.getStatus().toString();
+        // String b= AsyncTask.Status.FINISHED.toString();
 
 
         final Handler h = new Handler();
-        h.postDelayed(new Runnable()
-        {
+        h.postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 if (obj.getStatus() == AsyncTask.Status.FINISHED) {
-                    Intent mainIntent = new Intent()
-                            .setClass(SplashScreenActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                    finish();
-                }else {
+
+                    if(GlobalVariables.con_status==200){
+                        Intent mainIntent = new Intent()
+                                .setClass(SplashScreenActivity.this, MainActivity.class);
+                        startActivity(mainIntent);
+                        finish();
+                    }else{
+
+                        Toast.makeText(getApplicationContext(), "error en la conexion", Toast.LENGTH_SHORT).show();
+                        finish();
+                  /*      AlertDialog.Builder dialogo = new AlertDialog.Builder(getApplicationContext());
+                        dialogo.setTitle("Error de conexión");
+                        dialogo.setMessage("Es posible que la url sea incorrecta, ¿Que deseas hacer?");
+                        dialogo.setPositiveButton("Configuración", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+
+                            }
+                        });
+                        dialogo.setNegativeButton("Cerrar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        dialogo.create();
+                        dialogo.show();*/
+
+
+                    }
+
+
+
+
+                } else {
                     h.postDelayed(this, 250);
                 }
 
@@ -77,8 +112,25 @@ if(GlobalVariables.Urlbase.equals(null)) {
         }, 250);
 
 
+    }
 
-  /*      }else{
+
+
+
+    }
+
+  /*  public String Recuperar_data() {
+
+        SharedPreferences settings =  getSharedPreferences("datos", Context.MODE_PRIVATE);
+        String url_servidor = settings.getString("url","");
+        //Toast.makeText(this, url_servidor, Toast.LENGTH_SHORT).show();
+        return url_servidor;
+    }
+*/
+
+
+
+    /*      }else{
 
             //Toast.makeText(this, "Error en el servidor", Toast.LENGTH_SHORT).show();
             Intent mainIntent = new Intent()
@@ -88,7 +140,7 @@ if(GlobalVariables.Urlbase.equals(null)) {
         }*/
 
 
-        /*TimerTask task = new TimerTask() {
+          /*TimerTask task = new TimerTask() {
             @Override
             public void run() {
 
@@ -106,15 +158,3 @@ if(GlobalVariables.Urlbase.equals(null)) {
         // Simulate a long loading process on application startup.
         Timer timer = new Timer();
         timer.schedule(task, SPLASH_SCREEN_DELAY);*/
-    }
-
-    public String Recuperar_data() {
-
-        SharedPreferences settings =  getSharedPreferences("datos", Context.MODE_PRIVATE);
-        String url_servidor = settings.getString("url","");
-        //Toast.makeText(this, url_servidor, Toast.LENGTH_SHORT).show();
-        return url_servidor;
-    }
-
-
-}

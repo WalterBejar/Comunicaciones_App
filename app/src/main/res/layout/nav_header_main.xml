@@ -11,20 +11,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:weightSum="1">
 
     <ImageView
-        android:layout_width="86dp"
+        android:layout_width="142dp"
         android:layout_height="70dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/side_nav_logo2"
-        android:id="@+id/imageView" />
+        app:srcCompat="@drawable/side_nav_logo"
+        android:id="@+id/imageView"
+        android:layout_weight="0.18" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:text="Comunicaciones"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="gone"
+        />
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

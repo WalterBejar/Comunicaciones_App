@@ -79,6 +79,7 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
         intent.putExtra(ActImagDet.EXTRA_PARAM_ID, a);
         intent.putExtra("post",position);
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat activityOptions =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(

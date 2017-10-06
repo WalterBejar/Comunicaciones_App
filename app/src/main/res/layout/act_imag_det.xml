@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -8,14 +8,10 @@
 
     >
 
-    <com.pango.comunicaciones.TouchImageView
-        android:id="@+id/imagen_extendida"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="imagen_compartida"
+        />
 
-        >
-    </com.pango.comunicaciones.TouchImageView>
-
-
-</LinearLayout>
+</RelativeLayout>
