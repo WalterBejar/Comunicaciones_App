@@ -30,10 +30,12 @@ import layout.FragmentNotificacion;
 import layout.FragmentTickets;
 import layout.FragmentVideos;
 
+import layout.FragmentInicio2;
+
 public class MainActivity extends AppCompatActivity
         implements
         NavigationView.OnNavigationItemSelectedListener,
-        FragmentInicio.OnFragmentInteractionListener,
+        FragmentInicio2.OnFragmentInteractionListener,
         FragmentNoticias.OnFragmentInteractionListener,
         FragmentComunicados.OnFragmentInteractionListener,
         FragmentImagenes.OnFragmentInteractionListener,
@@ -344,7 +346,7 @@ public class MainActivity extends AppCompatActivity
     private void ChangeFragment(NavigationFragment value){
         Fragment fragment = null;
         switch (value) {
-            case Inicio:    fragment = new FragmentInicio(); break;
+            case Inicio:    fragment = new FragmentInicio2(); break;
             case Noticias:    fragment = new FragmentNoticias(); break;
             case Comunicados: fragment = new FragmentComunicados(); break;
             case Imagenes: fragment = new FragmentImagenes(); break;

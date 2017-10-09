@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.R;
@@ -70,6 +71,8 @@ public class FragmentTickets extends Fragment {
     Button btn_ingresar;
     EditText tx_user;
     EditText tx_pass;
+    ImageButton btn_borrarUser;
+    ImageButton btn_borrarPass;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,6 +82,22 @@ public class FragmentTickets extends Fragment {
 
         tx_user=(EditText) rootView.findViewById(R.id.usuario);
         tx_pass=(EditText) rootView.findViewById(R.id.password);
+
+        btn_borrarUser = (ImageButton) rootView.findViewById(R.id.btn_deleteUser);
+        btn_borrarPass = (ImageButton) rootView.findViewById(R.id.btn_deletePass);
+
+        btn_borrarUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tx_user.setText("");
+            }
+        });
+        btn_borrarPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tx_pass.setText("");
+            }
+        });
 
         btn_ingresar= (Button) rootView.findViewById(R.id.btningresar);
         btn_ingresar.setOnClickListener(new View.OnClickListener(){

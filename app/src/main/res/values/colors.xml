@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#8BC34A</color>
     <color name="colorPrimaryDark">#689F38</color>
-    <color name="colorAccent">#FF5722</color>
+    <color name="colorAccent">#ff5722</color> <!--#ff5722-->
     <color name="colorplaystore">#fdfdfd</color>
     <color name="background_footer">#90000000</color>
 
@@ -11,21 +11,27 @@
     <color name="colornegro">#000000</color>
     <color name="colorverde">#27e15c</color>
 
-    <color name="colorTitulo">#3f51b5</color>
-    <color name="colorNotificacion">#303f9f</color>
+    <color name="colorTitulo">#006bbc</color>
+    <color name="colorNotificacion">#002E8C</color>
     <color name="colorItemSecond">#919ef4</color>
 
 
-    <color name="colorNaranja">#f27d23</color>
+    <color name="colorNaranja">#ff6702</color>  <!--#f27d23-->
+
+
+    <color name="colorNaranja1">#ffc42c</color>
+    <color name="colorNaranja2">#ff9724</color>
+
+    <color name="colorAmarillo1">#dfcc30</color>
+    <color name="colorAmarillo2">#d1af00</color>
+
+    <color name="colorAzul1">#006bba</color>
+    <color name="colorAzul2">#3695db</color>
+    <color name="colorAzul3">#68bcf0</color>
+    <color name="colorAzul4">#58aff0</color>
 
     <color name="colorAmarillo">#f2bd3d</color>
-    <color name="colorVerdeImg">#83ad69</color>
-    <color name="colorAzulVid">#4b9fc2</color>
+    <color name="colorVerdeImg">#9cc425</color>
+    <color name="colorAzulVid">#00668c</color>
     <color name="colorfondoP">#E8EAF6</color>
-
-
-
-    E8EAF6
-
-
 </resources>
