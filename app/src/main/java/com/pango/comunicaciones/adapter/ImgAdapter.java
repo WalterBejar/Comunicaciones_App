@@ -13,9 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pango.comunicaciones.ActImag;
+import com.pango.comunicaciones.ActImagDet;
 import com.pango.comunicaciones.ActImgNot;
+import com.pango.comunicaciones.ActSwipeImg;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.controller.ImgdetController;
 import com.pango.comunicaciones.model.Imagen;
 
 import java.util.ArrayList;
@@ -59,7 +63,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         final String tempFecha=data.get(position).getFecha();
         final String tempTitulo=data.get(position).getTitulo();
         final int tempcant=data.get(position).getCount_img()-4;
-
+        final String codreg_img=data.get(position).getCod_reg();
 
 
         icono.setImageResource(R.drawable.ic_menu_gallery);
@@ -187,7 +191,22 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
             public void onClick(View v) {
                 //String adfhh=GlobalVariables.Urlbase +img2.get(2).replaceAll("\\s","%20");
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
-                Intent intent=new Intent(v.getContext(), ActImgNot.class);
+                //Intent intent=new Intent(v.getContext(), ActImgNot.class);
+
+
+               // final ImgdetController obj = new ImgdetController("url","get", ActImag.this);
+                //obj.execute(GlobalVariables.img_get.getCod_reg());
+
+
+
+
+               Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
+                //intent.putExtra(ActImagDet.EXTRA_PARAM_ID, 0);
+                intent.putExtra("post",0);
+                intent.putExtra("position_p",position);
+
+
+
 
                 intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(0).replaceAll("\\s","%20"));
 
@@ -200,7 +219,14 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
             public void onClick(View v) {
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
-                Intent intent=new Intent(v.getContext(), ActImgNot.class);
+               // Intent intent=new Intent(v.getContext(), ActImgNot.class);
+
+
+                Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
+                //intent.putExtra(ActImagDet.EXTRA_PARAM_ID, 0);
+                intent.putExtra("post",1);
+                intent.putExtra("position_p",position);
+
                 intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(1).replaceAll("\\s","%20"));
                 v.getContext().startActivity(intent);
 
@@ -214,7 +240,11 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
 
                 String adfhh=GlobalVariables.Urlbase +img2.get(2).replaceAll("\\s","%20");
-                Intent intent=new Intent(v.getContext(), ActImgNot.class);
+                //Intent intent=new Intent(v.getContext(), ActImgNot.class);
+                Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
+                intent.putExtra("post",2);
+                intent.putExtra("position_p",position);
+
                 intent.putExtra("url_img",adfhh);
 
                 v.getContext().startActivity(intent);
@@ -227,7 +257,10 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
             public void onClick(View v) {
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
-                Intent intent=new Intent(v.getContext(), ActImgNot.class);
+               // Intent intent=new Intent(v.getContext(), ActImgNot.class);
+                Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
+                intent.putExtra("post",3);
+                intent.putExtra("position_p",position);
                 intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(3).replaceAll("\\s","%20"));
 
                 v.getContext().startActivity(intent);

@@ -13,40 +13,27 @@
         android:roundIcon="@mipmap/ic_launcherlogofinal"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".SplashScreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-
-
         <activity android:name=".ReservaTicketFiltro" />
         <activity android:name=".ReservaTicketDetalle" />
         <activity android:name=".ReservaTicketListaPasajeros" />
-        <!--<activity android:name=".ReservaTicketBuscarPasajeros"></activity>-->
-        <!-- <activity android:name=".ReservaTicketDetalle"></activity>-->
-
+        <!-- <activity android:name=".ReservaTicketBuscarPasajeros"></activity> -->
+        <!-- <activity android:name=".ReservaTicketDetalle"></activity> -->
 
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-
-            android:theme="@style/AppTheme.NoActionBar">
-
-
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ReservaTicketBuscarPasajeros"
             android:launchMode="singleTask" />
@@ -65,9 +52,9 @@
             android:name=".ActVidDet"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".ActImgNot"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            />
+        <activity
+            android:name=".ActImgNot"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ActNotDes"
             android:screenOrientation="portrait"
@@ -83,6 +70,10 @@
         <activity
             android:name=".ActComDes"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ActSwipeImg"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+
+            ></activity>
     </application>
 
 </manifest>

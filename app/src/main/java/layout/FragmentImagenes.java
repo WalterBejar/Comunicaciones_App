@@ -87,8 +87,11 @@ public class FragmentImagenes extends Fragment {
         //final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
         //obj.execute(String.valueOf(1),String.valueOf(10));
 
+
+
         ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
         recListImag.setAdapter(ca);
+
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater2 = getActivity().getLayoutInflater();

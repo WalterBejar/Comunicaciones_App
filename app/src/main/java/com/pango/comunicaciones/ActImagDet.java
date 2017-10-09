@@ -32,25 +32,35 @@ public class ActImagDet extends AppCompatActivity {
         Bundle datos = this.getIntent().getExtras();
         positionIn=datos.getInt("post");
 
-
-
         imagenExtendida = (TouchImageView) findViewById(R.id.imagen_extendida);
+
+
+
+
+
 
 
 
        // cargarImagenExtendida();
 
-
-
         viewPager = (ViewPager)findViewById(R.id.viewPager);
         adapter = new ViewPagerAdapter(ActImagDet.this,GlobalVariables.listdetimg,positionIn);
         viewPager.setAdapter(adapter);
 
-
+        viewPager.setCurrentItem(positionIn,true);
 
 
 
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        //outState.putParcelableArrayList("image_array", GlobalVariables.listdetimg);
+        outState.putInt("savedImagePosition",positionIn);
+
+    }
+
 
 
 //itemDetallado.getIdimagdra()
