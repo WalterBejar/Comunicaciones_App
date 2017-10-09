@@ -79,6 +79,10 @@
         <activity
             android:name=".ActComDes"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ActSwipeImg"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+
+            ></activity>
     </application>
 
 </manifest>

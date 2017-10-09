@@ -14,7 +14,7 @@
         android:id="@+id/toolbarnot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorTitulo"
 
         />
 
@@ -78,7 +78,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textStyle="normal|bold"
-                android:textSize="12sp"
+                android:textSize="14sp"
 
                 />
 

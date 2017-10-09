@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
 
-        android:background="@color/colorPrimary" />
+        android:background="@color/colorTitulo" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:textColor="@color/background_footer"
 
 
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:textStyle="bold" />
 
 

@@ -14,7 +14,7 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorTitulo"
 
     />
 
@@ -36,7 +36,7 @@
             android:layout_toRightOf="@+id/icon_image"
             android:id="@+id/imag_titulo2"
             android:textStyle="normal|bold"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_alignEnd="@+id/grid_imag" />
 
         <TextView

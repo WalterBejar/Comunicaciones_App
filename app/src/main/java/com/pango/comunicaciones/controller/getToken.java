@@ -25,7 +25,7 @@ public class getToken {
             //////
             response = httpClient.execute(get);
             String respstring2 = EntityUtils.toString(response.getEntity());
-            //GlobalVariables.token_auth=respstring2.substring(1,respstring2.length()-1);
+            GlobalVariables.token_auth=respstring2.substring(1,respstring2.length()-1);
 
             if(respstring2.equals(""))
             {

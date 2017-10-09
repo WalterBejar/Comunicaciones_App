@@ -9,7 +9,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorSubtitulo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,9 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="8dp"
+
+            />
     </android.support.constraint.ConstraintLayout>
 
     <ListView
@@ -58,13 +60,14 @@
 
         <Button
             android:id="@+id/botonGestionarPasajeros"
-            android:background="@android:color/holo_green_dark"
+            android:background="@color/colorNaranja"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="0dp"
             android:text="GESTIONAR PASAJEROS"
             android:textSize="12sp"
+            android:textColor="@color/colorBlanco"
             android:onClick="toReservaTicketListaPasajeros"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/botonGestionarReserva"
@@ -76,13 +79,14 @@
 
         <Button
             android:id="@+id/botonGestionarReserva"
-            android:background="@android:color/holo_green_dark"
+            android:background="@color/colorNaranja"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="0dp"
             android:text="AGREGAR/QUITAR"
             android:textSize="12sp"
+            android:textColor="@color/colorBlanco"
             android:onClick="gestionarReserva"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

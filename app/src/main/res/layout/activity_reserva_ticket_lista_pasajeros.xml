@@ -8,7 +8,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout3"
-        android:background="@android:color/holo_green_dark"
+        android:background="@color/colorSubtitulo"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="0dp"
@@ -61,7 +61,7 @@
 
         <Button
             android:id="@+id/botonEliminarPasajero"
-            android:background="@android:color/holo_green_dark"
+            android:background="@color/colorNaranja"
             android:onClick="clickEnEliminarPasajeros"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -75,12 +75,12 @@
             app:layout_constraintVertical_bias="0.0"
             android:layout_marginLeft="1dp"
             android:enabled="false"
-
+            android:textColor="@color/colorBlanco"
             />
 
         <Button
             android:id="@+id/botonAgregarPasajero"
-            android:background="@android:color/holo_green_dark"
+            android:background="@color/colorNaranja"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="0dp"
@@ -92,7 +92,9 @@
             app:layout_constraintRight_toLeftOf="@+id/botonEliminarPasajero"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginRight="1dp"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:textColor="@color/colorBlanco"
+            />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

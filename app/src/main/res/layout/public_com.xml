@@ -39,7 +39,7 @@
             android:id="@+id/com_titulo"
             android:layout_marginRight="20dp"
 
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@android:color/background_dark"
 
             android:textStyle="normal|bold"
@@ -74,7 +74,7 @@
             android:layout_alignStart="@+id/com_imagen"
             android:layout_alignBottom="@+id/com_imagen"
 
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="normal"
 
  />

@@ -40,7 +40,7 @@
             android:id="@+id/titulo_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_alignTop="@+id/icon_vid"
             android:layout_marginLeft="21dp"
             android:layout_marginStart="14dp"

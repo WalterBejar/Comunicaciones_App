@@ -67,7 +67,7 @@
             android:layout_toEndOf="@+id/icon_imag"
             android:layout_marginLeft="2dp"
             android:textStyle="normal|bold"
-            android:textSize="12sp"
+            android:textSize="14sp"
 
 
             />
