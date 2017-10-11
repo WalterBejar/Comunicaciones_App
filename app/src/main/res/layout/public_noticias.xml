@@ -77,7 +77,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/imag_not"
             android:focusable="false"
-            android:src="@drawable/splash_logo"
 
             android:layout_below="@+id/txfecha"
             android:layout_centerHorizontal="true"

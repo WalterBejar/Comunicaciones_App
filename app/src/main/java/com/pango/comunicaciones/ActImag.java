@@ -30,7 +30,7 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
         setContentView(R.layout.act_imag);
         rootView= getLayoutInflater().inflate(R.layout.act_imag, null);
                // inflater.inflate(R.layout.frag_noticia_det, container, false);
-        setTitle("Imágenes");
+        setTitle("Fotos");
 
         final ImgdetController obj = new ImgdetController("url","get", ActImag.this);
         obj.execute(GlobalVariables.img_get.getCod_reg());

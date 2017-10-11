@@ -18,30 +18,22 @@ import com.pango.comunicaciones.model.Img_Gal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerAdapter extends PagerAdapter {
+public class ViewPagerAdapter2 extends PagerAdapter {
     Activity activity;
-    List<Img_Gal> images;
     LayoutInflater inflater;
     int positionIn;
     ArrayList<String> listaURL;
 
-    public ViewPagerAdapter(Activity activity, List<Img_Gal> images, int positionIn) {
-        this.activity = activity;
-        this.images = images;
-        this.positionIn = positionIn;
-    }
-
-
-   /* public ViewPagerAdapter(Activity activity, ArrayList<String> listaURL, int positionIn) {
+    public ViewPagerAdapter2(Activity activity, ArrayList<String> listaURL, int positionIn) {
         this.activity = activity;
         this.listaURL = listaURL;
         this.positionIn = positionIn;
     }
-*/
+
 
     @Override
     public int getCount() {
-        return images.size();
+        return listaURL.size();
     }
 
     @Override
@@ -70,7 +62,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
 
             Glide.with(image.getContext())
-                    .load(GlobalVariables.Urlbase+GlobalVariables.listdetimg.get(position).getUrl_img())
+                    .load(GlobalVariables.Urlbase+listaURL.get(position))
                     .into(image);
            // positionIn= position;
 

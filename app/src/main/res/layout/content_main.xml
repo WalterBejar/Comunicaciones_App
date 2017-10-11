@@ -26,6 +26,9 @@
         android:background="@color/colorTitulo"
         app:itemIconTint="@drawable/selector_bottom_tool_bar"
         app:itemTextColor="@drawable/selector_bottom_tool_bar"
-        app:menu="@menu/navigation"/>
+        app:menu="@menu/navigation"
+
+
+        />
 
 </LinearLayout>

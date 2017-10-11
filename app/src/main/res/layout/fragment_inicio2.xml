@@ -9,7 +9,6 @@
     android:background="@color/colorfondoP"
     >
 
-
     <android.support.v7.widget.CardView
         android:id="@+id/cardView5"
         android:layout_width="0dp"
@@ -25,18 +24,18 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/icon_not"
+                android:id="@+id/icon_not1"
                 android:layout_width="match_parent"
                 android:layout_height="106dp"
-                card_view:srcCompat="@drawable/ic_menu_noticias2"
+                android:src="@drawable/ic_menu_noticias2"
 
                 />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/icon_not"
+                android:layout_below="@+id/icon_not1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:text="NOTICIAS"
@@ -71,7 +70,7 @@
                 android:id="@+id/icon_video"
                 android:layout_width="match_parent"
                 android:layout_height="106dp"
-                card_view:srcCompat="@drawable/ic_menu_slideshow2"
+                android:src="@drawable/ic_menu_slideshow2"
 
                 />
 
@@ -117,7 +116,7 @@
 
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                card_view:srcCompat="@drawable/ic_menu_publicaciones2" />
+                android:src="@drawable/ic_menu_publicaciones2" />
 
             <TextView
                 android:id="@+id/txcom"
@@ -151,17 +150,17 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/icon_not"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                card_view:srcCompat="@drawable/ic_menu_noticias2"
+                android:id="@+id/icon_not2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_menu_noticias2"
 
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NOTICIAS"
@@ -170,9 +169,9 @@
                 android:textColor="@color/colorBlanco"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                android:layout_below="@+id/icon_not"
-                android:layout_alignRight="@+id/icon_not"
-                android:layout_alignEnd="@+id/icon_not"
+                android:layout_below="@+id/icon_not2"
+                android:layout_alignRight="@+id/icon_not2"
+                android:layout_alignEnd="@+id/icon_not2"
                 android:layout_marginTop="12dp" />
 
         </RelativeLayout>
@@ -208,7 +207,7 @@
                 android:id="@+id/icon_not"
                 android:layout_width="match_parent"
                 android:layout_height="106dp"
-                card_view:srcCompat="@drawable/ic_menu_noticias2"
+                android:src="@drawable/ic_menu_noticias2"
 
                 />
 
@@ -249,7 +248,7 @@
                 android:id="@+id/icon_img"
                 android:layout_width="match_parent"
                 android:layout_height="106dp"
-                card_view:srcCompat="@drawable/ic_menu_gallery2"
+                android:src="@drawable/ic_menu_gallery2"
 
                 />
 

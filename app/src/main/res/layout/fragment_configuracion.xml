@@ -29,8 +29,10 @@ tools:context="layout.FragmentConfiguracion"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:text="https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/"
+    android:freezesText="true"
     android:inputType="text"
     android:imeOptions="actionNext"
+    android:textColor="@color/cardview_dark_background"
 
     />
 

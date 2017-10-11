@@ -15,15 +15,9 @@
         app:showAsAction="ifRoom|withText"/>
 
     <item
-        android:id="@+id/navigation_publicaciones"
-        android:icon="@drawable/ic_menu_publicaciones"
-        android:title="Eventos"
-        app:showAsAction="ifRoom|withText"/>
-
-    <item
         android:id="@+id/navigation_imagenes"
         android:icon="@drawable/ic_menu_gallery"
-        android:title="Imágenes"
+        android:title="Fotos"
         app:showAsAction="ifRoom|withText"/>
 
     <item
@@ -31,5 +25,13 @@
         android:icon="@drawable/ic_menu_slideshow"
         android:title="Videos"
         app:showAsAction="ifRoom|withText"/>
+
+    <item
+        android:id="@+id/navigation_tickets"
+        android:icon="@drawable/ic_menu_tickets"
+        android:title="Reserva de Buses"
+        app:showAsAction="ifRoom|withText"/>
+
+
 
 </menu>

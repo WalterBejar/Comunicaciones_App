@@ -1,31 +1,24 @@
 package layout;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.pango.comunicaciones.ActComDetalle;
-import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
-import com.pango.comunicaciones.controller.NotifiController;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentNotificacion.OnFragmentInteractionListener} interface
+ * {@link FragmentRedesSociales.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentNotificacion#newInstance} factory method to
+ * Use the {@link FragmentRedesSociales#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentNotificacion extends Fragment {
+public class FragmentRedesSociales extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,7 +30,7 @@ public class FragmentNotificacion extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public FragmentNotificacion() {
+    public FragmentRedesSociales() {
         // Required empty public constructor
     }
 
@@ -47,11 +40,11 @@ public class FragmentNotificacion extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentNotificacion.
+     * @return A new instance of fragment FragmentRedesSociales.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentNotificacion newInstance(String param1, String param2) {
-        FragmentNotificacion fragment = new FragmentNotificacion();
+    public static FragmentRedesSociales newInstance(String param1, String param2) {
+        FragmentRedesSociales fragment = new FragmentRedesSociales();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,60 +61,12 @@ public class FragmentNotificacion extends Fragment {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    private ListView list_alertas;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView =inflater.inflate(R.layout.fragment_notificacion, container, false);
-        list_alertas = (ListView) rootView.findViewById(R.id.list_notifica);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        final NotifiController obj = new NotifiController(rootView,"url","get", FragmentNotificacion.this);
-        obj.execute();
-
-
-        list_alertas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GlobalVariables.cod_public= GlobalVariables.notific_data.get(position).getCod_reg();
-                //GlobalVariables.doclic=true;
-
-
-
-                GlobalVariables.com_pos= null;//captura los datos en la posiscion que se hace clic y almacena en not2pos
-                //GlobalVariables.pos_item_com=position;
-
-               /* android.app.Fragment fragment = null;
-                fragment = new Frag_com_det();
-                if(null!=fragment) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-
-
-                }*/
-                Intent intent = new Intent(getActivity(), ActComDetalle.class);
-                startActivity(intent);
-
-
-            }
-        });
-
-
-
-
-        return rootView;
-
+        return inflater.inflate(R.layout.fragment_redes_sociales, container, false);
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

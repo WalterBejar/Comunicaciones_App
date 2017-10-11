@@ -204,11 +204,10 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 //intent.putExtra(ActImagDet.EXTRA_PARAM_ID, 0);
                 intent.putExtra("post",0);
                 intent.putExtra("position_p",position);
+                intent.putExtra("url_img",img2);
 
 
-
-
-                intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(0).replaceAll("\\s","%20"));
+               // intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(0).replaceAll("\\s","%20"));
 
                 v.getContext().startActivity(intent);
 
@@ -226,8 +225,9 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 //intent.putExtra(ActImagDet.EXTRA_PARAM_ID, 0);
                 intent.putExtra("post",1);
                 intent.putExtra("position_p",position);
+                intent.putExtra("url_img",img2);
 
-                intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(1).replaceAll("\\s","%20"));
+                //intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(1).replaceAll("\\s","%20"));
                 v.getContext().startActivity(intent);
 
             }
@@ -244,8 +244,9 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
                 intent.putExtra("post",2);
                 intent.putExtra("position_p",position);
+                intent.putExtra("url_img",img2);
 
-                intent.putExtra("url_img",adfhh);
+                //intent.putExtra("url_img",adfhh);
 
                 v.getContext().startActivity(intent);
 
@@ -261,7 +262,10 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
                 intent.putExtra("post",3);
                 intent.putExtra("position_p",position);
-                intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(3).replaceAll("\\s","%20"));
+
+                intent.putExtra("url_img",img2);
+
+                //intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(3).replaceAll("\\s","%20"));
 
                 v.getContext().startActivity(intent);
 

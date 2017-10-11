@@ -86,9 +86,26 @@ private Switch sw_sonido;
         Boolean switchState = sw_sonido.isChecked();
 
         url_base = (EditText) rootView.findViewById(R.id.url_base);
+        //url_base.setText("https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/");
         dom = (EditText) rootView.findViewById(R.id.dom);
-
+        //dom.setText("anyaccess");
         b_save = (Button) rootView.findViewById(R.id.b_save);
+
+        ///registro por default
+
+
+     /*   SharedPreferences url_save = this.getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
+        SharedPreferences dominio = this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = url_save.edit();
+        editor.putString("url", "https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/");
+
+        SharedPreferences.Editor editor2 = dominio.edit();
+        editor2.putString("domain","anyaccess");
+
+        editor.commit();
+        editor2.commit();*/
+       // Recuperar_data();
 
       //
 
@@ -106,9 +123,6 @@ private Switch sw_sonido;
 
                 boolean est=URLUtil.isValidUrl(url_base.getText().toString());
                 String ultimo = a.substring(a.length() - 1);
-
-
-
 
 
                 if(est==true&ultimo.equals("/")){
@@ -130,11 +144,11 @@ private Switch sw_sonido;
 
         //sharedpreference para url del servidor
         SharedPreferences url_save = this.getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
-        url_base.setText(url_save.getString("url", ""));
+        url_base.setText(url_save.getString("url", "https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/"));
 
         //sharedpreference para url del dominio
         SharedPreferences dominio = this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);
-        dom.setText(dominio.getString("domain", ""));
+        dom.setText(dominio.getString("domain", "anyaccess"));
 
 
 
@@ -209,7 +223,7 @@ private Switch sw_sonido;
     public void Recuperar_data() {
 
         SharedPreferences settings =  this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);
-        String dominio_user = settings.getString("domain","valorpordefecto");
+        String dominio_user = settings.getString("domain","");
         //Toast.makeText(this.getActivity(), nombre, Toast.LENGTH_SHORT).show();
 
         Toast.makeText(this.getActivity(),"Se guardaron los cambios", Toast.LENGTH_SHORT).show();

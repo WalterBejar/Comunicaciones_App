@@ -1,5 +1,4 @@
 package com.pango.comunicaciones;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -18,15 +17,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
 
 import java.lang.reflect.Field;
 
 import layout.FragmentComunicados;
 import layout.FragmentConfiguracion;
+import layout.FragmentContactenos;
 import layout.FragmentImagenes;
-import layout.FragmentInicio;
 import layout.FragmentNoticias;
 import layout.FragmentNotificacion;
+import layout.FragmentRedesSociales;
 import layout.FragmentTickets;
 import layout.FragmentVideos;
 
@@ -42,11 +43,13 @@ public class MainActivity extends AppCompatActivity
         FragmentVideos.OnFragmentInteractionListener,
         FragmentTickets.OnFragmentInteractionListener,
         FragmentNotificacion.OnFragmentInteractionListener,
-        FragmentConfiguracion.OnFragmentInteractionListener
+        FragmentConfiguracion.OnFragmentInteractionListener,
+        FragmentContactenos.OnFragmentInteractionListener,
+        FragmentRedesSociales.OnFragmentInteractionListener
 
 {
-  //  private int mSelectedItem;
-  //  private static final String SELECTED_ITEM = "arg_selected_item";
+    //  private int mSelectedItem;
+    //  private static final String SELECTED_ITEM = "arg_selected_item";
 
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
     }
 
-    private enum NavigationFragment{
+    public enum NavigationFragment{
         Inicio,
         Noticias,
         Comunicados,
@@ -63,7 +66,9 @@ public class MainActivity extends AppCompatActivity
         Videos,
         Tickets,
         Notificacion,
-        Configuracion
+        Configuracion,
+        Contactenos,
+        RedesSociales
 
     }
 
@@ -74,12 +79,12 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //GlobalVariables.Urlbase=Recuperar_data();
-       // Intent toReservaTicketFiltro = new Intent(getApplicationContext(), ReservaTicketFiltro.class);
+        // Intent toReservaTicketFiltro = new Intent(getApplicationContext(), ReservaTicketFiltro.class);
         //startActivity(toReservaTicketFiltro);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -87,6 +92,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+        //bottomNavigationView.setVisibility(View.GONE);
+
         disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -94,10 +102,11 @@ public class MainActivity extends AppCompatActivity
         ChangeFragment(NavigationFragment.Inicio);
         uncheckItemsMenu();
         bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+        bottomNavigationView.setVisibility(View.GONE);
 
         //getSupportActionBar().
 
-        setTitle("Antapaccay te informa");
+        setTitle("Antapaccay");
 
 
     }
@@ -113,6 +122,7 @@ public class MainActivity extends AppCompatActivity
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         /*} else  if (mSelectedItem == videoItem.getItemId()||mSelectedItem == imagenItem.getItemId()) {
@@ -153,7 +163,7 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-       // int id = item.getItemId();
+        // int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
       /*  if (id == R.id.action_settings) {
@@ -162,7 +172,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-//menu lateral
+    //menu lateral
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -176,7 +186,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_publicaciones) {
             ClickMenuComunicados();
             uncheckItemsMenu();
-            bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
+            //bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
         } else if (id == R.id.nav_imagenes) {
             ClickMenuImagenes();
             uncheckItemsMenu();
@@ -188,12 +198,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_tickets) {
             ClickMenuTickets();
             uncheckItemsMenu();
-
+            bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
         }else if (id == R.id.nav_notificaciones){
             ClickMenuNotificacion();
             uncheckItemsMenu();
         }else if (id == R.id.nav_configuracion){
             ClickMenuConfiguracion();
+            uncheckItemsMenu();
+        }else if (id == R.id.nav_Contactenos){
+            ClickMenuContactenos();
+            uncheckItemsMenu();
+        }else if (id == R.id.nav_RedesSociales){
+            ClickMenuRedesSociales();
             uncheckItemsMenu();
         }
 
@@ -216,8 +232,10 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_inicio:
-                    setTitle("Antapaccay te informa");
+                    setTitle("Antapaccay");
                     ChangeFragment(NavigationFragment.Inicio);
+                    bottomNavigationView.setVisibility(View.GONE);
+
                     uncheckItemsMenu();
                     return true;
                 case R.id.navigation_imagenes:
@@ -233,10 +251,10 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_noticias:
                     ClickMenuNoticias();
                     return true;
-                case R.id.navigation_publicaciones:
+                case R.id.navigation_tickets:
                     //uncheckItemsMenu();
                     //navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
-                    ClickMenuComunicados();
+                    ClickMenuTickets();
                     return true;
             }
             return false;
@@ -248,6 +266,8 @@ public class MainActivity extends AppCompatActivity
         uncheckItemsMenu();
         setTitle("Noticias");
         bottomNavigationView.getMenu().findItem(R.id.navigation_noticias).setChecked(true);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(true);
         ChangeFragment(NavigationFragment.Noticias);
     }
@@ -255,17 +275,21 @@ public class MainActivity extends AppCompatActivity
     public void ClickMenuComunicados() {
 
         uncheckItemsMenu();
-        setTitle("Comunicados");
+        setTitle("Eventos");
 
-        bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
+        //bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
+       // bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
         ChangeFragment(NavigationFragment.Comunicados);
     }
     public void ClickMenuImagenes() {
         uncheckItemsMenu();
-        setTitle("Imágenes");
+        setTitle("Fotos");
 
         bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
         ChangeFragment(NavigationFragment.Imagenes);
 
@@ -274,14 +298,21 @@ public class MainActivity extends AppCompatActivity
         uncheckItemsMenu();
         setTitle("Videos");
         bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
         ChangeFragment(NavigationFragment.Videos);
     }
-//opciones menu lateral
+    //opciones menu lateral
     private void ClickMenuTickets() {
         uncheckItemsMenu();
         setTitle("Reserva de Buses");
+        bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
+        //bottomNavigationView.setVisibility(View.VISIBLE);
+
         ChangeFragment(NavigationFragment.Tickets);
     }
 
@@ -299,6 +330,21 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().findItem(R.id.nav_configuracion).setChecked(true);
         ChangeFragment(NavigationFragment.Configuracion);
     }
+
+    private void ClickMenuContactenos() {
+        uncheckItemsMenu();
+        setTitle("Contáctenos");
+        navigationView.getMenu().findItem(R.id.nav_Contactenos).setChecked(true);
+        ChangeFragment(NavigationFragment.Contactenos);
+    }
+
+    private void ClickMenuRedesSociales() {
+        uncheckItemsMenu();
+        setTitle("Redes Sociales");
+        navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
+        ChangeFragment(NavigationFragment.RedesSociales);
+    }
+
 
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
@@ -343,7 +389,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void ChangeFragment(NavigationFragment value){
+    public void ChangeFragment(NavigationFragment value){
         Fragment fragment = null;
         switch (value) {
             case Inicio:    fragment = new FragmentInicio2(); break;
@@ -354,6 +400,9 @@ public class MainActivity extends AppCompatActivity
             case Tickets: fragment = new FragmentTickets(); break;
             case Notificacion: fragment = new FragmentNotificacion(); break;
             case Configuracion: fragment = new FragmentConfiguracion(); break;
+            case Contactenos: fragment = new FragmentContactenos(); break;
+            case RedesSociales: fragment = new FragmentRedesSociales(); break;
+
         }
         if(fragment!=null)
             getSupportFragmentManager()

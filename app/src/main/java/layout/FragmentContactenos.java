@@ -7,54 +7,44 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pango.comunicaciones.R;
-import com.pango.comunicaciones.controller.ComunicadosInicioController;
-import com.pango.comunicaciones.controller.ImagenesInicioController;
-import com.pango.comunicaciones.controller.NoticiasInicioController;
-import com.pango.comunicaciones.controller.VideosInicioController;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentInicio.OnFragmentInteractionListener} interface
+ * {@link FragmentContactenos.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentInicio#newInstance} factory method to
+ * Use the {@link FragmentContactenos#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentInicio extends Fragment {
+public class FragmentContactenos extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    // walter necesita ladrillo
     private String mParam1;
     private String mParam2;
 
-    private TextView textVerMasNoticias;
-
     private OnFragmentInteractionListener mListener;
 
-    public FragmentInicio() {
+    public FragmentContactenos() {
         // Required empty public constructor
     }
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * uiyvvuybu
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentInicio.
+     * @return A new instance of fragment FragmentContactenos.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentInicio newInstance(String param1, String param2) {
-        FragmentInicio fragment = new FragmentInicio();
+    public static FragmentContactenos newInstance(String param1, String param2) {
+        FragmentContactenos fragment = new FragmentContactenos();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,28 +64,8 @@ public class FragmentInicio extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view =inflater.inflate(R.layout.fragment_inicio, container, false);
-
-
-        textVerMasNoticias = (TextView) view.findViewById(R.id.txt_ver_mas_noticias);
-        textVerMasNoticias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Se quiere ver mas noticias", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        final NoticiasInicioController objNoticias = new NoticiasInicioController(view);
-        objNoticias.Execute();
-        final ComunicadosInicioController objComunicados = new ComunicadosInicioController(view);
-        objComunicados.Execute();
-        final ImagenesInicioController objImagenes = new ImagenesInicioController(view);
-        objImagenes.Execute();
-        final VideosInicioController objVideos = new VideosInicioController(view);
-        objVideos.Execute();
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_contactenos, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

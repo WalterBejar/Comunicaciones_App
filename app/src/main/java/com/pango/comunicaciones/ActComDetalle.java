@@ -16,7 +16,7 @@ public class ActComDetalle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_com_detalle);
-        setTitle("Comunicados");
+        setTitle("Eventos");
 
         final ComdetController obj = new ComdetController("url","get", ActComDetalle.this);
         //obj.execute(GlobalVariables.com_pos.getCod_reg());

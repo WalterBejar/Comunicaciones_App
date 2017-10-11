@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="layout.FragmentInicio2"
+    android:background="@color/colorfondoP">
+
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="0dp"
+            card_view:contentPadding="5dp"
+            app:cardBackgroundColor="@color/colorAzul4"
+            card_view:layout_constraintBottom_toTopOf="@+id/card3"
+            card_view:layout_constraintTop_toTopOf="parent"
+
+            card_view:layout_constraintRight_toLeftOf="@+id/card2"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+
+
+                <ImageView
+                    android:id="@+id/icon1"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_menu_noticias2"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <TextView
+                    android:id="@+id/tx_menu1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/icon1"
+                    android:text="NOTICIAS"
+                    android:textAlignment="center"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlanco"
+                    android:layout_marginTop="10dp"
+
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorAzul4"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="0dp"
+            card_view:contentPadding="5dp"
+
+            card_view:layout_constraintBottom_toTopOf="@+id/card6"
+            card_view:layout_constraintTop_toBottomOf="@+id/card2"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@+id/card3">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            <ImageView
+                android:id="@+id/icon4"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_menu_publicaciones2"
+                />
+
+                <TextView
+                    android:id="@+id/tx_menu4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/icon4"
+                    android:text="EVENTOS"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlanco"
+                    android:layout_marginTop="10dp"
+                    />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+            android:id="@+id/card3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorAzul2"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="0dp"
+        card_view:contentPadding="5dp"
+
+            card_view:layout_constraintBottom_toTopOf="@+id/card5"
+
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintRight_toLeftOf="@+id/card4"
+            card_view:layout_constraintTop_toBottomOf="@+id/card1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <ImageView
+                android:id="@+id/icon3"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_menu_slideshow2"
+                 />
+
+            <TextView
+                android:id="@+id/tx_menu3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/icon3"
+                android:text="VIDEOS"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="@color/colorBlanco"
+                android:layout_marginTop="10dp"
+                />
+        </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorAzul2"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="0dp"
+            card_view:contentPadding="5dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@+id/card5"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card4">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+            <ImageView
+                android:id="@+id/icon6"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_menu_reserva_buses2"
+
+                />
+
+                <TextView
+                    android:id="@+id/tx_menu6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/icon6"
+                    android:text="RESERVA DE BUSES"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlanco"
+                    android:layout_marginTop="10dp"
+                    />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card5"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorAzul4"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="0dp"
+            card_view:contentPadding="5dp"
+
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintRight_toLeftOf="@+id/card6"
+            card_view:layout_constraintTop_toBottomOf="@+id/card3">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+            <ImageView
+                android:id="@+id/icon5"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+
+                android:src="@drawable/ic_menu_contactar"
+                />
+
+                <TextView
+                    android:id="@+id/tx_menu5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/icon5"
+                    android:text="CONTÁCTENOS"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlanco"
+                    android:layout_marginTop="10dp"
+                    />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/colorAzul2"
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="0dp"
+        card_view:contentPadding="5dp"
+        card_view:layout_constraintBottom_toTopOf="@+id/card4"
+        card_view:layout_constraintLeft_toRightOf="@+id/card1"
+        card_view:layout_constraintRight_toRightOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_menu_gallery2"
+            />
+
+            <TextView
+                android:id="@+id/tx_menu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/icon2"
+                android:text="IMÁGENES"
+
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="@color/colorBlanco"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>
+

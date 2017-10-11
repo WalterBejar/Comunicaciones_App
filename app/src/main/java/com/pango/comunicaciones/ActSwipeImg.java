@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.pango.comunicaciones.adapter.ViewPagerAdapter;
+import com.pango.comunicaciones.adapter.ViewPagerAdapter2;
 import com.pango.comunicaciones.controller.ImgdetController;
 import com.pango.comunicaciones.controller.ListImgdetController;
+
+import java.util.ArrayList;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -16,11 +19,12 @@ import static com.pango.comunicaciones.GlobalVariables.imagen2;
 public class ActSwipeImg extends AppCompatActivity {
     TouchImageView imagenExtendida;
     PhotoViewAttacher photoViewAttacher;
+    ArrayList<String> img_final=new ArrayList<String>();
     int positionIn;
     int posPublic;
 
     ViewPager viewPager;
-    ViewPagerAdapter adapter;
+    ViewPagerAdapter2 adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +40,20 @@ public class ActSwipeImg extends AppCompatActivity {
         Bundle datos2 = this.getIntent().getExtras();
         posPublic=datos2.getInt("position_p");
 
+
+        Bundle img_url = this.getIntent().getExtras();
+        img_final=img_url.getStringArrayList("url_img");
+
+
         imagenExtendida = (TouchImageView) findViewById(R.id.imagen_extendida);
         GlobalVariables.img_get= imagen2.get(posPublic);
 
         String code =GlobalVariables.img_get.getCod_reg();
 
-        final ListImgdetController obj = new ListImgdetController("url","get", ActSwipeImg.this);
-        obj.execute(code,String.valueOf(positionIn),String.valueOf(posPublic));
+
+
+        /*final ListImgdetController obj = new ListImgdetController("url","get", ActSwipeImg.this);
+        obj.execute(code,String.valueOf(positionIn),String.valueOf(posPublic));*/
 
 
 
@@ -52,12 +63,17 @@ public class ActSwipeImg extends AppCompatActivity {
         // cargarImagenExtendida();
 
         viewPager = (ViewPager)findViewById(R.id.viewPager2);
-        //adapter = new ViewPagerAdapter(ActSwipeImg.this,GlobalVariables.listdetimg,positionIn);
-       // viewPager.setAdapter(adapter);
+        adapter = new ViewPagerAdapter2(ActSwipeImg.this,img_final,positionIn);
+        viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(positionIn,true);
         //viewPager.setCurrentItem(posPublic,true);
 
+/*
+        adapter = new ViewPagerAdapter(actSwipeImg,GlobalVariables.listdetimg,Integer.parseInt(posIn));
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(Integer.parseInt(posIn),true);
 
+        */
 
     }
 

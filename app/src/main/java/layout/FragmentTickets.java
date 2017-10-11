@@ -68,6 +68,7 @@ public class FragmentTickets extends Fragment {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
    // ArrayList<String> user_auth=new ArrayList<String>();
+
     Button btn_ingresar;
     EditText tx_user;
     EditText tx_pass;
