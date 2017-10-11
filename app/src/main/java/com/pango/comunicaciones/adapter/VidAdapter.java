@@ -13,8 +13,12 @@ import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.model.Video;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Andre on 26/09/2017.
@@ -25,7 +29,8 @@ public class VidAdapter extends ArrayAdapter<Video> {
 
     private Context context;
     private List<Video> data = new ArrayList<Video>();
-
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
     public VidAdapter(Context context, List<Video> data) {
         super(context, R.layout.public_videos, data);
         this.data = data;
@@ -67,7 +72,14 @@ public class VidAdapter extends ArrayAdapter<Video> {
 
         icono.setImageResource(R.drawable.ic_menu_slideshow);
         //vNom_publicador.setText(tempNombre);
-        vFecha.setText(tempFecha);
+        //vFecha.setText(tempFecha);
+
+        try {
+            vFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         vTitulo.setText(tempTitulo);
         // vcant_vid.setText(tempcant_vid+"");
 

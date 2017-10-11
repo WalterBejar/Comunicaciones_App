@@ -25,8 +25,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ImgdetController extends AsyncTask<String,Void,Void>  {
@@ -147,7 +151,8 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
                 GlobalVariables.listdetimg=view_image;//datos correlativo,url,urlmin
              //   String asd=ImgdetArray.get(0);
 
@@ -157,6 +162,13 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
                 //String df= ImgdetArray.get(0);
                // tx1.setText(df);
                 tx2.setText(ImgdetArray.get(1));
+
+                try {
+                    tx2.setText(formatoRender.format(formatoInicial.parse(ImgdetArray.get(1))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 tx3.setText(ImgdetArray.get(2));
 
                 gridView = (GridView) actImag.findViewById(R.id.grid_imag);

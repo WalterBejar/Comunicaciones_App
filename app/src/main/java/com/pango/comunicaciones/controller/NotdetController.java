@@ -30,8 +30,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NotdetController extends AsyncTask<String,Void,Void> {
     int count_files=0;
@@ -142,8 +146,10 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
 
+            if (opcion == "get") {
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
 
                 GlobalVariables.listdetnot=des_data;
 
@@ -163,7 +169,15 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                 imag0.setImageResource(R.drawable.ic_menu_noticias);
                String df= notdetArray.get(0);
                 //tx1.setText(df);
-                tx2.setText(notdetArray.get(1));
+                //tx2.setText(notdetArray.get(1));
+
+                try {
+                    tx2.setText(formatoRender.format(formatoInicial.parse(notdetArray.get(1))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
                 tx3.setText(notdetArray.get(2));
                 //String g=notdetArray.get(3);
              /*   if(g.equals("null")){

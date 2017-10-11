@@ -28,8 +28,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ComdetController extends AsyncTask<String,Void,Void> {
@@ -137,7 +141,8 @@ public class ComdetController extends AsyncTask<String,Void,Void> {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
                 GlobalVariables.listdetcom=des_data;
 
 
@@ -154,7 +159,15 @@ public class ComdetController extends AsyncTask<String,Void,Void> {
                 imag0.setImageResource(R.drawable.ic_menu_publicaciones);
                 //String df= comdetArray.get(0);
                 //tx1.setText(df);
-                tx2.setText(comdetArray.get(1));
+                //tx2.setText(comdetArray.get(1));
+
+                try {
+                    tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(1))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
                 tx3.setText(comdetArray.get(2));
                // String g=comdetArray.get(3);
 /*                if(g.equals("null")){

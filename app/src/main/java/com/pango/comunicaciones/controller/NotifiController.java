@@ -28,10 +28,6 @@ import java.util.List;
 
 import layout.FragmentNotificacion;
 
-/**
- * Created by Andre on 05/09/2017.
- */
-
 public class NotifiController extends AsyncTask<String,Void,Void> {
 
     View v;
@@ -134,8 +130,4 @@ public class NotifiController extends AsyncTask<String,Void,Void> {
             Log.w("Error",ex);
         }
     }
-
-
-
-
 }

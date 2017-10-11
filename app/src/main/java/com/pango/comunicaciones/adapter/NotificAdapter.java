@@ -11,8 +11,12 @@ import android.widget.TextView;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.model.Notificacion;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Andre on 06/09/2017.
@@ -21,7 +25,8 @@ import java.util.List;
 public class NotificAdapter extends ArrayAdapter<Notificacion> {
     private Context context;
     private List<Notificacion> data = new ArrayList<Notificacion>();
-
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
     public NotificAdapter(Context context, List<Notificacion> data) {
         super(context, R.layout.public_notifica,data);
         this.data = data;
@@ -48,8 +53,12 @@ public class NotificAdapter extends ArrayAdapter<Notificacion> {
         //cargar la data al layout//////
         icono.setImageResource(R.drawable.ic_menu_notificacion);
         ntTitulo.setText(tempTitulo);
-        ntFecha.setText(tempFecha);
-
+        //ntFecha.setText(tempFecha);
+        try {
+            ntFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return rowView;
     }
 

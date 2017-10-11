@@ -25,8 +25,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Andre on 23/08/2017.
@@ -141,7 +145,8 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
                 GlobalVariables.listdetvid=view_video;//datos correlativo,url,urlmin
 
                 imagv1 =(ImageView) actVid.findViewById(R.id.icon_viddet);
@@ -153,7 +158,16 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
 
 
                 //txv1.setText(VidDetArray.get(0));
-                txv2.setText(VidDetArray.get(1));
+                //txv2.setText(VidDetArray.get(1));
+
+                try {
+                    txv2.setText(formatoRender.format(formatoInicial.parse(VidDetArray.get(1))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
                 txv3.setText(VidDetArray.get(2));
 
                 gridView = (GridView) actVid.findViewById(R.id.grid_vid);

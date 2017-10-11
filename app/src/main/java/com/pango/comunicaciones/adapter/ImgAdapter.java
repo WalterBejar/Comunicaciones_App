@@ -22,13 +22,20 @@ import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.controller.ImgdetController;
 import com.pango.comunicaciones.model.Imagen;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ImgAdapter extends ArrayAdapter<Imagen> {
     private LinearLayout linearLayout;
     private Context context;
     private List<Imagen> data = new ArrayList<Imagen>();
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+
     public ImgAdapter(Context context, List<Imagen> data) {
         super(context, R.layout.public_imagen,data);
         this.data = data;
@@ -70,7 +77,12 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
 
         //iNom_publicador.setText(tempNombre);
-        iFecha.setText(tempFecha);
+       // iFecha.setText(tempFecha);
+        try {
+            iFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         iTitulo.setText(tempTitulo);
         icant_img.setText("+"+tempcant);
 

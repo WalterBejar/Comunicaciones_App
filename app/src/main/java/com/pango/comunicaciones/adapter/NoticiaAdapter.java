@@ -15,8 +15,12 @@ import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.model.Noticias;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Andre on 25/09/2017.
@@ -25,6 +29,8 @@ import java.util.List;
 public class NoticiaAdapter extends ArrayAdapter<Noticias> {
     private Context context;
     private List<Noticias> data = new ArrayList<Noticias>();
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
 
     public NoticiaAdapter(Context context, List<Noticias> data) {
         super(context, R.layout.public_noticias,data);
@@ -59,8 +65,21 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
         //cargar la data al layout//////
         icono.setImageResource(R.drawable.ic_menu_noticias);
         //nNom_publicador.setText(tempNombre);
-        nFecha.setText(tempFecha);
+        //nFecha.setText(tempFecha);
+
+        try {
+            nFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         nTitulo.setText(tempTitulo);
+
+
+
+        //comunicadoModel.setFecha(formatoRender.format(formatoInicial.parse(comunicado.getFecha())));
+
+
 
         int ds=data.get(position).getFiledata().size();
 
