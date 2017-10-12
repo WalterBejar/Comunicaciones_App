@@ -281,9 +281,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             pasajeroDNI.setText(listaPasajeros[position].DNI);
 
             CheckBox pasajeroCheckEliminar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
-
             pasajeroCheckEliminar.setEnabled(!listaPasajeros[position].DNI.equals("DNI Reservado"));
-
             pasajeroCheckEliminar.setChecked(listaCheckBoxPasajeros[position]);
             pasajeroCheckEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override

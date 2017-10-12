@@ -62,6 +62,9 @@
                 android:id="@+id/icon_notdet"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+
+                android:tint = "@color/colorTitulo"
+
                 android:layout_alignParentStart="true"  />
 
 

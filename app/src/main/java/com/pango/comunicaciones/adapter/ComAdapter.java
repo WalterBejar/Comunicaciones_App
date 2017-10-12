@@ -30,8 +30,8 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
 
     private Context context;
     private List<Comunicado> data = new ArrayList<Comunicado>();
-    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
 
     public ComAdapter(Context context, List<Comunicado> data) {
         super(context, R.layout.public_com,data);
@@ -64,7 +64,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
 
 
         //cargar la data al layout//////
-        icono.setImageResource(R.drawable.ic_menu_publicaciones);
+        icono.setImageResource(R.drawable.ic_evento);
         //cNom_publicador.setText(tempNombre);
         //cFecha.setText(tempFecha);
 

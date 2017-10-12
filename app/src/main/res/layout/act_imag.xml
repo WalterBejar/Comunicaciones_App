@@ -10,39 +10,30 @@
     android:orientation="vertical"
     >
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorTitulo"
-
-    />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cardview_light_background"
-        >
+        android:background="@color/cardview_light_background">
 
 
         <TextView
+            android:id="@+id/imag_titulo2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/grid_imag"
+            android:layout_alignTop="@+id/icon_image"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_centerVertical="true"
-            android:textColor="@color/cardview_dark_background"
-            android:layout_alignTop="@+id/icon_image"
             android:layout_toRightOf="@+id/icon_image"
-            android:id="@+id/imag_titulo2"
-            android:textStyle="normal|bold"
+            android:textColor="@color/cardview_dark_background"
             android:textSize="14sp"
-            android:layout_alignEnd="@+id/grid_imag" />
+            android:textStyle="normal|bold" />
 
         <TextView
+            android:id="@+id/txfecha2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txfecha2"
             android:layout_alignLeft="@+id/imag_titulo2"
             android:layout_alignStart="@+id/imag_titulo2"
             android:layout_below="@+id/imag_titulo2"
@@ -53,30 +44,41 @@
 
         <GridView
             android:id="@+id/grid_imag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/icon_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="14dp"
             android:columnWidth="120dp"
             android:horizontalSpacing="@dimen/espacio_grilla"
             android:numColumns="auto_fit"
             android:padding="@dimen/espacio_grilla"
-            android:verticalSpacing="@dimen/espacio_grilla"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_below="@+id/icon_image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp" />
+            android:verticalSpacing="@dimen/espacio_grilla" />
 
         <ImageView
+            android:id="@+id/icon_image"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginTop="15dp"
-            android:id="@+id/icon_image"
-            android:layout_alignParentTop="true"
             android:layout_alignLeft="@+id/grid_imag"
-            android:layout_alignStart="@+id/grid_imag" />
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/grid_imag"
+            android:layout_marginTop="15dp"
+            android:tint = "@color/colorTitulo"
+
+            />
 
 
     </RelativeLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTitulo"
+
+    />
 
 
 </LinearLayout>

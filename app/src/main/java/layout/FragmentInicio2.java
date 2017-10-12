@@ -122,13 +122,13 @@ public class FragmentInicio2 extends Fragment {
         card2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Fotos");
+                getActivity().setTitle("Eventos");
 
                 bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentImagenes();
+                Fragment nuevoFragmento = new FragmentComunicados();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content, nuevoFragmento);
                 transaction.addToBackStack(null);
@@ -139,13 +139,13 @@ public class FragmentInicio2 extends Fragment {
         card3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Videos");
+                getActivity().setTitle("Fotos");
 
                 bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentVideos();
+                Fragment nuevoFragmento = new FragmentImagenes();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content, nuevoFragmento);
                 transaction.addToBackStack(null);
@@ -156,13 +156,13 @@ public class FragmentInicio2 extends Fragment {
         card4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Eventos");
+                getActivity().setTitle("Reserva de Buses");
 
                 //bottomNavigationView.getMenu().findItem(R.id.navigation_).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentComunicados();
+                Fragment nuevoFragmento = new FragmentTickets();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content, nuevoFragmento);
                 transaction.addToBackStack(null);
@@ -173,12 +173,12 @@ public class FragmentInicio2 extends Fragment {
         card5.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Contáctenos");
+                getActivity().setTitle("Videos");
                 //bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 //navigationView.getMenu().findItem(R.id.nav_Contactenos).setChecked(true);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentContactenos();
+                Fragment nuevoFragmento = new FragmentVideos();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content, nuevoFragmento);
                 transaction.addToBackStack(null);
@@ -189,12 +189,12 @@ public class FragmentInicio2 extends Fragment {
         card6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Reserva de Buses");
+                getActivity().setTitle("Redes Sociales");
                 bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentTickets();
+                Fragment nuevoFragmento = new FragmentRedesSociales();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.content, nuevoFragmento);
                 transaction.addToBackStack(null);

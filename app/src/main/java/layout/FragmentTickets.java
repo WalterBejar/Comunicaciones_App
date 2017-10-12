@@ -107,18 +107,19 @@ public class FragmentTickets extends Fragment {
 
                 String a=tx_user.getText().toString();
                 String b=tx_pass.getText().toString();
-                String c=Recuperar_data();
+                String c=Recuperar_data();//MODIFICA ESTO
+                        //Recuperar_data();
                 if(c.equals("")){
             Toast.makeText(v.getContext(),"El valor de login de dominio no existe, ve a configuraciones para añadirlo",Toast.LENGTH_SHORT).show();
 
             }else {
 
 
-    // Toast.makeText(v.getContext(),"logueo",Toast.LENGTH_SHORT).show();
-    final AuthController obj = new AuthController(rootView, "url", "get", FragmentTickets.this);
-    obj.execute(a, b, c);
-}
-//probar
+                // Toast.makeText(v.getContext(),"logueo",Toast.LENGTH_SHORT).show();
+                final AuthController obj = new AuthController(rootView, "url", "get", FragmentTickets.this);
+                obj.execute(a, b, c);
+            }
+            //probar
            //     Intent intent = new Intent(v.getContext(), ActFiltro.class);
           //      startActivity(intent);
 
@@ -130,7 +131,7 @@ public class FragmentTickets extends Fragment {
     public String Recuperar_data() {
 
         SharedPreferences settings =  this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);
-        String dominio_user = settings.getString("domain","valorpordefecto");
+        String dominio_user = settings.getString("domain","anyaccess");
         //Toast.makeText(this.getActivity(), nombre, Toast.LENGTH_SHORT).show();
         //Toast.makeText(this.getActivity(),dominio_user, Toast.LENGTH_SHORT).show();
         return dominio_user;

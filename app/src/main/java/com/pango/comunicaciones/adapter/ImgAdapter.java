@@ -73,16 +73,16 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         final String codreg_img=data.get(position).getCod_reg();
 
 
-        icono.setImageResource(R.drawable.ic_menu_gallery);
+        icono.setImageResource(R.drawable.ic_fotos3);
 
 
         //iNom_publicador.setText(tempNombre);
-       // iFecha.setText(tempFecha);
-        try {
+       iFecha.setText(tempFecha);
+       /* try {
             iFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
         iTitulo.setText(tempTitulo);
         icant_img.setText("+"+tempcant);
 

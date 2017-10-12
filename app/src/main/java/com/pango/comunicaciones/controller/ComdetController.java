@@ -7,6 +7,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,8 +53,8 @@ public class ComdetController extends AsyncTask<String,Void,Void> {
     TextView tx2;
     TextView tx3;
     WebView content;
-    ImageButton adj_com;
-
+    //ImageButton adj_com;
+Button btn_adjuntos;
     // int a;
     // int celda = 3;
 
@@ -152,20 +153,20 @@ public class ComdetController extends AsyncTask<String,Void,Void> {
                 tx2 = (TextView)  actComDetalle.findViewById(R.id.comdet_fecha);
                 tx3 = (TextView)  actComDetalle.findViewById(R.id.comdet_titulo);
                 content=(WebView) actComDetalle.findViewById(R.id.com_visor);
-                adj_com=(ImageButton) actComDetalle.findViewById(R.id.com_adj);
+                //adj_com=(ImageButton) actComDetalle.findViewById(R.id.com_adj);
+                btn_adjuntos=(Button) actComDetalle.findViewById(R.id.btn_adjuntos);
 
 
-
-                imag0.setImageResource(R.drawable.ic_menu_publicaciones);
+                imag0.setImageResource(R.drawable.ic_evento);
                 //String df= comdetArray.get(0);
                 //tx1.setText(df);
-                //tx2.setText(comdetArray.get(1));
+                tx2.setText(comdetArray.get(1));
 
-                try {
+                /*try {
                     tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(1))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
                 tx3.setText(comdetArray.get(2));
@@ -184,10 +185,10 @@ public class ComdetController extends AsyncTask<String,Void,Void> {
 
 
                 if(des_data.size()==0||count_files==0){
-                    adj_com.setVisibility(View.GONE);
+                    btn_adjuntos.setVisibility(View.GONE);
                 }else
                 {
-                    adj_com.setVisibility(View.VISIBLE);
+                    btn_adjuntos.setVisibility(View.VISIBLE);
                 }
 
 

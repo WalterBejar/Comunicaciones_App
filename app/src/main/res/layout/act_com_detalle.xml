@@ -20,102 +20,119 @@
 
         />
 
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/com_cardet"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         tools:context=".MainActivity"
-        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteY="100dp"
         tools:layout_editor_absoluteX="8dp">
 
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btn_adjuntos"
+        android:layout_width="388dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorNaranja"
+        android:text="Ver Adjuntos"
+
+
+        tools:layout_editor_absoluteX="8dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardview_light_background"
+            android:layout_width="0dp"
+            android:layout_height="464dp"
             android:layout_margin="1dp"
-            >
+            android:background="@color/cardview_light_background"
+            tools:layout_editor_absoluteX="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp">
 
             <TextView
+                android:id="@+id/comdet_fecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/comdet_fecha"
                 android:layout_alignLeft="@+id/comdet_titulo"
                 android:layout_alignStart="@+id/comdet_titulo"
                 android:layout_below="@+id/comdet_titulo"
                 android:text="fecha"
-                android:textColor="@color/cardview_shadow_start_color"
-                />
+                android:textColor="@color/cardview_shadow_start_color" />
 
             <TextView
+                android:id="@+id/comdet_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
 
                 android:layout_alignTop="@+id/comdet_icon"
-                android:layout_toRightOf="@+id/comdet_icon"
-                android:layout_toEndOf="@+id/comdet_icon"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_toEndOf="@+id/comdet_icon"
+                android:layout_toRightOf="@+id/comdet_icon"
                 android:textColor="@color/cardview_dark_background"
-                android:id="@+id/comdet_titulo"
-                android:textStyle="normal|bold"
                 android:textSize="14sp"
+                android:textStyle="normal|bold"
 
                 />
 
             <WebView
+                android:id="@+id/com_visor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/comdet_titulo"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
+                android:layout_below="@+id/comdet_fecha"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_below="@+id/comdet_fecha"
-                android:layout_alignLeft="@+id/comdet_titulo"
-                android:lineSpacingExtra="3sp"
-                android:id="@+id/com_visor"
-                />
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="3sp" />
 
 
             <ImageButton
+                android:id="@+id/com_adj"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                app:srcCompat="@drawable/ic_adj"
-                android:id="@+id/com_adj"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBottom="@+id/comdet_fecha"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
                 android:visibility="invisible"
-                />
+                app:srcCompat="@drawable/ic_adj" />
 
             <ImageView
+                android:id="@+id/comdet_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="17dp"
                 android:layout_marginStart="17dp"
                 android:layout_marginTop="18dp"
-                android:id="@+id/comdet_icon"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:tint="@color/colorTitulo"
+
+                />
 
         </RelativeLayout>
-    </ScrollView>
 
 
-
-
-
-
-
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

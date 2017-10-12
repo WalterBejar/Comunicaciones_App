@@ -84,5 +84,5 @@ public class GlobalVariables {
 
 
     public static int con_status;
-
+    public static String dominio="anyaccess";
 }
