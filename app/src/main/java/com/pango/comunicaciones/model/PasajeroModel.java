@@ -6,7 +6,7 @@ package com.pango.comunicaciones.model;
 
 public class PasajeroModel
 {
-    public String CodPersona;
+   /* public String CodPersona;
     public String Dni;
     public String Nombre;
     public String ApellidoPaterno;
@@ -14,5 +14,15 @@ public class PasajeroModel
     public String Empresa;
     public String Email;
     public String CodTicket;
-    public String CodBus;
+    public String CodBus;*/
+
+    public String IDPROG;
+    public String DNI;
+    public String NOMBRES;
+    public String EMPRESA;
+    public String FECHA_RESERVA;
+    public String HORA_RESERVA;
+    public String USER_MODIFICA;
+    public String DSCR;
+    public int RESPUESTA;
 }

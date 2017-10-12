@@ -101,7 +101,7 @@ public class ReservaTicketDetalle extends AppCompatActivity {
 
     public void gestionarReserva(View view){
         String titulo = "";
-        if (ticket.Separado)
+        if (ticket.SEPARADO)
             titulo = "Está a punto de eliminar su reserva en este viaje.";
         else
             titulo = "Está a punto de reservar un ticket en este viaje.";
@@ -112,7 +112,7 @@ public class ReservaTicketDetalle extends AppCompatActivity {
 
     public void toReservaTicketListaPasajeros(View view){
         Intent toReservaTicketListaPasajeros = new Intent(getApplicationContext(), ReservaTicketListaPasajeros.class);
-        toReservaTicketListaPasajeros.putExtra("CodigoTicket", ticket.Codigo);
+        toReservaTicketListaPasajeros.putExtra("CodigoTicket", ticket.IDPROG);
         startActivity(toReservaTicketListaPasajeros);
     }
 
@@ -136,7 +136,7 @@ public class ReservaTicketDetalle extends AppCompatActivity {
                     Gson gson = new Gson();
                     ticket = gson.fromJson(str, TicketModel.class);
 
-                    if (ticket.Separado) {
+                    if (ticket.SEPARADO) {
                         botonGestionarReserva.setText("Eliminar reserva");
                         //Toast.makeText(getApplicationContext(),"Despues de pedir detalles ticket.Separado: "+ticket.Separado,Toast.LENGTH_SHORT).show();
                     }
@@ -197,8 +197,8 @@ public class ReservaTicketDetalle extends AppCompatActivity {
                     break;
                 default:
                     Toast.makeText(getApplicationContext(),"La operación se ha realizado con éxito",Toast.LENGTH_SHORT).show();
-                    ticket.Separado = !ticket.Separado;
-                    if (ticket.Separado)
+                    ticket.SEPARADO = !ticket.SEPARADO;
+                    if (ticket.SEPARADO)
                         botonGestionarReserva.setText("Eliminar reserva");
                     else
                         botonGestionarReserva.setText("Reservar ticket");
@@ -216,12 +216,12 @@ public class ReservaTicketDetalle extends AppCompatActivity {
 
 
 
-                PersonaPostReservaModel[] persona = {Utils.getPersonaPostReservaModel(ticket.Codigo)};
+                PersonaPostReservaModel[] persona = {Utils.getPersonaPostReservaModel(ticket.IDPROG)};
                 Gson gson = new Gson();
 
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost;
-                if (ticket.Separado)
+                if (ticket.SEPARADO)
                     httpPost = new HttpPost(Utils.getUrlForEliminarReserva());
                 else
                     httpPost = new HttpPost(Utils.getUrlForAgregarReserva());

@@ -264,7 +264,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             if (listaPasajeros == null)
                 return  null;
             convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_listapasajeros, null);
-            String nombreCompleto = listaPasajeros[position].Nombre;
+            String nombreCompleto = listaPasajeros[position].NOMBRES;
             /*
             if (listaPasajeros[position].ApellidoPaterno != null)
                 nombreCompleto = nombreCompleto + " " + listaPasajeros[position].ApellidoPaterno;
@@ -275,10 +275,10 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             pasajeroNombre.setText(nombreCompleto);
 
             TextView pasajeroEmpresa = (TextView) convertView.findViewById(R.id.lblPasajeroEmpresa);
-            pasajeroEmpresa.setText(listaPasajeros[position].Empresa);
+            pasajeroEmpresa.setText(listaPasajeros[position].EMPRESA);
 
             TextView pasajeroDNI = (TextView) convertView.findViewById(R.id.lblPasajeroDNI);
-            pasajeroDNI.setText(listaPasajeros[position].Dni);
+            pasajeroDNI.setText(listaPasajeros[position].DNI);
 
             CheckBox pasajeroCheckEliminar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
             pasajeroCheckEliminar.setChecked(listaCheckBoxPasajeros[position]);

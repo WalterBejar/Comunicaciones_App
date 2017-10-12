@@ -34,7 +34,7 @@ import java.util.Date;
 
 public class ReservaTicketFiltro extends AppCompatActivity {
 
-    String[] terminalesCodigos;
+    //String[] terminalesCodigos;
     String[] terminalesNombres;
     TicketModel[] tickets;
 
@@ -86,7 +86,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 botonEscogerFecha.setText(dt.format(actual));
 
                 escogioFecha = true;
-                dt = new SimpleDateFormat("dd-MM-yyyy");
+                dt = new SimpleDateFormat("yyyyMMdd");
                 fechaEscogida = dt.format(actual);
                 if (escogioOrigen && escogioDestino && escogioFecha)
                     botonBuscarTickets.setEnabled(true);
@@ -104,7 +104,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketDetalle.class);
-                toReservaTicketDetalle.putExtra("CodigoTicket", tickets[position].Codigo);
+                toReservaTicketDetalle.putExtra("CodigoTicket", tickets[position].IDPROG);
                 startActivity(toReservaTicketDetalle);
             }
         });
@@ -172,6 +172,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
+                String url2 =Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida, cantidadTickets);
                 URL url = new URL(Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida, cantidadTickets));
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestProperty("Authorization", "Bearer " + Utils.token);
@@ -219,14 +220,9 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                     break;
                 default:
                     Gson gson = new Gson();
-                    final Terminal[] arrayTerminales = gson.fromJson(str, Terminal[].class);
-                    terminalesCodigos = new String[arrayTerminales.length];
-                    terminalesNombres = new String[arrayTerminales.length];
-
-                    for (int i = 0 ; i < arrayTerminales.length ; i++){
-                        terminalesCodigos[i] = arrayTerminales[i].CodTipo;
-                        terminalesNombres[i] = arrayTerminales[i].Descripcion;
-                    }
+                    final Terminal arrayTerminales = gson.fromJson(str, Terminal.class);
+                   // terminalesCodigos = new String[arrayTerminales.length];
+                    terminalesNombres = arrayTerminales.Data;
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(com.pango.comunicaciones.ReservaTicketFiltro.this,
                             android.R.layout.simple_spinner_item, terminalesNombres);
@@ -322,19 +318,19 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_row, null);
 
             TextView busNombre = (TextView) convertView.findViewById(R.id.lblBusNombre);
-            busNombre.setText(tickets[position].Bus.Nombre);
+            busNombre.setText(tickets[position].SERVICIO);
 
             TextView busHora = (TextView) convertView.findViewById(R.id.lblBusHora);
-            busHora.setText(tickets[position].Fecha.substring(11,16));
+            busHora.setText(tickets[position].HORA.substring(0,5));
 
             TextView busALibres = (TextView) convertView.findViewById(R.id.lblBusAsientosLibres);
-            busALibres.setText("" + tickets[position].Libres);
+            busALibres.setText("" + tickets[position].DISPONIBLES);
 
             TextView busAOcupados = (TextView) convertView.findViewById(R.id.lblBusAsientosOcupados);
-            busAOcupados.setText("" + tickets[position].Reservas);
+            busAOcupados.setText("" + tickets[position].RESERVAS);
 
             ImageView checkReserva = (ImageView) convertView.findViewById(R.id.imgBusReservado);
-            if (!tickets[position].Separado)
+            if (!tickets[position].SEPARADO)
                 checkReserva.setVisibility(View.INVISIBLE);
             else
                 checkReserva.setVisibility(View.VISIBLE);

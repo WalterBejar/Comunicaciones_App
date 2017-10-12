@@ -34,7 +34,8 @@ public class Utils {
     }
 
     public static String getUrlForBuscarTickets(String origenEscogido, String destinoEscogido, String fechaEscogida, int cantidadTickets) {
-        return baseUrl + "/ticket/get_tickets/" + origenEscogido + "/" + destinoEscogido + "/" + fechaEscogida + "/1/" + cantidadTickets;
+        String url= baseUrl + "/ticket/get_tickets/" + origenEscogido + "/" + destinoEscogido + "/" + fechaEscogida + "/1/" + cantidadTickets;
+        return url.replace(" ", "%20");
     }
 
     public static String getUrlForReservaTicketDetalle(String codigoTicket) {
@@ -44,27 +45,27 @@ public class Utils {
     public static String getTicketProperty(TicketModel ticket, String s) {
         switch (s){
             case "Nro Programa":
-                return ticket.Codigo;
+                return ticket.IDPROG;
             case "Fecha":
-                return ticket.Fecha.substring(0,10);
+                return ticket.FECHA;
             case "Hora":
-                return ticket.Fecha.substring(11,16);
+                return ticket.HORA.substring(0,5);
             case "Origen":
-                return ticket.Origen;
+                return ticket.ORIGEN;
             case "Destino":
-                return ticket.Destino;
+                return ticket.DESTINO;
             case "Reservas":
-                return "" + ticket.Reservas;
+                return "" + ticket.RESERVAS;
             case "Patente":
-                return ticket.Bus.Patente;
+                return ticket.PATENTE;
             case "Marca":
-                return ticket.Bus.Marca;
+                return ticket.MARCA;
             case "Modelo":
-                return ticket.Bus.Modelo;
+                return ticket.MODELO;
             case "Tipo Vehiculo":
-                return ticket.Bus.Tipo;
+                return ticket.TIPOVEH;
             case "Asientos":
-                return "" + ticket.Bus.Asientos;
+                return "" + ticket.ASIENTOS;
             default:
                 return "";
         }
@@ -72,10 +73,10 @@ public class Utils {
 
     public static PersonaPostReservaModel getPersonaPostReservaModel(String codTicket) {
         PersonaPostReservaModel persona = new PersonaPostReservaModel();
-        persona.CodPersona = Utils.codPersona;
-        persona.CodTicket = codTicket;
-        persona.Dni = "";
-        persona.Email = "";
+        persona.DNI = Utils.codPersona;
+        persona.IDPROG = codTicket;
+        //persona.dn = "";
+       // persona.Email = "";
         return persona;
     }
 
@@ -93,15 +94,16 @@ public class Utils {
     }
 
     public static String getUrlForReservaTicketBuscarPasajeros(String dni, String nombre, String empresa, int cantidad) {
-        return baseUrl + "/persona/get_personas/" + dni + "/" + nombre + "/" + empresa + "/1/" + cantidad;
+        String url= baseUrl + "/persona/get_personas/" + dni + "/" + nombre + "/" + empresa + "/1/" + cantidad;
+        return url.replace(" ", "%20");
     }
 
     public static PersonaPostReservaModel fromPasajeroToPersona(PasajeroModel pasajero, String codigoTicket){
         PersonaPostReservaModel persona = new PersonaPostReservaModel();
-        persona.CodPersona = pasajero.CodPersona;
-        persona.CodTicket= codigoTicket;
-        persona.Email = pasajero.Email;
-        persona.Dni = pasajero.Dni;
+        //persona.CodPersona = pasajero.CodPersona;
+        persona.IDPROG= codigoTicket;
+        //persona.Email = pasajero.Email;
+        persona.DNI = pasajero.DNI;
         return persona;
     }
 

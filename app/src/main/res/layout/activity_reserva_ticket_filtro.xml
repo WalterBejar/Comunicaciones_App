@@ -77,7 +77,7 @@
             android:layout_marginBottom="8dp" />
 
         <Spinner
-            android:id="@+id/spinnerOrigen"
+            android:id="@+id/spinnerDestino"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginBottom="8dp"
@@ -88,12 +88,12 @@
             app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintLeft_toRightOf="@+id/textView2"
             app:layout_constraintRight_toLeftOf="@+id/botonBuscarTickets"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerDestino"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerOrigen"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" />
 
         <Spinner
-            android:id="@+id/spinnerDestino"
+            android:id="@+id/spinnerOrigen"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginLeft="8dp"

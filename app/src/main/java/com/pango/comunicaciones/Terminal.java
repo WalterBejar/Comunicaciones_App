@@ -5,10 +5,6 @@ package com.pango.comunicaciones;
  */
 
 public class Terminal {
-    public String CodTabla;
-    public String CodTipo;
-    public String Descripcion;
-    public String DescripionCorta;
-    public String Estado;
-    public String UsuarioMod;
+    public String[] Data;
+    public int Count;
 }
