@@ -154,17 +154,17 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                 txv2 = (TextView) actVid.findViewById(R.id.txvfecha);
                 txv3 = (TextView) actVid.findViewById(R.id.vid_titulo);
 
-                imagv1.setImageResource(R.drawable.ic_menu_slideshow);
+                imagv1.setImageResource(R.drawable.ic_video3);
 
 
                 //txv1.setText(VidDetArray.get(0));
-                //txv2.setText(VidDetArray.get(1));
-
+                txv2.setText(VidDetArray.get(1));
+/*
                 try {
                     txv2.setText(formatoRender.format(formatoInicial.parse(VidDetArray.get(1))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
 

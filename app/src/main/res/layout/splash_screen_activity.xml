@@ -10,7 +10,7 @@ tools:context="com.pango.comunicaciones.SplashScreenActivity" >
     android:layout_height="match_parent"
     android:contentDescription="@string/app_name"
     android:scaleType="fitXY"
-    android:src="@drawable/logo" />
+    android:src="@drawable/bienvenido_final_2" />
 
 <ProgressBar
     android:layout_width="100dp"

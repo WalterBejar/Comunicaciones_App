@@ -19,7 +19,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -38,7 +38,10 @@
             android:id="@+id/icon_viddet"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:tint = "@color/colorTitulo"
+
+            />
 
         <TextView
             android:id="@+id/vid_titulo"

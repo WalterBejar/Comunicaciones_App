@@ -10,25 +10,25 @@
 
     <item
         android:id="@+id/navigation_noticias"
-        android:icon="@drawable/ic_menu_noticias"
+        android:icon="@drawable/ic_noticia"
         android:title="Noticias"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/navigation_imagenes"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_fotos"
         android:title="Fotos"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/navigation_videos"
-        android:icon="@drawable/ic_menu_slideshow"
+        android:icon="@drawable/ic_video"
         android:title="Videos"
         app:showAsAction="ifRoom|withText"/>
 
     <item
         android:id="@+id/navigation_tickets"
-        android:icon="@drawable/ic_menu_tickets"
+        android:icon="@drawable/ic_bus"
         android:title="Reserva de Buses"
         app:showAsAction="ifRoom|withText"/>
 

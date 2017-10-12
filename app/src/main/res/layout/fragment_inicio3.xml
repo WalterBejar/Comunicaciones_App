@@ -7,12 +7,13 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="layout.FragmentInicio2"
-    android:background="@color/colorfondoP">
+    android:background="@color/colorBlanco">
 
 
 
         <android.support.v7.widget.CardView
             android:id="@+id/card1"
+
             android:layout_width="0dp"
             android:layout_height="0dp"
             card_view:cardCornerRadius="0dp"
@@ -25,6 +26,10 @@
             card_view:layout_constraintRight_toLeftOf="@+id/card2"
             card_view:layout_constraintLeft_toLeftOf="parent"
 
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
             >
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -36,8 +41,9 @@
                 <ImageView
                     android:id="@+id/icon1"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@drawable/ic_menu_noticias2"
+                    android:layout_height="65dp"
+                    android:src="@drawable/ic_noticia2"
+android:layout_marginTop="28dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
@@ -74,103 +80,26 @@
             card_view:layout_constraintBottom_toTopOf="@+id/card6"
             card_view:layout_constraintTop_toBottomOf="@+id/card2"
             card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintLeft_toRightOf="@+id/card3">
+            card_view:layout_constraintLeft_toRightOf="@+id/card3"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
-            <ImageView
-                android:id="@+id/icon4"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_menu_publicaciones2"
-                />
 
-                <TextView
-                    android:id="@+id/tx_menu4"
+                <ImageView
+                    android:id="@+id/icon6"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="39dp"
+                    android:src="@drawable/ic_bus2"
+
+                    android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/icon4"
-                    android:text="EVENTOS"
-                    android:textAlignment="center"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="@color/colorBlanco"
-                    android:layout_marginTop="10dp"
-                    />
-
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-            android:id="@+id/card3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:cardBackgroundColor="@color/colorAzul2"
-        card_view:cardCornerRadius="0dp"
-        card_view:cardElevation="0dp"
-        card_view:contentPadding="5dp"
-
-            card_view:layout_constraintBottom_toTopOf="@+id/card5"
-
-            card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintRight_toLeftOf="@+id/card4"
-            card_view:layout_constraintTop_toBottomOf="@+id/card1">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            >
-            <ImageView
-                android:id="@+id/icon3"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_menu_slideshow2"
-                 />
-
-            <TextView
-                android:id="@+id/tx_menu3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/icon3"
-                android:text="VIDEOS"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="@color/colorBlanco"
-                android:layout_marginTop="10dp"
-                />
-        </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card6"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:cardBackgroundColor="@color/colorAzul2"
-            card_view:cardCornerRadius="0dp"
-            card_view:cardElevation="0dp"
-            card_view:contentPadding="5dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintLeft_toRightOf="@+id/card5"
-            card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/card4">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                >
-            <ImageView
-                android:id="@+id/icon6"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_menu_reserva_buses2"
-
-                />
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/tx_menu6"
@@ -186,6 +115,57 @@
                     android:textColor="@color/colorBlanco"
                     android:layout_marginTop="10dp"
                     />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+            android:id="@+id/card6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/colorAzul2"
+            card_view:cardCornerRadius="0dp"
+            card_view:cardElevation="0dp"
+            card_view:contentPadding="5dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@+id/card5"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/card4"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+
+                <ImageView
+                    android:id="@+id/icon5"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="28dp"
+                    android:src="@mipmap/ic_redesfinal"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tx_menu5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/icon5"
+                    android:text="REDES SOCIALES"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/colorBlanco"
+                    android:layout_marginTop="10dp"
+                    />
+
+
+
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
@@ -202,28 +182,32 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintRight_toLeftOf="@+id/card6"
-            card_view:layout_constraintTop_toBottomOf="@+id/card3">
+            card_view:layout_constraintTop_toBottomOf="@+id/card3"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
                 >
-            <ImageView
-                android:id="@+id/icon5"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-
-                android:src="@drawable/ic_menu_contactar"
-                />
+                <ImageView
+                    android:id="@+id/icon3"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="28dp"
+                    android:src="@drawable/ic_video2"
+                    />
 
                 <TextView
-                    android:id="@+id/tx_menu5"
+                    android:id="@+id/tx_menu3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/icon5"
-                    android:text="CONTÁCTENOS"
+                    android:layout_below="@+id/icon3"
+                    android:text="VIDEOS"
                     android:textAlignment="center"
                     android:textStyle="bold"
                     android:textSize="16dp"
@@ -238,6 +222,10 @@
         android:id="@+id/card2"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
         app:cardBackgroundColor="@color/colorAzul2"
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="0dp"
@@ -246,35 +234,89 @@
         card_view:layout_constraintLeft_toRightOf="@+id/card1"
         card_view:layout_constraintRight_toRightOf="parent"
         card_view:layout_constraintTop_toTopOf="parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
             >
-        <ImageView
-            android:id="@+id/icon2"
+
+            <ImageView
+                android:id="@+id/icon4"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/ic_evento2" />
+
+            <TextView
+                android:id="@+id/tx_menu4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/icon4"
+                android:layout_marginTop="10dp"
+                android:text="EVENTOS"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlanco"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="2dp"
+
+        app:cardBackgroundColor="@color/colorAzul2"
+
+        card_view:cardCornerRadius="0dp"
+        card_view:cardElevation="0dp"
+        card_view:contentPadding="5dp"
+        card_view:layout_constraintBottom_toTopOf="@+id/card5"
+        card_view:layout_constraintLeft_toLeftOf="parent"
+        card_view:layout_constraintRight_toLeftOf="@+id/card4"
+        card_view:layout_constraintTop_toBottomOf="@+id/card1">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_menu_gallery2"
-            />
+            android:layout_height="match_parent"
+
+            >
+
+            <ImageView
+                android:id="@+id/icon2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="39dp"
+                android:src="@drawable/ic_fotos2" />
 
             <TextView
                 android:id="@+id/tx_menu2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/icon2"
-                android:text="IMÁGENES"
-
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:textColor="@color/colorBlanco"
                 android:layout_marginTop="10dp"
-                />
+
+                android:text="FOTOS"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlanco"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
 
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>
 
+<!--                     android:src="@mipmap/ic_noticiasfinal"
+-->

@@ -166,16 +166,16 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
 
 
 
-                imag0.setImageResource(R.drawable.ic_menu_noticias);
+                imag0.setImageResource(R.drawable.ic_noticia3);
                String df= notdetArray.get(0);
                 //tx1.setText(df);
-                //tx2.setText(notdetArray.get(1));
-
+                tx2.setText(notdetArray.get(1));
+/*
                 try {
                     tx2.setText(formatoRender.format(formatoInicial.parse(notdetArray.get(1))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
                 tx3.setText(notdetArray.get(2));

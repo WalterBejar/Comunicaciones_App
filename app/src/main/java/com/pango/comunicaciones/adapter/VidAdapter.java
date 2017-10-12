@@ -70,15 +70,15 @@ public class VidAdapter extends ArrayAdapter<Video> {
 
 
 
-        icono.setImageResource(R.drawable.ic_menu_slideshow);
+        icono.setImageResource(R.drawable.ic_video3);
         //vNom_publicador.setText(tempNombre);
-        //vFecha.setText(tempFecha);
+        vFecha.setText(tempFecha);
 
-        try {
+       /* try {
             vFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
 
         vTitulo.setText(tempTitulo);
         // vcant_vid.setText(tempcant_vid+"");

@@ -9,6 +9,8 @@
     android:background="@color/colorBlanco"
     tools:context=".ActComDes">
 
+
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/tbar_comdes"
         android:layout_height="wrap_content"
@@ -23,7 +25,7 @@
 
         >
 
-
     </ListView>
+
 
 </LinearLayout>

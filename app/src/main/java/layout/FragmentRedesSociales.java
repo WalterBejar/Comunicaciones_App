@@ -1,14 +1,19 @@
 package layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pango.comunicaciones.R;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,12 +65,74 @@ public class FragmentRedesSociales extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+CardView card1, card2, card3;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_redes_sociales, container, false);
+        View rowview = inflater.inflate(R.layout.fragment_redes_sociales, container, false);
+
+        final String facebookId = "fb://page/< 1392365134368940>";
+        final String urlPage = "https://www.facebook.com/Antapaccay/";
+        final String urlPageln = "https://twitter.com/tintayaperu?lang=es";
+        final String urlPagelin = "https://www.youtube.com/user/TintayaAntapaccay";
+
+
+        card1 =(CardView) rowview.findViewById(R.id.cardredes1);
+        card2 =(CardView) rowview.findViewById(R.id.cardredes2);
+        card3 =(CardView) rowview.findViewById(R.id.cardredes3);
+
+
+
+        card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookId )));
+                } catch (Exception e) {
+                    Log.e(TAG, "Aplicación no instalada.");
+                    //Abre url de pagina.
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPage)));
+                }
+            }
+        });
+
+
+    card2.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagelin)));
+        } catch (Exception e) {
+            Log.e(TAG, "Aplicación no instalada.");
+            //Abre url de pagina.
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPageln)));
+        }
+
+
+
+
+    }
+});
+
+
+       card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagelin )));
+                } catch (Exception e) {
+                    Log.e(TAG, "Aplicación no instalada.");
+                    //Abre url de pagina.
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagelin)));
+                }
+
+            }
+        });
+
+
+
+        return rowview;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

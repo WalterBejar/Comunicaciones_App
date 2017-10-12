@@ -60,7 +60,9 @@
             android:id="@+id/notific_icon"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:tint="@color/colorTitulo"
+            />
 
 
     </RelativeLayout>

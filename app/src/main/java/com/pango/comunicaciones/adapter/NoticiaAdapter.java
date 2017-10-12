@@ -63,15 +63,15 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
 
 
         //cargar la data al layout//////
-        icono.setImageResource(R.drawable.ic_menu_noticias);
+        icono.setImageResource(R.drawable.ic_noticia3);
         //nNom_publicador.setText(tempNombre);
-        //nFecha.setText(tempFecha);
-
+        nFecha.setText(tempFecha);
+/*
         try {
             nFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
 
         nTitulo.setText(tempTitulo);
 

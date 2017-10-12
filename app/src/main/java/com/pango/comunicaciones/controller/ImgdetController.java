@@ -157,17 +157,17 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
              //   String asd=ImgdetArray.get(0);
 
              //   GlobalVariables.Imgdet=ImgdetArray;
-                imag0.setImageResource(R.drawable.ic_menu_gallery);
+                imag0.setImageResource(R.drawable.ic_fotos3);
 
                 //String df= ImgdetArray.get(0);
                // tx1.setText(df);
                 tx2.setText(ImgdetArray.get(1));
 
-                try {
+               /* try {
                     tx2.setText(formatoRender.format(formatoInicial.parse(ImgdetArray.get(1))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }
+                }*/
 
                 tx3.setText(ImgdetArray.get(2));
 

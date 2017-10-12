@@ -82,7 +82,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
                     JSONObject respJSON = new JSONObject(respstring);
 
-                        CodPersona=respJSON.getString("CodPersona");
+                        CodPersona=respJSON.getString("DNI");
                         Nombres=respJSON.getString("Nombres");
 
                         JSONArray Data2 = respJSON.getJSONArray("Roles");

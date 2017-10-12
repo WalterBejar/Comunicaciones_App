@@ -121,7 +121,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout5"
-        android:background="@color/colorSubtitulo"
+        android:background="@color/colorAzul2"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginLeft="0dp"
