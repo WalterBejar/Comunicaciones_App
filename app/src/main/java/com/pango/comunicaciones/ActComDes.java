@@ -45,7 +45,13 @@ public class ActComDes extends AppCompatActivity {
                 //Uri uri=Uri.parse("http://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf9GsdJZOxuApw8q86bV211L8tPhh1RB3zj6qIJbfVV9HwIBwlfg");
                 String url_serv= GlobalVariables.Urlbase+ GlobalVariables.listdetcom.get(position).getUrl_file();
                 //String url_serv="http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal   bug.png";
-                Uri uri=Uri.parse(url_serv.replaceAll("\\s","%20"));
+                String cadMod=Utils.ChangeUrl(url_serv);
+
+
+
+                        //;
+
+                Uri uri=Uri.parse(cadMod);
                 // Uri uri=Uri.parse("http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal%20bug.png");
 
 

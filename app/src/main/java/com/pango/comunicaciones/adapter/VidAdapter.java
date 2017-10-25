@@ -1,6 +1,7 @@
 package com.pango.comunicaciones.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pango.comunicaciones.ActVidDet;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.model.Vid_Gal;
 import com.pango.comunicaciones.model.Video;
 
 import java.text.DateFormat;
@@ -25,12 +28,12 @@ import java.util.Locale;
  */
 
 public class VidAdapter extends ArrayAdapter<Video> {
-
+    int posicion;
 
     private Context context;
     private List<Video> data = new ArrayList<Video>();
-    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
     public VidAdapter(Context context, List<Video> data) {
         super(context, R.layout.public_videos, data);
         this.data = data;
@@ -41,14 +44,14 @@ public class VidAdapter extends ArrayAdapter<Video> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         //ViewHolder viewHolder;
-
+        posicion=position;
         LayoutInflater inflater = LayoutInflater.from(context);
 
 
 
         View rowView=inflater.inflate(R.layout.public_videos, null,true);
 
-        ImageView icono = (ImageView) rowView.findViewById(R.id.icon_vid);
+        //ImageView icono = (ImageView) rowView.findViewById(R.id.icon_vid);
         //TextView vNom_publicador = (TextView)  rowView.findViewById(R.id.txvidpub);
         TextView vFecha = (TextView)  rowView.findViewById(R.id.txfechavid);
         TextView vTitulo = (TextView)  rowView.findViewById(R.id.titulo_video);
@@ -68,17 +71,17 @@ public class VidAdapter extends ArrayAdapter<Video> {
 
         final int tempcant_vid=data.get(position).getCant_video();
 
+        final String tempUrl=data.get(position).getFiledata().get(0).getUrl_vid();
 
-
-        icono.setImageResource(R.drawable.ic_video3);
+//        icono.setImageResource(R.drawable.ic_video_final);
         //vNom_publicador.setText(tempNombre);
-        vFecha.setText(tempFecha);
+        //vFecha.setText(tempFecha);
 
-       /* try {
+        try {
             vFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
-        }*/
+        }
 
         vTitulo.setText(tempTitulo);
         // vcant_vid.setText(tempcant_vid+"");
@@ -118,6 +121,21 @@ public class VidAdapter extends ArrayAdapter<Video> {
                     .into(vImagVid);
 
         }
+
+
+        vImagVid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GlobalVariables.cont_posvid=0;
+                Intent intent = new Intent(v.getContext(), ActVidDet.class);
+                intent.putExtra("post",position);
+                intent.putExtra("urltemp",tempUrl);
+                intent.putExtra("isList",true);
+                //intent.putExtra("val",0);
+                //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
+                v.getContext().startActivity(intent);
+            }
+        });
 
 
 

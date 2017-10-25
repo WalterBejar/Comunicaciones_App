@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="Claudia Ccapatinta"
+                android:text="Teresa Charca"
                 android:textColor="@color/colornegro"
                 android:textSize="16dp"
 
@@ -50,7 +50,7 @@
                 android:layout_alignLeft="@+id/textView16"
                 android:layout_alignStart="@+id/textView16"
                 android:layout_below="@+id/textView16"
-                android:text="Asistente de Comunicación Interna"
+                android:text="Superintendente de Comunicación y Asuntos Externos"
                 android:textSize="12dp" />
 
             <TextView

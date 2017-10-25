@@ -59,7 +59,7 @@ public class NotifiController extends AsyncTask<String,Void,Void> {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"alerta/getall");
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                   // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());

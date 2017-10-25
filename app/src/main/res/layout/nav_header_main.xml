@@ -22,12 +22,12 @@
             android:visibility="gone"
 
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="243dp" />
+            tools:layout_editor_absoluteY="324dp" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
 
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +49,7 @@
             android:paddingTop="@dimen/nav_header_vertical_spacing"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="324dp" />
+            tools:layout_editor_absoluteY="405dp" />
     </android.support.constraint.ConstraintLayout>
 
     <!--<TextView

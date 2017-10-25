@@ -65,14 +65,14 @@
             android:id="@+id/imageView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/ic_twitter" />
+            app:srcCompat="@mipmap/ic_linked" />
 
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Twitter"
+                android:text="Linkedin"
                 android:textColor="@color/colornegro"
                 android:textSize="18sp" />
 

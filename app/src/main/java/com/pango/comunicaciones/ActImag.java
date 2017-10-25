@@ -24,16 +24,28 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
     static TextView tx1, tx2, tx3;
     private GridView gridView;
     private Adap_Img adaptador;
+    String titulo;
+    String fecha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_imag);
         rootView= getLayoutInflater().inflate(R.layout.act_imag, null);
                // inflater.inflate(R.layout.frag_noticia_det, container, false);
-        setTitle("Fotos");
+        //setTitle("Fotos");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+
+        toolbar.setLogo(R.drawable.imagen1234);
+
+        Bundle datos = this.getIntent().getExtras();
+        titulo=datos.getString("titulo");
+        fecha=datos.getString("fecha");
+
+
 
         final ImgdetController obj = new ImgdetController("url","get", ActImag.this);
-        obj.execute(GlobalVariables.img_get.getCod_reg());
+        obj.execute(GlobalVariables.img_get.getCod_reg(),titulo,fecha );
 
        /* if(GlobalVariables.img_get==null){
             obj.execute(GlobalVariables.cod_public);
@@ -104,6 +116,7 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
     }

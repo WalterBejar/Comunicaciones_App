@@ -25,8 +25,8 @@ import java.util.Locale;
 public class NotificAdapter extends ArrayAdapter<Notificacion> {
     private Context context;
     private List<Notificacion> data = new ArrayList<Notificacion>();
-    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
     public NotificAdapter(Context context, List<Notificacion> data) {
         super(context, R.layout.public_notifica,data);
         this.data = data;

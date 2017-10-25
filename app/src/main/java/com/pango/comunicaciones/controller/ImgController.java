@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.ImgAdapter;
 import com.pango.comunicaciones.model.Imagen;
 import com.pango.comunicaciones.model.Img_Gal;
@@ -62,14 +63,14 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
             String a = params[0];
             String b = params[1];
 
-            getToken gettoken=new getToken();
-            gettoken.getToken();
+          //  getToken gettoken=new getToken();
+           // gettoken.getToken();
 
             if (opcion == "get") {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase + "entrada/getpaginated/" + a + "/" + b + "/TP03");
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                   // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
@@ -77,18 +78,18 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                     JSONArray image = respJSON.getJSONArray("Data");
 
                     GlobalVariables.cont_item = image.length();
-                    GlobalVariables.contador = respJSON.getInt("Count");
+                    GlobalVariables.contFotos = respJSON.getInt("Count");
 
                     for (int i = 0; i < image.length(); i++) {
                         JSONObject c = image.getJSONObject(i);
-                        String T = c.getString("Tipo");
+                        //String T = c.getString("Tipo");
                         //String A="TP02";
                        // if (T.equals("TP03")) {
 
                             String CodRegistro = c.getString("CodRegistro");
-                            String Tipo = c.getString("Tipo");
+                            //String Tipo = c.getString("Tipo");
                             int icon = R.drawable.ic_menu_noticias;
-                            String Autor = c.getString("Autor");
+                           // String Autor = c.getString("Autor");
                             String Fecha = c.getString("Fecha");
                             String Titulo = c.getString("Titulo");
                             //String Descripcion = c.getString("Descripcion");
@@ -101,18 +102,27 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                             for (int j = 0; j < Data2.length(); j++) {
                                 JSONObject h = Data2.getJSONObject(j);
 
-                                String Correlativo = h.getString("Correlativo");
+                                String Correlativo = Integer.toString(j);
                                 String Url = h.getString("Url");
-                                String Urlmin = h.getString("Urlmin");
+                                String Urlmin2 = h.getString("Urlmin");
 
-                                dataf.add(new Img_Gal(Correlativo, Url.replaceAll("\\s","%20"), Urlmin.replaceAll("\\s","%20")));
+                                String[] parts = Urlmin2.split("550px;");
+                                //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                                //String part2 = parts[1]; //obtiene: 19-A
+
+                                String Urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+
+
+
+                                dataf.add(new Img_Gal(Correlativo, Utils.ChangeUrl(Url), Utils.ChangeUrl(Urlmin)));
 
                               /*  dataf.add(Correlativo);
                                 dataf.add(Url);
                                 dataf.add(Urlmin);*/
                             }
                             // dataf.get(0);
-                            imagenList.add(new Imagen(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, dataf,cant_img));
+                            imagenList.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
+                        GlobalVariables.imagen2.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
                        // }
                     }
                 } catch (Exception ex) {
@@ -139,7 +149,9 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
     protected void onPreExecute() {
         if (opcion == "get") {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            if(GlobalVariables.imagen2.size()<3) {
+                progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            }
         }
     }
 
@@ -147,10 +159,14 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
     protected void onPostExecute(Void result) {
         try {
             if (opcion == "get") {
-                ImgAdapter ca = new ImgAdapter(v.getContext(), imagenList);
-                recListImag.setAdapter(ca);
-                progressDialog.dismiss();
-                GlobalVariables.imagen2 = imagenList;
+
+                if(GlobalVariables.imagen2.size()<=3) {
+                    ImgAdapter ca = new ImgAdapter(v.getContext(), GlobalVariables.imagen2);
+                    recListImag.setAdapter(ca);
+                    progressDialog.dismiss();
+
+                }
+                //GlobalVariables.imagen2 = imagenList;
                 //  GlobalVariables.noticias2.get(0);
             }
         } catch (Exception ex) {

@@ -50,13 +50,15 @@ android:layout_margin="5dp"
             android:id="@+id/com_tam_file"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/com_icon_des"
             android:layout_alignLeft="@+id/com_icon_des"
+            android:layout_alignRight="@+id/com_icon_des"
             android:layout_alignStart="@+id/com_icon_des"
             android:layout_below="@+id/com_icon_des"
             android:layout_marginBottom="2dp"
-            android:layout_marginRight="2dp"
             android:layout_marginTop="2dp"
             android:text="456456"
+            android:textAlignment="center"
             android:textSize="12sp" />
 
 
@@ -69,8 +71,8 @@ android:layout_margin="5dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_download"
-
+            android:src="@drawable/ic_descarga"
+            android:background="@color/colorBlanco"
             android:layout_marginTop="10dp"
              />
 

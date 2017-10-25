@@ -12,18 +12,28 @@ import com.pango.comunicaciones.controller.NotdetController;
 
 public class ActNotDetalle extends AppCompatActivity {
     ImageButton adj;
+    String titulo;
+    String fecha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_not_detalle);
-        setTitle("Noticias");
+        setupToolBar();
+
+        //setTitle("Noticias");
+
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarnot);
+        setSupportActionBar(toolbar);
+        toolbar.setLogo(R.drawable.imagen1234);*/
 
 
-        String asd=GlobalVariables.not2pos.getCod_reg();
+        Bundle datos = this.getIntent().getExtras();
+        titulo=datos.getString("titulo");
+        fecha=datos.getString("fecha");
 
         NotdetController obj = new NotdetController("url","get", ActNotDetalle.this);
-        obj.execute(asd);
+        obj.execute(GlobalVariables.not2pos.getCod_reg(),titulo,fecha);
 
 /*
         if(GlobalVariables.not2pos==null){
@@ -35,8 +45,7 @@ public class ActNotDetalle extends AppCompatActivity {
 
         }*/
 
-
-        setupToolBar();
+/*
         adj=(ImageButton) findViewById(R.id.ib_adj);
 
         adj.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +58,7 @@ public class ActNotDetalle extends AppCompatActivity {
                 startActivity(intent);
 
             }
-        });
+        });*/
 
 
     }
@@ -62,8 +71,12 @@ public class ActNotDetalle extends AppCompatActivity {
         if (toolbar == null) return;
 
         setSupportActionBar(toolbar);
+        toolbar.setLogo(R.drawable.imagen1234);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
+
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.pango.comunicaciones.ActVid;
+import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.adapter.VidAdapter;
+import com.pango.comunicaciones.controller.VidController;
 import com.pango.comunicaciones.model.Imagen;
 
 import java.util.List;
@@ -95,17 +98,20 @@ public class FragmentVideos extends Fragment {
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_videos, container, false);
         context = container.getContext();
-
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
         recListVid = (ListView) rootView.findViewById(R.id.recycler_vid);
         LinearLayoutManager llm_vid = new LinearLayoutManager(getActivity());
         llm_vid.setOrientation(LinearLayoutManager.VERTICAL);
 
+        if(GlobalVariables.vidlist.size()==0) {
 
-       // final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
-        //obj.execute(String.valueOf(1),String.valueOf(32));
-
+            final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
+            obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid));
+        }else {
         VidAdapter ca = new VidAdapter(context, GlobalVariables.vidlist);
         recListVid.setAdapter(ca);
+        }
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater2 = getActivity().getLayoutInflater();
@@ -119,15 +125,57 @@ public class FragmentVideos extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Log.i("Click", "click en el elemento " + position + " de mi ListView");
-
                 GlobalVariables.pos_item_vid=position;
                 GlobalVariables.vid_det = GlobalVariables.vidlist.get(position);
+
+                String titulo=GlobalVariables.vidlist.get(position).getTitulo();
+                String fecha=GlobalVariables.vidlist.get(position).getFecha();
+
                 Intent intent = new Intent(getActivity(), ActVid.class);
+
+                intent.putExtra("titulo",titulo);
+                intent.putExtra("fecha",fecha);
+
                 startActivity(intent);
 
 
             }
         });
+
+        recListVid.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemCount) {
+                int page2=page;
+
+
+                if(GlobalVariables.vidlist.size()<GlobalVariables.contVideos) {
+
+
+                    final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
+                    obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
+                    pageCount++;
+
+
+                 /*
+                 String Url = "media/GetImagen/6767/Salud Mental 2016 - 1.jpg";
+                 String Urlmin = "media/GetminFile/6767/Salud Mental 2016 - 1.jpg";
+                 ArrayList<String> dataf = new ArrayList<>();
+                 dataf.add("6767");
+                 dataf.add(Url.replaceAll("\\s", "%20"));
+                 dataf.add(Urlmin.replaceAll("\\s", "%20"));
+
+                 GlobalVariables.noticias2.add(new Noticias("SC2017000549", "TP01", R.drawable.ic_menu_noticias, "Ojeda, Christiam A (", "2017-10-09T00:00:00", "CUIDEMOS NUESTRA SALUD MENTAL", "Una de cada cinco personas en ámbito laboral puede experimentar un trastorno de salud mental. Los problemas de salud mental tienen un impacto directo en los lugares de trabajo.", dataf));
+*/
+
+                    return true; // ONLY if more data is actually being loaded; false otherwise.
+                }else{
+                    //flag=true;
+                    return false;
+
+                }
+            }
+        });
+
 
         return rootView;
 

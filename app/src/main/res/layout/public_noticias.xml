@@ -10,17 +10,20 @@
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
+    android:layout_alignParentEnd="true"
     card_view:cardCornerRadius="5dp"
     android:layout_margin="5dp"
     android:layout_alignParentRight="true"
     card_view:contentPadding="10dp"
-    card_view:cardElevation="5dp"
+    card_view:cardElevation="2dp"
+    app:cardBackgroundColor="@color/colormedio"
 
 
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         >
 
 
@@ -30,7 +33,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-
+            android:visibility="gone"
             android:id="@+id/icon_inicio"
             android:tint = "@color/colorNotificacion"
 
@@ -41,20 +44,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/icon_inicio"
-            android:layout_toRightOf="@+id/icon_inicio"
-            android:layout_toEndOf="@+id/icon_inicio"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
             android:textColor="@color/cardview_dark_background"
             android:id="@+id/titulo_noticia"
             tools:text="Titulo"
             android:textSize="14sp"
-
-            android:textStyle="normal|bold" />
-
-
-
+            android:textStyle="normal|bold"
+            android:layout_below="@+id/frameimg"
+            android:layout_toRightOf="@+id/icon_inicio"
+            android:layout_toEndOf="@+id/icon_inicio" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,30 +68,34 @@
 
 
 
+<FrameLayout
+    android:id="@+id/frameimg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
 
+    >
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imag_not"
             android:focusable="false"
-
-            android:layout_below="@+id/txfecha"
-            android:layout_centerHorizontal="true"
-            android:visibility="visible"
             />
+
+</FrameLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txdesc"
-            android:layout_below="@+id/imag_not"
+            android:layout_below="@+id/txfecha"
             android:maxLines="3"
             android:ellipsize="end"
             android:lineSpacingExtra="2sp"
             tools:text="descripcion"
-
-            android:layout_alignLeft="@+id/imag_not"
-            android:layout_alignStart="@+id/imag_not"
+            android:layout_marginTop="5dp"
+            android:layout_alignLeft="@+id/frameimg"
+            android:layout_alignStart="@+id/frameimg"
 
             android:textSize="14sp"
             android:textStyle="normal"

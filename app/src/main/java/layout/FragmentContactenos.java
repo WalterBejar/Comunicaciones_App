@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,8 +68,9 @@ public class FragmentContactenos extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_contactenos, container, false);
 
-        getActivity().setTitle("Contáctanos");
-
+        //getActivity().setTitle("Contáctanos");
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
 
         return rootView;
     }

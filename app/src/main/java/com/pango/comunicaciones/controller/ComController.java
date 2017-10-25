@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.ComAdapter;
 import com.pango.comunicaciones.model.Comunicado;
 
@@ -60,14 +61,14 @@ public class ComController extends AsyncTask<String,Void,Void> {
             String a=params[0];
             String b=params[1];
 
-            getToken gettoken=new getToken();
-            gettoken.getToken();
+            //getToken gettoken=new getToken();
+            //gettoken.getToken();
 
             if(opcion=="get"){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+a+"/"+b+"/TP02");
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
@@ -75,20 +76,20 @@ public class ComController extends AsyncTask<String,Void,Void> {
                     JSONArray comunic = respJSON.getJSONArray("Data");
 
                     GlobalVariables.cont_item=comunic.length();
-                    GlobalVariables.contador=respJSON.getInt("Count");//obtiene el total de publicaciones en general
+                    GlobalVariables.contComunicado=respJSON.getInt("Count");//obtiene el total de publicaciones en general
                     int inc=0;
                     for (int i = 0; i < comunic.length(); i++) {
                         JSONObject c = comunic.getJSONObject(i);
-                        String T =c.getString("Tipo");
+                        //String T =c.getString("Tipo");
                         //String A="TP02"
 
                         //comunicado:2
                        // if(T.equals("TP02")) {
                             inc+=1;
                             String CodRegistro = c.getString("CodRegistro");
-                            String Tipo = c.getString("Tipo");
+                            //String Tipo = c.getString("Tipo");
                             int icon = R.drawable.ic_menu_publicaciones;
-                            String Autor = c.getString("Autor");
+                            //String Autor = c.getString("Autor");
                             String Fecha = c.getString("Fecha");
                             String Titulo = c.getString("Titulo");
                             String Descripcion = c.getString("Descripcion");
@@ -103,18 +104,20 @@ public class ComController extends AsyncTask<String,Void,Void> {
                             for (int j = 0; j <hg; j++) {
                                 JSONObject h = Data2.getJSONObject(j);
 
-                                String Correlativo = h.getString("Correlativo");
-                                String Url = h.getString("Url");
-                                String Urlmin = h.getString("Urlmin");
+                                String Correlativo = Integer.toString(j);
+                                String Url = Utils.ChangeUrl(h.getString("Url"));
+                                String Urlmin =Utils.ChangeUrl(h.getString("Urlmin"));
 
                                 dataf.add(Correlativo);
-                                dataf.add(Url.replaceAll("\\s","%20"));
-                                dataf.add(Urlmin.replaceAll("\\s","%20"));
+                                dataf.add(Url);
+                                dataf.add(Urlmin);
                             }
                          /*   if (hg != 0) {
                                 dataf.get(0);
                             }*/
-                            comList.add(new Comunicado(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, Descripcion, dataf));
+                            comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+                        GlobalVariables.comlist.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+
                         //}
                     }
                 }catch (Exception ex){
@@ -140,17 +143,23 @@ public class ComController extends AsyncTask<String,Void,Void> {
     protected void onPreExecute() {
         if(opcion=="get") {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+
+            if(GlobalVariables.comlist.size()<3) {
+                progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            }
         }
     }
     @Override
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-                ComAdapter ca = new ComAdapter(v.getContext(),comList);
+                if(GlobalVariables.comlist.size()<=3){
+                ComAdapter ca = new ComAdapter(v.getContext(),GlobalVariables.comlist);
                 recListCom.setAdapter(ca);
                 progressDialog.dismiss();
-                GlobalVariables.comlist=comList;
+                //GlobalVariables.comlist=comList;
+
+                }
             }
         }catch (Exception ex){
             Log.w("Error",ex);

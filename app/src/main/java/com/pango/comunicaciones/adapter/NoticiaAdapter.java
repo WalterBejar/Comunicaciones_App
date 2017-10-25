@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.pango.comunicaciones.ActImgNot;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.model.Noticias;
 
 import java.text.DateFormat;
@@ -29,8 +30,8 @@ import java.util.Locale;
 public class NoticiaAdapter extends ArrayAdapter<Noticias> {
     private Context context;
     private List<Noticias> data = new ArrayList<Noticias>();
-    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
 
     public NoticiaAdapter(Context context, List<Noticias> data) {
         super(context, R.layout.public_noticias,data);
@@ -65,20 +66,22 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
         //cargar la data al layout//////
         icono.setImageResource(R.drawable.ic_noticia3);
         //nNom_publicador.setText(tempNombre);
-        nFecha.setText(tempFecha);
-/*
+        //nFecha.setText(tempFecha);
+
         try {
             nFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
-        }*/
+        }
 
         nTitulo.setText(tempTitulo);
+        nDescripcion.setText(tempDescripcion);
 
 
 
         //comunicadoModel.setFecha(formatoRender.format(formatoInicial.parse(comunicado.getFecha())));
 
+       //nImagNot.setVisibility(View.GONE);
 
 
         int ds=data.get(position).getFiledata().size();
@@ -89,18 +92,11 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
             nImagNot.setVisibility(View.GONE);
             //nDescs.setText(tempDescripcion);
         }else {
-
-            nDescripcion.setText(tempDescripcion);
-            String dddf=data.get(position).getFiledata().get(2).replaceAll("\\s", "%20");
-
-
+            //String dddf=data.get(position).getFiledata().get(2);
             Glide.with(context)
-
-                    .load(GlobalVariables.Urlbase + dddf)
+                    .load(GlobalVariables.Urlbase + Utils.ChangeUrl(data.get(position).getFiledata().get(1)))
                     .into(nImagNot);
         }
-
-
 
         nImagNot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +104,14 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
                 Intent intent=new Intent(v.getContext(), ActImgNot.class);
-
-                intent.putExtra("url_img", GlobalVariables.Urlbase + data.get(position).getFiledata().get(1).replaceAll("\\s", "%20"));
+                intent.putExtra("codreg",data.get(position).getCod_reg());
+                intent.putExtra("url_img", GlobalVariables.Urlbase + data.get(position).getFiledata().get(0).replaceAll("\\s", "%20"));
                 // intent.putExtra("val",0);
-
                 //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
                 v.getContext().startActivity(intent);
+
+
+
 
             }
         });
@@ -121,9 +119,5 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
 
         return rowView;
     }
-
-
-
-
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.pango.comunicaciones.ActComDetalle;
+import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.adapter.ComAdapter;
+import com.pango.comunicaciones.controller.ComController;
 import com.pango.comunicaciones.model.Comunicado;
 
 import java.util.List;
@@ -89,15 +92,22 @@ public class FragmentComunicados extends Fragment {
                              Bundle savedInstanceState) {
         context = container.getContext();
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_comunicados, container, false);
+
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+
+        final View rootView = inflater.inflate(R.layout.fragment_comunicados, container, false);
         recListCom = (ListView) rootView.findViewById(R.id.l_frag_com);
 
-        //final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
-        //obj.execute(String.valueOf(1),String.valueOf(10));
+        final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
+        obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid));
 
-        ComAdapter ca = new ComAdapter(context, GlobalVariables.comlist);
-        recListCom.setAdapter(ca);
+      /*  if(GlobalVariables.comlist.size()==0) {
 
+        }else {
+            ComAdapter ca = new ComAdapter(context, GlobalVariables.comlist);
+            recListCom.setAdapter(ca);
+        }*/
         recListCom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -106,19 +116,71 @@ public class FragmentComunicados extends Fragment {
                 GlobalVariables.com_pos= comlist.get(position);//captura los datos en la posiscion que se hace clic y almacena en not2pos
 
                 GlobalVariables.doclic=true;
-
                 GlobalVariables.pos_item_com=position;
+
+                String titulo=comlist.get(position).getTitulo();
+                String fecha=comlist.get(position).getFecha();
+
+
                 //se conecta a un activity//
                 Intent intent = new Intent(getActivity(), ActComDetalle.class);
+
+                intent.putExtra("titulo",titulo);
+                intent.putExtra("fecha",fecha);
+
                 startActivity(intent);
-
-
 
             }
         });
 
+        recListCom.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemCount) {
+
+                int page2=page;
+
+
+                if(GlobalVariables.comlist.size()<GlobalVariables.contComunicado) {
+
+
+                    final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
+                    obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
+                    pageCount++;
+
+
+                 /*
+                 String Url = "media/GetImagen/6767/Salud Mental 2016 - 1.jpg";
+                 String Urlmin = "media/GetminFile/6767/Salud Mental 2016 - 1.jpg";
+                 ArrayList<String> dataf = new ArrayList<>();
+                 dataf.add("6767");
+                 dataf.add(Url.replaceAll("\\s", "%20"));
+                 dataf.add(Urlmin.replaceAll("\\s", "%20"));
+
+                 GlobalVariables.noticias2.add(new Noticias("SC2017000549", "TP01", R.drawable.ic_menu_noticias, "Ojeda, Christiam A (", "2017-10-09T00:00:00", "CUIDEMOS NUESTRA SALUD MENTAL", "Una de cada cinco personas en ámbito laboral puede experimentar un trastorno de salud mental. Los problemas de salud mental tienen un impacto directo en los lugares de trabajo.", dataf));
+*/
+
+                    return true; // ONLY if more data is actually being loaded; false otherwise.
+                }else{
+                    //flag=true;
+                    return false;
+
+                }
+            }
+        });
+
+
+
+
+
+
         return rootView;
     }
+
+
+
+
+
+
 //////////////////////////////////////////////
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

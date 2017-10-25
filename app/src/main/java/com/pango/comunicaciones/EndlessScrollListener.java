@@ -2,9 +2,7 @@ package com.pango.comunicaciones;
 
 import android.widget.AbsListView;
 
-/**
- * Created by Walter Béjar on 27/09/2017.
- */
+
 
 public abstract class EndlessScrollListener implements AbsListView.OnScrollListener {
 
@@ -17,6 +15,7 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
     public EndlessScrollListener() { }
 
     public EndlessScrollListener(int limiteVisible) {
+
         this.limiteVisible = limiteVisible;
     }
 
@@ -24,6 +23,14 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
         this.limiteVisible = limiteVisible;
         this.paginaActual = paginaInicio;
         this.indicePaginaInicio = paginaInicio;
+    }
+
+
+    public abstract boolean onLoadMore(int page, int totalItemCount);
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        // no se tiene que modificar nada aca
     }
 
     @Override
@@ -47,10 +54,5 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
         }
     }
 
-    public abstract boolean onLoadMore(int page, int totalItemCount);
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        // no se tiene que modificar nada aca
-    }
 }

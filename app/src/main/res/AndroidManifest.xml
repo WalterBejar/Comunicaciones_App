@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcherlogofinal"
+        android:icon="@mipmap/ic_logofinal"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcherlogofinal"
+        android:roundIcon="@mipmap/ic_logofinal"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,12 +76,18 @@ public class FragmentTickets extends Fragment {
     EditText tx_pass;
     ImageButton btn_borrarUser;
     ImageButton btn_borrarPass;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootView =inflater.inflate(R.layout.fragment_tickets, container, false);
 
+       // AppBarLayout appBarLayout=(AppBarLayout) getActivity().findViewById(R.id.barlayout);
+        //appBarLayout.setVisibility(View.GONE);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.GONE);
 
         tx_user=(EditText) rootView.findViewById(R.id.usuario);
         tx_pass=(EditText) rootView.findViewById(R.id.password);

@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.VidAdapter;
 import com.pango.comunicaciones.model.Vid_Gal;
 import com.pango.comunicaciones.model.Video;
@@ -51,7 +52,6 @@ public class VidController extends AsyncTask<String,Void,Void> {
         this.opcion = opcion;
         this.Frag = Frag;
         recListVid = (ListView) v.findViewById(R.id.recycler_vid);
-
         //recList.setOnScrollListener(this);
     }
 
@@ -62,14 +62,14 @@ public class VidController extends AsyncTask<String,Void,Void> {
             String a = params[0];
             String b = params[1];
 
-            getToken gettoken=new getToken();
-            gettoken.getToken();
+           // getToken gettoken=new getToken();
+           // gettoken.getToken();
 
             if (opcion == "get") {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase + GlobalVariables.Urlbase2 + a + "/" + b + "/TP04");
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
@@ -77,20 +77,18 @@ public class VidController extends AsyncTask<String,Void,Void> {
                     JSONArray video = respJSON.getJSONArray("Data");
 
                     GlobalVariables.cont_item = video.length();
-                    GlobalVariables.contador = respJSON.getInt("Count");
-
-
+                    GlobalVariables.contVideos = respJSON.getInt("Count");
 
                     for (int i = 0; i < video.length(); i++) {
                         JSONObject c = video.getJSONObject(i);
-                        String T = c.getString("Tipo");
+                        //String T = c.getString("Tipo");
                         //String A="TP02";
                         //if (T.equals("TP04")) {
 
                             String CodRegistro = c.getString("CodRegistro");
-                            String Tipo = c.getString("Tipo");
-                            int icon = R.drawable.ic_menu_slideshow;
-                            String Autor = c.getString("Autor");
+                            //String Tipo = c.getString("Tipo");
+                            int icon = R.drawable.ic_video_final;
+                            //String Autor = c.getString("Autor");
                             String Fecha = c.getString("Fecha");
                             String Titulo = c.getString("Titulo");
 
@@ -105,18 +103,24 @@ public class VidController extends AsyncTask<String,Void,Void> {
                             for (int j = 0; j < Data2.length(); j++) {
                                 JSONObject h = Data2.getJSONObject(j);
 
-                                String Correlativo = h.getString("Correlativo");
+                                String Correlativo = Integer.toString(j);
                                 String Url = h.getString("Url");
-                                String Urlmin = h.getString("Urlmin");
+                                String Urlmin2 = h.getString("Urlmin");
 
-                                dataf.add(new Vid_Gal(Correlativo, Url.replaceAll("\\s","%20"), Urlmin.replaceAll("\\s","%20")));
+                                String[] parts = Urlmin2.split("550px;");
+                                //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                                //String part2 = parts[1]; //obtiene: 19-A
 
-                              /*  dataf.add(Correlativo);
-                                dataf.add(Url);
-                                dataf.add(Urlmin);*/
+                                String Urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+
+
+
+                                dataf.add(new Vid_Gal(Correlativo, Utils.ChangeUrl(Url), Utils.ChangeUrl(Urlmin)));
+
                             }
                             //dataf.get(0);
-                            videoList.add(new Video(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, dataf,CantidadV));
+                            videoList.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf,CantidadV));
+                        GlobalVariables.vidlist.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf,CantidadV));
                        // }
                     }
                 } catch (Exception ex) {
@@ -142,19 +146,23 @@ public class VidController extends AsyncTask<String,Void,Void> {
     @Override
     protected void onPreExecute() {
         if (opcion == "get") {
+            if(GlobalVariables.vidlist.size()<3) {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
-        }
+        }}
     }
 
     @Override
     protected void onPostExecute(Void result) {
         try {
             if (opcion == "get") {
-                VidAdapter ca = new VidAdapter(v.getContext(), videoList);
-                recListVid.setAdapter(ca);
-                progressDialog.dismiss();
-                GlobalVariables.vidlist = videoList;
+                if(GlobalVariables.vidlist.size()<=3) {
+
+                    VidAdapter ca = new VidAdapter(v.getContext(), GlobalVariables.vidlist);
+                    recListVid.setAdapter(ca);
+                    progressDialog.dismiss();
+                }
+                //GlobalVariables.vidlist = videoList;
                 //  GlobalVariables.noticias2.get(0);
             }
         } catch (Exception ex) {

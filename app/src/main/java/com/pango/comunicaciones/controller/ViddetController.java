@@ -74,6 +74,9 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
         try {
             HttpResponse response;
             String codreg=params[0];
+            String titulo=params[1];
+            String fecha=params[2];
+
 
             //String b=params[1];
 
@@ -81,16 +84,16 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                   // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     //notdetArray.add(R.drawable.ic_menu_noticias);
 
-                    VidDetArray.add(respJSON.getString("Autor"));
-                    VidDetArray.add(respJSON.getString("Fecha"));
-                    VidDetArray.add(respJSON.getString("Titulo"));
+                   // VidDetArray.add(respJSON.getString("Autor"));
+                    VidDetArray.add(fecha);
+                    VidDetArray.add(titulo);
                     // ImgdetArray.add(respJSON.getString("Subtitulo"));
                     //  ImgdetArray.add(respJSON.getString("Descripcion"));
 
@@ -104,7 +107,7 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                         private String url_img;
                         private String urlmin_imag;*/
 
-                        String correlativo=h.getString("Correlativo");
+                        String correlativo=Integer.toString(i);
                         // int tamanio=h.getInt("Tamanio");
                         String url_file=h.getString("Url");
                         String urlmin=h.getString("Urlmin");
@@ -145,8 +148,8 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
                 GlobalVariables.listdetvid=view_video;//datos correlativo,url,urlmin
 
                 imagv1 =(ImageView) actVid.findViewById(R.id.icon_viddet);
@@ -158,17 +161,17 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
 
 
                 //txv1.setText(VidDetArray.get(0));
-                txv2.setText(VidDetArray.get(1));
-/*
+                //txv2.setText(VidDetArray.get(1));
+
                 try {
-                    txv2.setText(formatoRender.format(formatoInicial.parse(VidDetArray.get(1))));
+                    txv2.setText(formatoRender.format(formatoInicial.parse(VidDetArray.get(0))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
 
 
 
-                txv3.setText(VidDetArray.get(2));
+                txv3.setText(VidDetArray.get(1));
 
                 gridView = (GridView) actVid.findViewById(R.id.grid_vid);
                 adaptador = new Adap_Vid(actVid);

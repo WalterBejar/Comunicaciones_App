@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context="com.pango.comunicaciones.ReservaTicketFiltro">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarbus1"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+
+            android:background="?attr/colorPrimary"
+            android:backgroundTint="@color/colorBlanco"
+            android:titleTextColor="@color/colorazul"
+            app:titleTextColor="@color/colorazul"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/textView4"
@@ -21,9 +38,10 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarbus1" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/grupoConstraint"
@@ -34,8 +52,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="0dp">
+        tools:layout_constraintRight_creator="1">
 
         <TextView
             android:id="@+id/textView"
@@ -62,7 +79,8 @@
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" />
 
         <TextView
             android:id="@+id/textView3"
@@ -74,7 +92,8 @@
             android:layout_marginStart="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp" />
 
         <Spinner
             android:id="@+id/spinnerDestino"
@@ -110,7 +129,7 @@
             android:id="@+id/botonEscogerFecha"
             android:onClick="escogerFecha"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="48dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
@@ -126,7 +145,7 @@
         <Button
             android:id="@+id/botonBuscarTickets"
             android:onClick="clickEnBuscarViajes"
-            android:layout_width="80dp"
+            android:layout_width="88dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -137,7 +156,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginRight="8dp" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -159,9 +179,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -173,7 +190,6 @@
         android:id="@+id/listaTickets"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -197,7 +213,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
         app:layout_constraintRight_toLeftOf="@+id/textView7"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.571"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/textView7"
@@ -212,7 +230,8 @@
         app:layout_constraintBottom_toTopOf="@+id/listaTickets"
         app:layout_constraintRight_toLeftOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.571"
+        android:layout_marginEnd="8dp" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -226,7 +245,8 @@
         app:layout_constraintRight_toLeftOf="@+id/imageView4"
         app:srcCompat="@drawable/ic_local_offer_black_24dp"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -240,7 +260,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
         app:layout_constraintRight_toRightOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        app:srcCompat="@drawable/ic_check_box_black_24dp" />
+        app:srcCompat="@drawable/ic_check_box_black_24dp"
+        android:layout_marginEnd="8dp" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -253,6 +274,7 @@
         app:layout_constraintTop_toTopOf="@+id/constraintLayout"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/listaTickets" />
+        app:layout_constraintBottom_toTopOf="@+id/listaTickets"
+        android:layout_marginEnd="8dp" />
 
 </android.support.constraint.ConstraintLayout>

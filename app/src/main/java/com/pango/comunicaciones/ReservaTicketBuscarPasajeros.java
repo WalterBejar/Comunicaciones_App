@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -56,6 +57,9 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_buscar_pasajeros);
         setTitle("Reserva de Buses");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus2);
+        setSupportActionBar(toolbar);
         botonAgregar=(Button) findViewById(R.id.botonAgregarPasajeroALista) ;
         editTextDNI = (EditText) findViewById(R.id.textboxPasajeroDNI);
         editTextNombre = (EditText) findViewById(R.id.textboxPasajeroNombre);

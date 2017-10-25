@@ -20,11 +20,22 @@ public class ActVid extends AppCompatActivity implements AdapterView.OnItemClick
    // static TextView txv1, txv2, txv3;
     private GridView gridView;
     private Adap_Vid adaptador;
+    String titulo;
+    String fecha;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_vid);
-        setTitle("Videos");
+        //setTitle("Videos");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar4);
+
+        toolbar.setLogo(R.drawable.imagen1234);
+
+        Bundle datos = this.getIntent().getExtras();
+        titulo=datos.getString("titulo");
+        fecha=datos.getString("fecha");
 
        /* ActionBar actionBar= getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);*/
@@ -37,14 +48,14 @@ public class ActVid extends AppCompatActivity implements AdapterView.OnItemClick
         //rootView= getLayoutInflater().inflate(R.layout.act_vid, null);
 
         final ViddetController obj = new ViddetController("url","get", ActVid.this);
+        obj.execute(GlobalVariables.vid_det.getCod_reg(),titulo,fecha);
 
-
-        if(GlobalVariables.vid_det==null){
+       /* if(GlobalVariables.vid_det==null){
             obj.execute(GlobalVariables.cod_public);
         }else {
 
             obj.execute(GlobalVariables.vid_det.getCod_reg());
-        }
+        }*/
         
         gridView = (GridView) findViewById(R.id.grid_vid);
 
@@ -86,28 +97,26 @@ public class ActVid extends AppCompatActivity implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-
         Vid_Gal item= (Vid_Gal) parent.getItemAtPosition(position);
-
-
         Intent intent = new Intent(this, ActVidDet.class);
         intent.putExtra("post",position);
+        intent.putExtra("isList",false);
         //intent.putExtra("val",0);
-
         //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
         startActivity(intent);
-
     }
 
+
     private void setupToolBar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar4);
 
         if (toolbar == null) return;
 
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
+
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
     }

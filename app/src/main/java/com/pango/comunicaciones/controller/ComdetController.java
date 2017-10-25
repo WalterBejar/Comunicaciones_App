@@ -71,6 +71,8 @@ Button btn_adjuntos;
         try {
             HttpResponse response;
             String codreg=params[0];
+            String titulo=params[1];
+            String fecha=params[2];
 
             //String b=params[1];
 
@@ -78,15 +80,15 @@ Button btn_adjuntos;
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     //notdetArray.add(R.drawable.ic_menu_noticias);
-                    comdetArray.add(respJSON.getString("Autor"));
-                    comdetArray.add(respJSON.getString("Fecha"));
-                    comdetArray.add(respJSON.getString("Titulo"));
+                   // comdetArray.add(respJSON.getString("Autor"));
+                    comdetArray.add(fecha);
+                    comdetArray.add(titulo);
                     comdetArray.add(respJSON.getString("Descripcion"));
 
                     JSONObject Files = respJSON.getJSONObject("Files");
@@ -94,7 +96,6 @@ Button btn_adjuntos;
 
                     for (int i = 0; i < Data2.length(); i++) {
                         JSONObject h = Data2.getJSONObject(i);
-
 
                         String nombre=h.getString("Nombre");
                         int tamanio=h.getInt("Tamanio");
@@ -142,8 +143,8 @@ Button btn_adjuntos;
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
                 GlobalVariables.listdetcom=des_data;
 
 
@@ -160,16 +161,16 @@ Button btn_adjuntos;
                 imag0.setImageResource(R.drawable.ic_evento);
                 //String df= comdetArray.get(0);
                 //tx1.setText(df);
-                tx2.setText(comdetArray.get(1));
+                //tx2.setText(comdetArray.get(1));
 
-                /*try {
-                    tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(1))));
+                try {
+                    tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(0))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
 
 
-                tx3.setText(comdetArray.get(2));
+                tx3.setText(comdetArray.get(1));
                // String g=comdetArray.get(3);
 /*                if(g.equals("null")){
                     tx4.setVisibility(View.GONE);
@@ -179,7 +180,7 @@ Button btn_adjuntos;
 
 
                 content.setWebViewClient(new ComdetController.MyWebViewClient());
-                content.loadDataWithBaseURL("",comdetArray.get(3) , "text/html", "UTF-8", "");
+                content.loadDataWithBaseURL("",comdetArray.get(2) , "text/html", "UTF-8", "");
                 WebSettings settings=content.getSettings();
                 settings.setJavaScriptEnabled(true);
 
@@ -198,8 +199,6 @@ Button btn_adjuntos;
                 progressDialog.dismiss();
                 GlobalVariables.noticias2=noticiaList;*/
                 //  GlobalVariables.noticias2.get(0);
-
-
 
             }
         }catch (Exception ex){
