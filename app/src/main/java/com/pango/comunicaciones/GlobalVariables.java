@@ -32,10 +32,10 @@ public class GlobalVariables {
     public static List<Noticias> noticias2 = new ArrayList<>();
     public static int contador;
 
-    public static int contador1;
-    public static int contador2;
-    public static int contador3;
-    public static int contador4;
+    public static int contNoticia;
+    public static int contComunicado;
+    public static int contFotos;
+    public static int contVideos;
 
     public static int cont_item;
     public static Noticias not2pos;
@@ -85,4 +85,8 @@ public class GlobalVariables {
 
     public static int con_status;
     public static String dominio="anyaccess";
+    public static int anchoMovil;
+
+    public static int num_vid=3;
+
 }

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,8 @@ private Switch sw_sonido;
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_configuracion, container, false);
         // Inflate the layout for this fragment
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
 
         sw_sonido = (Switch) rootView.findViewById(R.id.switch_s);
         Boolean switchState = sw_sonido.isChecked();

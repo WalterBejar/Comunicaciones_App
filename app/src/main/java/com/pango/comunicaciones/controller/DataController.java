@@ -7,6 +7,7 @@ import android.util.Log;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.SplashScreenActivity;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.model.Comunicado;
 import com.pango.comunicaciones.model.Imagen;
 import com.pango.comunicaciones.model.Img_Gal;
@@ -28,10 +29,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Andre on 27/09/2017.
- */
 
 public class DataController extends AsyncTask<String,Void,Void> {
 int varcant;
@@ -130,7 +127,7 @@ int varcant;
                 JSONObject respJSON = new JSONObject(respstring);
 
                 JSONArray data_p = respJSON.getJSONArray("Data");
-                GlobalVariables.contador1 = respJSON.getInt("Count");
+                GlobalVariables.contNoticia = respJSON.getInt("Count");
 
                 for (int i = 0; i < data_p.length(); i++) {
                     JSONObject h = data_p.getJSONObject(i);
@@ -156,11 +153,11 @@ int varcant;
                         String Urlmin = h1.getString("Urlmin");
 
                         dataf.add(Correlativo);
-                        dataf.add(Url.replaceAll("\\s", "%20"));
-                        dataf.add(Urlmin.replaceAll("\\s", "%20"));
+                        dataf.add(Utils.ChangeUrl(Url));
+                        dataf.add(Utils.ChangeUrl(Urlmin));
                     }
 
-                    noticiaData.add(new Noticias(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, Descripcion, dataf));
+                    noticiaData.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
 
                 }
 
@@ -192,7 +189,7 @@ int varcant;
                     JSONObject respJSON = new JSONObject(respstring);
 
                     JSONArray data_p = respJSON.getJSONArray("Data");
-                    GlobalVariables.contador2 = respJSON.getInt("Count");
+                    GlobalVariables.contComunicado = respJSON.getInt("Count");
 
 
                     for (int i = 0; i < data_p.length(); i++) {
@@ -218,10 +215,10 @@ int varcant;
                             String Urlmin = h1.getString("Urlmin");
 
                             dataf.add(Correlativo);
-                            dataf.add(Url.replaceAll("\\s", "%20"));
-                            dataf.add(Urlmin.replaceAll("\\s", "%20"));
+                            dataf.add(Utils.ChangeUrl(Url));
+                            dataf.add(Utils.ChangeUrl(Urlmin));
                         }
-                        comunicadoData.add(new Comunicado(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, Descripcion, dataf));
+                        comunicadoData.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
                     }
                     // des_data
                 }catch (Exception ex){
@@ -245,14 +242,14 @@ int varcant;
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase + GlobalVariables.Urlbase2 + a + "/" + b + "/" + "TP03");//url de cada publicacion
 
-                    get.setHeader("Authorization", "Bearer " + GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer " + GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
 
                     JSONArray data_p = respJSON.getJSONArray("Data");
-                    GlobalVariables.contador3 = respJSON.getInt("Count");
+                    GlobalVariables.contFotos = respJSON.getInt("Count");
 
 
                     for (int i = 0; i < data_p.length(); i++) {
@@ -275,13 +272,13 @@ int varcant;
                             JSONObject m = Data2.getJSONObject(j);
 
                             String Correlativo = m.getString("Correlativo");
-                            String Url = m.getString("Url");
-                            String Urlmin = m.getString("Urlmin");
+                            String Url = Utils.ChangeUrl(m.getString("Url"));
+                            String Urlmin = Utils.ChangeUrl(m.getString("Urlmin"));
 
-                            datafImg.add(new Img_Gal(Correlativo, Url.replaceAll("\\s", "%20"), Urlmin.replaceAll("\\s", "%20")));
+                            datafImg.add(new Img_Gal(Correlativo, Url, Urlmin));
                         }
 
-                        imagenData.add(new Imagen(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, datafImg, cant_img));
+                        imagenData.add(new Imagen(CodRegistro, icon, Fecha, Titulo, datafImg, cant_img));
                     }
                     // des_data
                 }catch (Exception ex){
@@ -314,7 +311,7 @@ int varcant;
                     JSONObject respJSON = new JSONObject(respstring);
 
                     JSONArray data_p = respJSON.getJSONArray("Data");
-                    GlobalVariables.contador4 = respJSON.getInt("Count");
+                    GlobalVariables.contVideos = respJSON.getInt("Count");
 
 
                     for (int i = 0; i < data_p.length(); i++) {
@@ -338,14 +335,14 @@ int varcant;
                             JSONObject n = Data2.getJSONObject(j);
 
                             String Correlativo = n.getString("Correlativo");
-                            String Url = n.getString("Url");
-                            String Urlmin = n.getString("Urlmin");
+                            String Url = Utils.ChangeUrl(n.getString("Url"));
+                            String Urlmin = Utils.ChangeUrl(n.getString("Urlmin"));
 
-                            datafile.add(new Vid_Gal(Correlativo, Url.replaceAll("\\s", "%20"), Urlmin.replaceAll("\\s", "%20")));
+                            datafile.add(new Vid_Gal(Correlativo, Url, Urlmin));
 
                         }
 
-                        videoData.add(new Video(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, datafile, CantidadV));
+                        videoData.add(new Video(CodRegistro, icon, Fecha, Titulo, datafile, CantidadV));
                     }
                     // des_data
                 }catch (Exception ex){

@@ -74,6 +74,10 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
         try {
             HttpResponse response;
             String codreg=params[0];
+            String titulo_not=params[1];
+            String fecha_not=params[2];
+
+
 
             //String b=params[1];
 
@@ -81,21 +85,24 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    get.setHeader("Content-type", "application/json");
+
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     //notdetArray.add(R.drawable.ic_menu_noticias);
-                    notdetArray.add(respJSON.getString("Autor"));
-                    notdetArray.add(respJSON.getString("Fecha"));
-                    notdetArray.add(respJSON.getString("Titulo"));
+                    //notdetArray.add(respJSON.getString("Autor"));
+                    notdetArray.add(fecha_not);
+                    notdetArray.add(titulo_not);
                     //notdetArray.add(respJSON.getString("Subtitulo"));
                     notdetArray.add(respJSON.getString("Descripcion"));
 
                     JSONObject Files = respJSON.getJSONObject("Files");
                     JSONArray Data2 = Files.getJSONArray("Data");
-
+                    int count=Files.getInt("Count");
+                    if(count!=0){
                     for (int i = 0; i < Data2.length(); i++) {
                         JSONObject h = Data2.getJSONObject(i);
 
@@ -113,7 +120,7 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
 
                         }
 
-
+                    }
                     }
 
                    // des_data
@@ -148,8 +155,8 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
         try {
 
             if (opcion == "get") {
-                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
 
                 GlobalVariables.listdetnot=des_data;
 
@@ -160,25 +167,25 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                 tx2 = (TextView)  actNotDet.findViewById(R.id.txfecha);
                 tx3 = (TextView)  actNotDet.findViewById(R.id.not_titulo);
                 content=(WebView) actNotDet.findViewById(R.id.Visor);
-                adj=(ImageButton) actNotDet.findViewById(R.id.ib_adj);
+                //adj=(ImageButton) actNotDet.findViewById(R.id.ib_adj);
 
 
 
 
 
-                imag0.setImageResource(R.drawable.ic_noticia3);
+                imag0.setImageResource(R.drawable.ic_noticia_final2);
                String df= notdetArray.get(0);
                 //tx1.setText(df);
-                tx2.setText(notdetArray.get(1));
-/*
+                //tx2.setText(notdetArray.get(1));
+
                 try {
-                    tx2.setText(formatoRender.format(formatoInicial.parse(notdetArray.get(1))));
+                    tx2.setText(formatoRender.format(formatoInicial.parse(notdetArray.get(0))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
 
 
-                tx3.setText(notdetArray.get(2));
+                tx3.setText(notdetArray.get(1));
                 //String g=notdetArray.get(3);
              /*   if(g.equals("null")){
                     tx4.setVisibility(View.GONE);
@@ -187,18 +194,18 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                     }*/
                 content.setWebViewClient(new MyWebViewClient());
 
-                content.loadDataWithBaseURL("",notdetArray.get(3) , "text/html", "UTF-8", "");
+                content.loadDataWithBaseURL("",notdetArray.get(2) , "text/html", "UTF-8", "");
                 WebSettings settings=content.getSettings();
                 settings.setJavaScriptEnabled(true);
 
                 //content.getSettings().setBuiltInZoomControls(true);
 
-                if(des_data.size()==0||count_files==0){
+                /*if(des_data.size()==0||count_files==0){
                     adj.setVisibility(View.GONE);
                 }else
                 {
                     adj.setVisibility(View.VISIBLE);
-                }
+                }*/
 
                 progressDialog.dismiss();
                 /*Not2Adapter ca = new Not2Adapter(v.getContext(),noticiaList);

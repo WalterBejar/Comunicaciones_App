@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.NoticiaAdapter;
 import com.pango.comunicaciones.model.Noticias;
 
@@ -51,7 +52,9 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
         this.opcion=opcion;
         this.Frag=Frag;
         recList=(ListView) v.findViewById(R.id.l_frag_not);
+
         //recList.setOnScrollListener(this);
+
     }
     @Override
     protected Void doInBackground(String... params) {
@@ -60,14 +63,16 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
             String a=params[0];
             String b=params[1];
 
-            getToken gettoken=new getToken();
-            gettoken.getToken();
+          //  getToken gettoken=new getToken();
+           // gettoken.getToken();
 
             if(opcion=="get"){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+GlobalVariables.Urlbase2+a+"/"+b+"/TP01");
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    get.setHeader("Content-type", "application/json");
+
                     response = httpClient.execute(get);
                     String respstring = EntityUtils.toString(response.getEntity());
 
@@ -76,18 +81,17 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                     JSONArray noticias = respJSON.getJSONArray("Data");
 
                     GlobalVariables.cont_item=noticias.length();
-                    GlobalVariables.contador=respJSON.getInt("Count");//obtiene el total de publicaciones en general
+                    GlobalVariables.contNoticia=respJSON.getInt("Count");//obtiene el total de publicaciones en general
 
                     for (int i = 0; i < noticias.length(); i++) {
                         JSONObject c = noticias.getJSONObject(i);
-                        String T =c.getString("Tipo");
+                        //String T =c.getString("Tipo");
                         //String A="TP02";
                         //if(T.equals("TP01")) {
 
                             String CodRegistro = c.getString("CodRegistro");
-                            String Tipo = c.getString("Tipo");
+                            //String Tipo = c.getString("Tipo");
                             int icon = R.drawable.ic_menu_noticias;
-                            String Autor = c.getString("Autor");
                             String Fecha = c.getString("Fecha");
                             String Titulo = c.getString("Titulo");
                             String Descripcion = c.getString("Descripcion");
@@ -99,16 +103,22 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                             for (int j = 0; j < Data2.length(); j++) {
                                 JSONObject h = Data2.getJSONObject(j);
 
-                                String Correlativo = h.getString("Correlativo");
                                 String Url = h.getString("Url");
-                                String Urlmin = h.getString("Urlmin");
+                                String Urlmin2 = h.getString("Urlmin");
 
-                                dataf.add(Correlativo);
-                                dataf.add(Url.replaceAll("\\s","%20"));
-                                dataf.add(Urlmin.replaceAll("\\s","%20"));
+                                String[] parts = Urlmin2.split("550px;");
+                                //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                                //String part2 = parts[1]; //obtiene: 19-A
+
+                                String Urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+
+                                dataf.add(Utils.ChangeUrl(Url));
+                                dataf.add(Utils.ChangeUrl(Urlmin));
                             }
                             //dataf.get(0);
-                            noticiaList.add(new Noticias(CodRegistro, Tipo, icon, Autor, Fecha, Titulo, Descripcion, dataf));
+                            noticiaList.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+                            GlobalVariables.noticias2.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+
                         //}
                     }
                 }catch (Exception ex){
@@ -134,17 +144,26 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     protected void onPreExecute() {
         if(opcion=="get") {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            if(GlobalVariables.noticias2.size()<3) {
+                progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            }
         }
     }
     @Override
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-                NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),noticiaList);
+                if(GlobalVariables.noticias2.size()<=3){
+
+                NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),GlobalVariables.noticias2);
                 recList.setAdapter(ca);
-                progressDialog.dismiss();
-                GlobalVariables.noticias2=noticiaList;
+                    progressDialog.dismiss();
+
+                }
+
+
+                // GlobalVariables.noticias2=GlobalVariables.noticias2.add(noticiaList) ;
+
                 //  GlobalVariables.noticias2.get(0);
             }
         }catch (Exception ex){

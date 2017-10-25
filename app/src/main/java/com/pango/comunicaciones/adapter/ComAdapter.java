@@ -45,7 +45,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
 
         View rowView=inflater.inflate(R.layout.public_com, null,true);
 
-        ImageView icono = (ImageView) rowView.findViewById(R.id.com_icon);
+        //ImageView icono = (ImageView) rowView.findViewById(R.id.com_icon);
 
         //TextView cNom_publicador = (TextView)  rowView.findViewById(R.id.com_txpub);
         TextView cFecha = (TextView)  rowView.findViewById(R.id.com_txfecha);
@@ -57,14 +57,14 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
 
 
         //asignando a las variables los valores obtenidos
-        final String tempNombre=data.get(position).getNom_publicador();
+        //final String tempNombre=data.get(position).getNom_publicador();
         final String tempFecha=data.get(position).getFecha();
         final String tempTitulo=data.get(position).getTitulo();
         final String tempDescripcion=data.get(position).getDescripcion();
 
 
         //cargar la data al layout//////
-        icono.setImageResource(R.drawable.ic_evento);
+        //icono.setImageResource(R.drawable.ic_evento);
         //cNom_publicador.setText(tempNombre);
         //cFecha.setText(tempFecha);
 
@@ -75,6 +75,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         }
 
         cTitulo.setText(tempTitulo);
+        cDescripcion.setText(tempDescripcion);
 
         int ds=data.get(position).getFiledata().size();
         if(ds==0) {
@@ -84,7 +85,6 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
             //cDescs.setText(tempDescripcion);
         }else {
 
-            cDescripcion.setText(tempDescripcion);
             Glide.with(context)
                     .load(GlobalVariables.Urlbase + data.get(position).getFiledata().get(2).replaceAll("\\s", "%20"))
                     .into(cImagNot);
@@ -97,10 +97,10 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
                 Intent intent=new Intent(v.getContext(), ActImgNot.class);
+                intent.putExtra("codreg",data.get(position).getCod_reg());
 
                 intent.putExtra("url_img", GlobalVariables.Urlbase + data.get(position).getFiledata().get(1).replaceAll("\\s", "%20"));
                 // intent.putExtra("val",0);
-
                 //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
                 v.getContext().startActivity(intent);
 

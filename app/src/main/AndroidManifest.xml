@@ -27,25 +27,31 @@
 
 
 
-        <activity android:name=".ReservaTicketFiltro" />
-        <activity android:name=".ReservaTicketDetalle" />
-        <activity android:name=".ReservaTicketListaPasajeros" />
+        <activity android:name=".ReservaTicketFiltro"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".ReservaTicketDetalle"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".ReservaTicketListaPasajeros"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <!--<activity android:name=".ReservaTicketBuscarPasajeros"></activity>-->
         <!-- <activity android:name=".ReservaTicketDetalle"></activity>-->
 
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|adjustResize"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
         <activity
             android:name=".ReservaTicketBuscarPasajeros"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ActImagDet"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

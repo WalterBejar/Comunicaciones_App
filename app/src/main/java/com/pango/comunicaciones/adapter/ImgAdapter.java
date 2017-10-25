@@ -33,8 +33,8 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
     private LinearLayout linearLayout;
     private Context context;
     private List<Imagen> data = new ArrayList<Imagen>();
-    DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+    DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+    DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
 
     public ImgAdapter(Context context, List<Imagen> data) {
         super(context, R.layout.public_imagen,data);
@@ -50,7 +50,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
         View rowView=inflater.inflate(R.layout.public_imagen, null,true);
 
-        ImageView icono = (ImageView) rowView.findViewById(R.id.icon_imag);
+        //ImageView icono = (ImageView) rowView.findViewById(R.id.icon_imag);
         //TextView iNom_publicador = (TextView)  rowView.findViewById(R.id.tximagpub);
         TextView iFecha = (TextView)  rowView.findViewById(R.id.txfechaimag);
         TextView iTitulo = (TextView)  rowView.findViewById(R.id.titulo_imagen);
@@ -73,16 +73,16 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         final String codreg_img=data.get(position).getCod_reg();
 
 
-        icono.setImageResource(R.drawable.ic_fotos3);
+       // icono.setImageResource(R.drawable.ic_fotos3);
 
 
         //iNom_publicador.setText(tempNombre);
-       iFecha.setText(tempFecha);
-       /* try {
+       //iFecha.setText(tempFecha);
+        try {
             iFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
-        }*/
+        }
         iTitulo.setText(tempTitulo);
         icant_img.setText("+"+tempcant);
 
@@ -97,7 +97,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
             a.length();
             b.length();
             String cad= a.substring( a.length()-4);
-            String cad2= b.substring( a.length()-4);
+           // String cad2= b.substring( a.length()-4);
             if(cad.equals(".jpg")|cad.equals(".png")) {
                 img.add(a);
                 img2.add(b);
@@ -198,6 +198,10 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
             }
         });
 
+
+
+
+
         iImag1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,9 +212,6 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
                // final ImgdetController obj = new ImgdetController("url","get", ActImag.this);
                 //obj.execute(GlobalVariables.img_get.getCod_reg());
-
-
-
 
                Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
                 //intent.putExtra(ActImagDet.EXTRA_PARAM_ID, 0);

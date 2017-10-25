@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -76,11 +77,29 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //toolbar.setNavigationIcon(R.mipmap.ic_logotitulo);
+        toolbar.setLogo(R.drawable.imagen1234);
+
+
+        //toolbar.setAlpha(1);
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //getSupportActionBar().setIcon(R.mipmap.ic_logotitulo);
         //GlobalVariables.Urlbase=Recuperar_data();
         // Intent toReservaTicketFiltro = new Intent(getApplicationContext(), ReservaTicketFiltro.class);
         //startActivity(toReservaTicketFiltro);
+
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        GlobalVariables.anchoMovil=metrics.widthPixels;
+        //int width = metrics.widthPixels; // ancho absoluto en pixels
+        //int height = metrics.heightPixels; // alto absoluto en pixels
+
+
+        //toolbar
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,6 +109,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
 
@@ -104,9 +124,11 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
         bottomNavigationView.setVisibility(View.GONE);
 
-        //getSupportActionBar().
+        getSupportActionBar().setTitle("");
 
-        setTitle("Antapaccay");
+
+
+
 
 
     }
@@ -232,7 +254,7 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_inicio:
-                    setTitle("Antapaccay");
+                    //setTitle("Antapaccay");
                     ChangeFragment(NavigationFragment.Inicio);
                     bottomNavigationView.setVisibility(View.GONE);
 

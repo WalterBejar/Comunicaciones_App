@@ -55,7 +55,7 @@ public class Adap_Vid extends BaseAdapter {
 
         final Vid_Gal item = getItem(position);
         Glide.with(imagen.getContext())
-                .load(GlobalVariables.Urlbase+item.getUrlmin_vid().replaceAll("\\s","%20"))
+                .load(GlobalVariables.Urlbase +item.getUrlmin_vid().replaceAll("\\s","%20"))
                 .into(imagen);
 
         return view;

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.pango.comunicaciones.ActImag;
+import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.adapter.ImgAdapter;
+import com.pango.comunicaciones.controller.ComController;
+import com.pango.comunicaciones.controller.ImgController;
 
 import static com.pango.comunicaciones.GlobalVariables.imagen2;
+import static com.pango.comunicaciones.GlobalVariables.noticias2;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,7 +78,7 @@ public class FragmentImagenes extends Fragment {
 /////////////////////////////////////////////////////////////////////////////////
     ListView recListImag;
     Context context;
-
+    private int pageCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,22 +86,23 @@ public class FragmentImagenes extends Fragment {
         context = container.getContext();
         // Inflate the layout for this fragment
         final View rootView = inflater.inflate(R.layout.fragment_imagenes, container, false);
-
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
         recListImag = (ListView) rootView.findViewById(R.id.list_imag);
 
-        //final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
-        //obj.execute(String.valueOf(1),String.valueOf(10));
 
+        if(GlobalVariables.imagen2.size()==0) {
+            final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
+            obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid));
+        }else {
+            ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
+            recListImag.setAdapter(ca);
+        }
 
-
-        ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
-        recListImag.setAdapter(ca);
-
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater2 = getActivity().getLayoutInflater();
-        View v = inflater.inflate(R.layout.act_imag, null);
-        builder.setView(v);
+        //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //LayoutInflater inflater2 = getActivity().getLayoutInflater();
+        //View v = inflater.inflate(R.layout.act_imag, null);
+        //builder.setView(v);
 
         recListImag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,16 +114,60 @@ public class FragmentImagenes extends Fragment {
 
                 GlobalVariables.img_get= imagen2.get(position);
 
+                String titulo=imagen2.get(position).getTitulo();
+                String fecha=imagen2.get(position).getFecha();
 
                 //se conecta a un activity//
                 Intent intent = new Intent(getActivity(), ActImag.class);
+                intent.putExtra("titulo",titulo);
+                intent.putExtra("fecha",fecha);
+
                 startActivity(intent);
 
             }
         });
 
+        recListImag.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemCount) {
+
+                int page2=page;
+
+
+                if(GlobalVariables.imagen2.size()<GlobalVariables.contFotos) {
+
+
+                    final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
+                    obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
+                    pageCount++;
+
+
+                 /*
+                 String Url = "media/GetImagen/6767/Salud Mental 2016 - 1.jpg";
+                 String Urlmin = "media/GetminFile/6767/Salud Mental 2016 - 1.jpg";
+                 ArrayList<String> dataf = new ArrayList<>();
+                 dataf.add("6767");
+                 dataf.add(Url.replaceAll("\\s", "%20"));
+                 dataf.add(Urlmin.replaceAll("\\s", "%20"));
+
+                 GlobalVariables.noticias2.add(new Noticias("SC2017000549", "TP01", R.drawable.ic_menu_noticias, "Ojeda, Christiam A (", "2017-10-09T00:00:00", "CUIDEMOS NUESTRA SALUD MENTAL", "Una de cada cinco personas en ámbito laboral puede experimentar un trastorno de salud mental. Los problemas de salud mental tienen un impacto directo en los lugares de trabajo.", dataf));
+*/
+
+                    return true; // ONLY if more data is actually being loaded; false otherwise.
+                }else{
+                    //flag=true;
+                    return false;
+
+                }
+            }
+        });
+
+
         return rootView;
     }
+
+
+
 
     ////////////////////////////////////////////////////////////////////////
 

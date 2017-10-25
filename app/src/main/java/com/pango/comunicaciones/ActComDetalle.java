@@ -12,13 +12,20 @@ import android.widget.ImageButton;
 import com.pango.comunicaciones.controller.ComdetController;
 
 public class ActComDetalle extends AppCompatActivity {
-    ImageButton adj_com;
     Button btn_adjuntos;
+    String titulo;
+    String fecha;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_com_detalle);
-        setTitle("Eventos");
+        //setTitle("Eventos");
+
+
+        Bundle datos = this.getIntent().getExtras();
+        titulo=datos.getString("titulo");
+        fecha=datos.getString("fecha");
+
 
         final ComdetController obj = new ComdetController("url","get", ActComDetalle.this);
         //obj.execute(GlobalVariables.com_pos.getCod_reg());
@@ -27,11 +34,11 @@ public class ActComDetalle extends AppCompatActivity {
 
         if(GlobalVariables.com_pos==null){
             //if (GlobalVariables.cod_public_com!=null){
-            obj.execute(GlobalVariables.cod_public);}
+            obj.execute(GlobalVariables.cod_public,titulo,fecha);}
         //else{obj.execute(GlobalVariables.cod_public_com);}
         //}
         else {
-            obj.execute(GlobalVariables.com_pos.getCod_reg());
+            obj.execute(GlobalVariables.com_pos.getCod_reg(),titulo,fecha);
 
         }
 
@@ -67,12 +74,14 @@ public class ActComDetalle extends AppCompatActivity {
 
     private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarcom);
+        toolbar.setLogo(R.drawable.imagen1234);
 
         if (toolbar == null) return;
 
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
+
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
     }

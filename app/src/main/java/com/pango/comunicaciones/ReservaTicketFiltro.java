@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -61,6 +62,10 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_filtro);
         setTitle("Reserva de Buses");
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus1);
+        setSupportActionBar(toolbar);
+
 
         botonBuscarTickets = (Button) findViewById(R.id.botonBuscarTickets);
         botonEscogerFecha = (Button) findViewById(R.id.botonEscogerFecha);

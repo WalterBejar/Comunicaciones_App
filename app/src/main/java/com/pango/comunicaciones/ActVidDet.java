@@ -69,7 +69,9 @@ public class ActVidDet extends AppCompatActivity {
                     ActVidDet.this);
             mediacontroller.setAnchorView(videoExtendida);
             // Get the URL from String VideoURL
-            Uri video = Uri.parse(GlobalVariables.Urlbase+GlobalVariables.listdetvid.get(position).getUrl_vid());
+           String asdf= GlobalVariables.listdetvid.get(position).getUrl_vid();
+
+            Uri video = Uri.parse(GlobalVariables.Urlbase.substring(0,GlobalVariables.Urlbase.length()-4)+asdf);
 
             videoExtendida.setMediaController(mediacontroller);
             videoExtendida.setVideoURI(video);

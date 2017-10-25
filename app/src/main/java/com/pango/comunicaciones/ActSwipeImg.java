@@ -31,15 +31,10 @@ public class ActSwipeImg extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_swipe_img);
 
-
-
-
         Bundle datos = this.getIntent().getExtras();
         positionIn=datos.getInt("post");
-
         Bundle datos2 = this.getIntent().getExtras();
         posPublic=datos2.getInt("position_p");
-
 
         Bundle img_url = this.getIntent().getExtras();
         img_final=img_url.getStringArrayList("url_img");
@@ -52,8 +47,12 @@ public class ActSwipeImg extends AppCompatActivity {
 
 
 
-        /*final ListImgdetController obj = new ListImgdetController("url","get", ActSwipeImg.this);
-        obj.execute(code,String.valueOf(positionIn),String.valueOf(posPublic));*/
+        final ListImgdetController obj = new ListImgdetController("url","get", ActSwipeImg.this);
+        obj.execute(code,String.valueOf(positionIn),String.valueOf(posPublic));
+
+
+
+
 
 
 
@@ -62,10 +61,10 @@ public class ActSwipeImg extends AppCompatActivity {
 
         // cargarImagenExtendida();
 
-        viewPager = (ViewPager)findViewById(R.id.viewPager2);
+       /* viewPager = (ViewPager)findViewById(R.id.viewPager2);
         adapter = new ViewPagerAdapter2(ActSwipeImg.this,img_final,positionIn);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(positionIn,true);
+        viewPager.setCurrentItem(positionIn,true);*/
         //viewPager.setCurrentItem(posPublic,true);
 
 /*

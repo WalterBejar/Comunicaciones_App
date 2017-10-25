@@ -13,6 +13,7 @@
     android:layout_alignParentEnd="true"
     card_view:cardCornerRadius="4dp"
     android:layout_alignParentRight="true"
+    app:cardBackgroundColor="@color/colormedio"
 
     card_view:contentPadding="10dp"
     card_view:cardElevation="5dp"
@@ -20,35 +21,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-
-        <ImageView
-            android:id="@+id/icon_vid"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-
-            android:tint="@color/colorNotificacion"
-
-            />
+        android:layout_height="wrap_content">
 
 
         <TextView
             android:id="@+id/titulo_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_alignTop="@+id/icon_vid"
-
+            android:layout_below="@+id/rel_vid"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
-            android:layout_toEndOf="@+id/icon_vid"
             android:textColor="@color/cardview_dark_background"
+            android:textSize="14sp"
             android:textStyle="normal|bold"
-            android:layout_toRightOf="@+id/icon_vid" />
+            android:text="hbhuyyuyuvytfytvgjhbj"
+
+            />
 
         <TextView
             android:id="@+id/txfechavid"
@@ -57,14 +45,19 @@
             android:layout_alignLeft="@+id/titulo_video"
             android:layout_alignStart="@+id/titulo_video"
             android:layout_below="@+id/titulo_video"
-            android:textSize="12sp" />
-
+            android:textSize="12sp"
+            android:text="obilubilublib"
+            />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/rel_vid"
+        >
 
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txfechavid"
             android:layout_centerHorizontal="true"
 
             >
@@ -72,8 +65,7 @@
             <ImageView
                 android:id="@+id/imag_vid"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:scaleType="centerCrop"
+                android:layout_height="wrap_content"
                 android:src="@drawable/splash_logo"
                 android:transitionName="Imagen_compartida" />
 
@@ -82,8 +74,11 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
+
+                android:src="@drawable/button_play"
                 android:visibility="invisible"
-                app:srcCompat="@drawable/button_play" />
+
+                />
 
         </FrameLayout>
 
@@ -121,18 +116,26 @@
             android:textAlignment="center"
             android:textColor="@android:color/white" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/frameLayout"
-            android:layout_alignRight="@+id/frameLayout"
-            android:layout_below="@+id/videtiq"
-            android:layout_marginEnd="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginTop="17dp"
-            app:srcCompat="@color/cardview_dark_background" />
+</RelativeLayout>
 
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
+
+
+<!--
+
+        <ImageView
+            android:id="@+id/icon_vid"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+
+            android:tint="@color/colorNotificacion"
+
+            />
+
+
+   -->

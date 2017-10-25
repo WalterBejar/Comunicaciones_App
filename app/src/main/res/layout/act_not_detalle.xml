@@ -3,26 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/act_imag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActNotDetalle"
     android:orientation="vertical"
     android:background="@color/colorBlanco"
     >
+
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarnot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorTitulo"
+        android:layout_height="50dp"
+        android:background="@color/colorBlanco"
+        android:minHeight="?attr/actionBarSize"
 
         />
 
 
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_ndet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -48,7 +47,7 @@
             android:background="@color/cardview_light_background"
             android:layout_margin="0dp"
 
-            >
+            tools:ignore="WebViewLayout">
 
 
 
@@ -92,7 +91,7 @@
                 android:layout_alignLeft="@+id/not_titulo"
                 android:layout_alignStart="@+id/not_titulo"
                 android:layout_below="@+id/not_titulo"
-                android:text="fecha de la publicacion"
+                tools:text="fecha de la publicacion"
                 android:textColor="@color/cardview_shadow_start_color"
 
                 android:textStyle="normal|bold" />
@@ -106,26 +105,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
-                android:layout_margin="20dp"
+                android:layout_margin="15dp"
                 android:layout_below="@+id/txfecha"
                 android:layout_alignLeft="@+id/not_titulo"
                 android:lineSpacingExtra="3sp"
                 android:id="@+id/Visor"
                 />
-
-            <ImageButton
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                app:srcCompat="@drawable/ic_adj"
-                android:id="@+id/ib_adj"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@+id/txfecha"
-                android:visibility="invisible"
-
-                />
-
 
         </RelativeLayout>
 

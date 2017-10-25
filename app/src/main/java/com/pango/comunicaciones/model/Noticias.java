@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 public class Noticias {
     private String cod_reg;
-    private String tipo;
     private int icon;
-    private String nom_publicador;
     private String fecha;
     private String titulo;
     private String descripcion;
@@ -21,11 +19,9 @@ public class Noticias {
     public Noticias() {
     }
 
-    public Noticias(String cod_reg, String tipo, int icon, String nom_publicador, String fecha, String titulo, String descripcion, ArrayList<String> filedata) {
+    public Noticias(String cod_reg, int icon, String fecha, String titulo, String descripcion, ArrayList<String> filedata) {
         this.cod_reg = cod_reg;
-        this.tipo = tipo;
         this.icon = icon;
-        this.nom_publicador = nom_publicador;
         this.fecha = fecha;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -40,28 +36,12 @@ public class Noticias {
         this.cod_reg = cod_reg;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
     public int getIcon() {
         return icon;
     }
 
     public void setIcon(int icon) {
         this.icon = icon;
-    }
-
-    public String getNom_publicador() {
-        return nom_publicador;
-    }
-
-    public void setNom_publicador(String nom_publicador) {
-        this.nom_publicador = nom_publicador;
     }
 
     public String getFecha() {
@@ -89,9 +69,6 @@ public class Noticias {
     }
 
     public ArrayList<String> getFiledata() {
-
-
-
         return filedata;
     }
 

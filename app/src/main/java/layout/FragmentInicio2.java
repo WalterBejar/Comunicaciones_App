@@ -8,6 +8,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -80,13 +81,18 @@ public class FragmentInicio2 extends Fragment {
         View view =inflater.inflate(R.layout.fragment_inicio3, container, false);
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-        getActivity().setTitle("Antapaccay");
+        //getActivity().setTitle("Antapaccay");
         bottomNavigationView.setVisibility(View.GONE);
 
-        navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(false);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+
+      /*  navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(false);
         navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(false);
         navigationView.getMenu().findItem(R.id.nav_videos).setChecked(false);
         navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(false);
+*/
+        //disableItem();
 
         card1 = (CardView) view.findViewById(R.id.card1);
         card2 = (CardView) view.findViewById(R.id.card2);
@@ -102,6 +108,7 @@ public class FragmentInicio2 extends Fragment {
             public void onClick(View v) {
                 getActivity().setTitle("Noticias");
 
+
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentNoticias();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -110,9 +117,11 @@ public class FragmentInicio2 extends Fragment {
                 // Commit a la transacción
                 transaction.commit();
 
-                bottomNavigationView.getMenu().findItem(R.id.navigation_noticias).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
+
+
                 navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                bottomNavigationView.getMenu().findItem(R.id.navigation_noticias).setChecked(true);
 
 
             }
@@ -124,9 +133,7 @@ public class FragmentInicio2 extends Fragment {
             public void onClick(View v) {
                 getActivity().setTitle("Eventos");
 
-                bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
+
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentComunicados();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -134,6 +141,12 @@ public class FragmentInicio2 extends Fragment {
                 transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+
+                //bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
+
+
             }
         });
         card3.setOnClickListener(new View.OnClickListener(){
@@ -141,9 +154,7 @@ public class FragmentInicio2 extends Fragment {
             public void onClick(View v) {
                 getActivity().setTitle("Fotos");
 
-                bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
+
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentImagenes();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -151,6 +162,10 @@ public class FragmentInicio2 extends Fragment {
                 transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+                bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
+
             }
         });
         card4.setOnClickListener(new View.OnClickListener(){
@@ -158,9 +173,7 @@ public class FragmentInicio2 extends Fragment {
             public void onClick(View v) {
                 getActivity().setTitle("Reserva de Buses");
 
-                //bottomNavigationView.getMenu().findItem(R.id.navigation_).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
+
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentTickets();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -168,15 +181,18 @@ public class FragmentInicio2 extends Fragment {
                 transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+
+                bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
+
             }
         });
         card5.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 getActivity().setTitle("Videos");
-                //bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                //navigationView.getMenu().findItem(R.id.nav_Contactenos).setChecked(true);
+
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentVideos();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -184,15 +200,17 @@ public class FragmentInicio2 extends Fragment {
                 transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+
+                bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
             }
         });
         card6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 getActivity().setTitle("Redes Sociales");
-                bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
+
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentRedesSociales();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -200,12 +218,25 @@ public class FragmentInicio2 extends Fragment {
                 transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+
+                //bottomNavigationView.getMenu().findItem(R.id.navigation_).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
             }
         });
 
 
         return view;
     }
+
+
+    public  void disableItem(){
+        navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(false);
+        navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(false);
+        navigationView.getMenu().findItem(R.id.nav_videos).setChecked(false);
+        navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(false);
+    }
+
 
 
 

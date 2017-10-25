@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.pango.comunicaciones.ActImag;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.Adap_Img;
 import com.pango.comunicaciones.model.Img_Gal;
 
@@ -74,29 +75,33 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
     }
     @Override
     protected Void doInBackground(String... params) {
+
+
         try {
             HttpResponse response;
             String codreg=params[0];
-
+            String titulo=params[1];
+            String fecha=params[2];
             //String b=params[1];
-            getToken gettoken=new getToken();
-            gettoken.getToken();
+           // getToken gettoken=new getToken();
+           // gettoken.getToken();
 
 
             if(opcion=="get"){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                  //  get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     //notdetArray.add(R.drawable.ic_menu_noticias);
 
-                    ImgdetArray.add(respJSON.getString("Autor"));
-                    ImgdetArray.add(respJSON.getString("Fecha"));
-                    ImgdetArray.add(respJSON.getString("Titulo"));
+                    //ImgdetArray.add(respJSON.getString("Autor"));
+
+                    ImgdetArray.add(fecha);
+                    ImgdetArray.add(titulo);
                    // ImgdetArray.add(respJSON.getString("Subtitulo"));
                   //  ImgdetArray.add(respJSON.getString("Descripcion"));
 
@@ -105,18 +110,20 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
 
                     for (int i = 0; i < Data2.length(); i++) {
                         JSONObject h = Data2.getJSONObject(i);
-/*
-                        private String Correlativo;
-                        private String url_img;
-                        private String urlmin_imag;*/
 
-                        String correlativo=h.getString("Correlativo");
+                        String correlativo=Integer.toString(i);
                        // int tamanio=h.getInt("Tamanio");
                         String url_file=h.getString("Url");
-                        String urlmin=h.getString("Urlmin");
+                        String urlmin2=h.getString("Urlmin");
+
+                        String[] parts = urlmin2.split("550px;");
+                        //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                        //String part2 = parts[1]; //obtiene: 19-A
+
+                        String urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
 
 
-                        view_image.add(new Img_Gal(correlativo,url_file.replaceAll("\\s","%20"),urlmin.replaceAll("\\s","%20")));
+                        view_image.add(new Img_Gal(correlativo, Utils.ChangeUrl(url_file),Utils.ChangeUrl(urlmin)));
 
                     }
 
@@ -151,25 +158,25 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-                DateFormat formatoInicial = new SimpleDateFormat("yyyy-mm-dd'T'00:00:00", new Locale("es", "ES"));
-                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+                DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
+                DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
                 GlobalVariables.listdetimg=view_image;//datos correlativo,url,urlmin
              //   String asd=ImgdetArray.get(0);
 
              //   GlobalVariables.Imgdet=ImgdetArray;
-                imag0.setImageResource(R.drawable.ic_fotos3);
+                imag0.setImageResource(R.drawable.ic_galeria_final2);
 
                 //String df= ImgdetArray.get(0);
                // tx1.setText(df);
-                tx2.setText(ImgdetArray.get(1));
+                //tx2.setText(ImgdetArray.get(1));
 
-               /* try {
-                    tx2.setText(formatoRender.format(formatoInicial.parse(ImgdetArray.get(1))));
+                try {
+                    tx2.setText(formatoRender.format(formatoInicial.parse(ImgdetArray.get(0))));
                 } catch (ParseException e) {
                     e.printStackTrace();
-                }*/
+                }
 
-                tx3.setText(ImgdetArray.get(2));
+                tx3.setText(ImgdetArray.get(1));
 
                 gridView = (GridView) actImag.findViewById(R.id.grid_imag);
                 adaptador = new Adap_Img(actImag);

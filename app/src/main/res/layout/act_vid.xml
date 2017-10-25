@@ -3,19 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/act_vid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActVid"
     android:orientation="vertical"
     >
 
+
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar4"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
 
-        android:background="@color/colorTitulo" />
+        android:background="@color/colorBlanco"
+
+        android:minHeight="?attr/actionBarSize"
+
+
+         />
 
     <FrameLayout
         android:layout_width="match_parent"

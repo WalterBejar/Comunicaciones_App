@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,10 +72,13 @@ CardView card1, card2, card3;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rowview = inflater.inflate(R.layout.fragment_redes_sociales, container, false);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        final String facebookId = "fb://page/1392365134368940";
 
-        final String facebookId = "fb://page/< 1392365134368940>";
+
         final String urlPage = "https://www.facebook.com/Antapaccay/";
-        final String urlPageln = "https://twitter.com/tintayaperu?lang=es";
+        final String urlPageln = "https://www.linkedin.com/company/3658000";
         final String urlPagelin = "https://www.youtube.com/user/TintayaAntapaccay";
 
 
@@ -88,7 +92,7 @@ CardView card1, card2, card3;
             @Override
             public void onClick(View v) {
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookId )));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(facebookId)));
                 } catch (Exception e) {
                     Log.e(TAG, "Aplicación no instalada.");
                     //Abre url de pagina.
@@ -102,7 +106,7 @@ CardView card1, card2, card3;
     @Override
     public void onClick(View v) {
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagelin)));
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPageln)));
         } catch (Exception e) {
             Log.e(TAG, "Aplicación no instalada.");
             //Abre url de pagina.

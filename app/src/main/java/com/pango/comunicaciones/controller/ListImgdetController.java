@@ -13,6 +13,7 @@ import com.pango.comunicaciones.ActSwipeImg;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.TouchImageView;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.Adap_Img;
 import com.pango.comunicaciones.adapter.ViewPagerAdapter;
 import com.pango.comunicaciones.model.Img_Gal;
@@ -32,9 +33,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Andre on 08/10/2017.
- */
 
 public class ListImgdetController extends AsyncTask<String,Void,Void> {
 
@@ -110,18 +108,21 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
 
                     for (int i = 0; i < Data2.length(); i++) {
                         JSONObject h = Data2.getJSONObject(i);
-/*
-                        private String Correlativo;
-                        private String url_img;
-                        private String urlmin_imag;*/
 
-                        String correlativo=h.getString("Correlativo");
+
+                        String correlativo=Integer.toString(i);
                         // int tamanio=h.getInt("Tamanio");
                         String url_file=h.getString("Url");
-                        String urlmin=h.getString("Urlmin");
+                        String urlmin2=h.getString("Urlmin");
+
+                        String[] parts = urlmin2.split("550px;");
+                        //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                        //String part2 = parts[1]; //obtiene: 19-A
+
+                        String urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
 
 
-                        view_image.add(new Img_Gal(correlativo,url_file.replaceAll("\\s","%20"),urlmin.replaceAll("\\s","%20")));
+                        view_image.add(new Img_Gal(correlativo, Utils.ChangeUrl(url_file),Utils.ChangeUrl(urlmin)));
 
                     }
 
@@ -164,10 +165,6 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
                 adapter = new ViewPagerAdapter(actSwipeImg,GlobalVariables.listdetimg,Integer.parseInt(posIn));
                 viewPager.setAdapter(adapter);
                 viewPager.setCurrentItem(Integer.parseInt(posIn),true);
-
-
-
-
                 progressDialog.dismiss();
 
             }
