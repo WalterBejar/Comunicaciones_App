@@ -71,7 +71,7 @@ public class VidAdapter extends ArrayAdapter<Video> {
 
         final int tempcant_vid=data.get(position).getCant_video();
 
-
+        final String tempUrl=data.get(position).getFiledata().get(0).getUrl_vid();
 
 //        icono.setImageResource(R.drawable.ic_video_final);
         //vNom_publicador.setText(tempNombre);
@@ -126,8 +126,11 @@ public class VidAdapter extends ArrayAdapter<Video> {
         vImagVid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GlobalVariables.cont_posvid=0;
                 Intent intent = new Intent(v.getContext(), ActVidDet.class);
                 intent.putExtra("post",position);
+                intent.putExtra("urltemp",tempUrl);
+                intent.putExtra("isList",true);
                 //intent.putExtra("val",0);
                 //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
                 v.getContext().startActivity(intent);

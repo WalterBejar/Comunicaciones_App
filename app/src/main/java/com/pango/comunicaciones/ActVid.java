@@ -100,6 +100,7 @@ public class ActVid extends AppCompatActivity implements AdapterView.OnItemClick
         Vid_Gal item= (Vid_Gal) parent.getItemAtPosition(position);
         Intent intent = new Intent(this, ActVidDet.class);
         intent.putExtra("post",position);
+        intent.putExtra("isList",false);
         //intent.putExtra("val",0);
         //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
         startActivity(intent);

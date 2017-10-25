@@ -79,8 +79,6 @@ public class VidController extends AsyncTask<String,Void,Void> {
                     GlobalVariables.cont_item = video.length();
                     GlobalVariables.contVideos = respJSON.getInt("Count");
 
-
-
                     for (int i = 0; i < video.length(); i++) {
                         JSONObject c = video.getJSONObject(i);
                         //String T = c.getString("Tipo");

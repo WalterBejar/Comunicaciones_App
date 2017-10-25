@@ -19,6 +19,8 @@ public class ActVidDet extends AppCompatActivity {
     //ActVid reg=new ActVid();
 
     private int position;
+    public String Url_video;
+    public boolean isListvideo;
     public int valor;
     //private Vid_Gal itemDetallado;
 
@@ -38,6 +40,7 @@ public class ActVidDet extends AppCompatActivity {
 
         Bundle datos = this.getIntent().getExtras();
         position=datos.getInt("post");
+        isListvideo=datos.getBoolean("isList");
         //valor=datos.getInt("valor");
         //Registrar(valor);
 
@@ -68,10 +71,17 @@ public class ActVidDet extends AppCompatActivity {
             MediaController mediacontroller = new MediaController(
                     ActVidDet.this);
             mediacontroller.setAnchorView(videoExtendida);
+            Uri video;
             // Get the URL from String VideoURL
-           String asdf= GlobalVariables.listdetvid.get(position).getUrl_vid();
+            if(isListvideo==true) {
+                //String asdf= GlobalVariables.listdetvid.get(position).getUrl_vid();
+                //String aadd = "Videos/2608.mp4";
+                Url_video=datos.getString("urltemp");
 
-            Uri video = Uri.parse(GlobalVariables.Urlbase.substring(0,GlobalVariables.Urlbase.length()-4)+asdf);
+                 video = Uri.parse(GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4) + Url_video);
+            }else{
+                 video = Uri.parse(GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4) + GlobalVariables.listdetvid.get(position).getUrl_vid());
+            }
 
             videoExtendida.setMediaController(mediacontroller);
             videoExtendida.setVideoURI(video);
