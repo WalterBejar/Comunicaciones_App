@@ -4,6 +4,8 @@ import com.pango.comunicaciones.model.PasajeroModel;
 import com.pango.comunicaciones.model.PersonaPostReservaModel;
 import com.pango.comunicaciones.model.TicketModel;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,8 +35,8 @@ public class Utils {
         return baseUrl + "/maestro/get_terminal";
     }
 
-    public static String getUrlForBuscarTickets(String origenEscogido, String destinoEscogido, String fechaEscogida, int cantidadTickets) {
-        String url= baseUrl + "/ticket/get_tickets/" + origenEscogido + "/" + destinoEscogido + "/" + fechaEscogida + "/1/" + cantidadTickets;
+    public static String getUrlForBuscarTickets(String origenEscogido, String destinoEscogido, String fechaEscogida, int pagina,int cantidadTickets) {
+        String url= baseUrl + "/ticket/get_tickets/" + origenEscogido + "/" + destinoEscogido + "/" + fechaEscogida + "/"+pagina+"/" + cantidadTickets;
         return url.replace(" ", "%20");
     }
 
@@ -42,20 +44,40 @@ public class Utils {
         return baseUrl + "/ticket/get_ticket/" + codigoTicket;
     }
 
+
     public static String getTicketProperty(TicketModel ticket, String s) {
+        DateFormat formatoInicial = new SimpleDateFormat("yyyyMMdd'T'HH:mm:ss");
+        DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
+        DateFormat formatoHora = new SimpleDateFormat("h:mm a");
+        Date temp= null;
+        try {
+            temp= formatoInicial.parse(ticket.FECHA+"T"+ticket.HORA);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         switch (s){
             case "Nro Programa":
                 return ticket.IDPROG;
-            case "Fecha":
-                return ticket.FECHA;
-            case "Hora":
-                return ticket.HORA.substring(0,5);
+            case "Nombre Bus":
+                return ticket.SERVICIO;
             case "Origen":
                 return ticket.ORIGEN;
             case "Destino":
                 return ticket.DESTINO;
-            case "Reservas":
+            case "Fecha":
+                return formatoRender.format(temp);
+            case "Hora":
+                return formatoHora.format(temp).replace(". ","").replace(".","");
+            case "Disponibles":
+                return ticket.DISPONIBLES;
+            case "Ocupados":
                 return "" + ticket.RESERVAS;
+            case "Total Asientos":
+                return ticket.ASIENTOS;
+            case "Reservas Hecha":
+                return ticket.SEPARADO?"SI":"NO";
+            case "Tipo Bus":
+                return "" + ticket.TIPOBUS;
             case "Patente":
                 return ticket.PATENTE;
             case "Marca":
@@ -64,8 +86,7 @@ public class Utils {
                 return ticket.MODELO;
             case "Tipo Vehiculo":
                 return ticket.TIPOVEH;
-            case "Asientos":
-                return "" + ticket.ASIENTOS;
+
             default:
                 return "";
         }
@@ -93,8 +114,8 @@ public class Utils {
         return baseUrl + "/persona/get_pasajeros/" + codigoTicket;
     }
 
-    public static String getUrlForReservaTicketBuscarPasajeros(String dni, String nombre, String empresa, int cantidad) {
-        String url= baseUrl + "/persona/get_personas/" + dni + "/" + nombre + "/" + empresa + "/1/" + cantidad;
+    public static String getUrlForReservaTicketBuscarPasajeros(String dni, String nombre, String empresa,int pagina, int cantidad) {
+        String url= baseUrl + "/persona/Get_Personas?DNI=" + dni + "&Nombres=" + nombre + "&Empresa=" + empresa + "&Pagenumber="+pagina+"&Elemperpage=" + cantidad;
         return url.replace(" ", "%20");
     }
 
@@ -102,7 +123,7 @@ public class Utils {
         PersonaPostReservaModel persona = new PersonaPostReservaModel();
         //persona.CodPersona = pasajero.CodPersona;
         persona.IDPROG= codigoTicket;
-        //persona.Email = pasajero.Email;
+        persona.NOMBRES = pasajero.NOMBRES;
         persona.DNI = pasajero.DNI;
         return persona;
     }

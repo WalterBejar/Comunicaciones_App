@@ -14,9 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.pango.comunicaciones.model.GetPasajeroModel;
+import com.pango.comunicaciones.model.PasajeroModel;
 import com.pango.comunicaciones.model.PersonaPostReservaModel;
 import com.pango.comunicaciones.model.TicketModel;
 
@@ -31,13 +32,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ReservaTicketDetalle extends AppCompatActivity {
 
     String codigoTicket;
     TicketModel ticket;
 
-    String[] busDetalleListaNombre = {"Nro Programa", "Fecha", "Hora", "Origen", "Destino", "Reservas", "Patente", "Marca", "Modelo", "Tipo Vehiculo", "Asientos"};
+    String[] busDetalleListaNombre = {"Nro Programa","Nombre Bus","Origen", "Destino", "Fecha", "Hora","Disponibles","Ocupados","Total Asientos", "Reservas Hecha", "Tipo Bus","Patente", "Marca", "Modelo", "Tipo Vehiculo"};
 
     DetalleAdapter detalleAdapter;
     ProgressDialog progressDialog;
@@ -61,7 +63,7 @@ public class ReservaTicketDetalle extends AppCompatActivity {
         progressDialog.setMessage("Por favor, espere...");
         progressDialog.setCancelable(false);
         builder = new AlertDialog.Builder(this);
-        builder.setMessage("¿Desea continuar?");
+        builder.setTitle("¿Desea continuar?");
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // Gestionar la reserva y cerrar el diálogo
@@ -104,10 +106,14 @@ public class ReservaTicketDetalle extends AppCompatActivity {
     public void gestionarReserva(View view){
         String titulo = "";
         if (ticket.SEPARADO)
-            titulo = "Está a punto de eliminar su reserva en este viaje.";
-        else
-            titulo = "Está a punto de reservar un ticket en este viaje.";
-        builder.setTitle(titulo);
+        {
+            builder.setIcon(R.drawable.erroricon);
+            builder.setMessage("Está a punto de eliminar su reserva en este viaje.");
+        }
+        else{
+            builder.setIcon(R.drawable.confirmicon);
+            builder.setMessage("Está a punto de reservar un ticket en este viaje.");
+        }
         alertDialog = builder.create();
         alertDialog.show();
     }
@@ -198,16 +204,52 @@ public class ReservaTicketDetalle extends AppCompatActivity {
                 case "500":
                     break;
                 default:
-                    Toast.makeText(getApplicationContext(),"La operación se ha realizado con éxito",Toast.LENGTH_SHORT).show();
-                    ticket.SEPARADO = !ticket.SEPARADO;
-                    if (ticket.SEPARADO)
-                        botonGestionarReserva.setText("Eliminar reserva");
-                    else
-                        botonGestionarReserva.setText("Reservar ticket");
+                    Gson gson = new Gson();
+                    GetPasajeroModel getPasajeroModel = gson.fromJson(str, GetPasajeroModel.class);
+                    ArrayList<PasajeroModel> listaPasajeros;
+                    listaPasajeros = getPasajeroModel.Data;
+                    String sms="La operación se ha realizado con éxito";
+                    //int pass=0;
+                    for (PasajeroModel p :listaPasajeros) {
+                        if(p.DNI.equals(Utils.codPersona))
+                        {
+                            //Toast.makeText(getApplicationContext(),p.DSCR,Toast.LENGTH_SHORT).show();
+                            //pass=p.RESPUESTA;
+                            AlertDialog alertDialog = new AlertDialog.Builder(ReservaTicketDetalle.this).create();
+                            if(p.RESPUESTA>0){
+                                alertDialog.setTitle("Ok");
+                                if(p.RESPUESTA==1)
+                                alertDialog.setIcon(R.drawable.confirmicon);
+                                else{
+                                    alertDialog.setTitle("Advertencia");
+                                    alertDialog.setIcon(R.drawable.warrninicon);
+                                }
+                            }
+                            else {
+                                alertDialog.setTitle("Ocurrio un Error");
+                                alertDialog.setIcon(R.drawable.erroricon);
+                            }
+                            alertDialog.setMessage(p.DSCR);
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Aceptar",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                            break;
+                        }
+                    }
+                   // if(pass>0){
+                        ticket.SEPARADO = !ticket.SEPARADO;
+                        if (ticket.SEPARADO)
+                            botonGestionarReserva.setText("Eliminar reserva");
+                        else
+                            botonGestionarReserva.setText("Reservar ticket");
 
-                    // Pedir detalles bus (actualizar cantidad pasajeros)
-                    new GetBusDetalles().execute();
-
+                        // Pedir detalles bus (actualizar cantidad pasajeros)
+                        new GetBusDetalles().execute();
+                    //}
             }
             progressDialog.dismiss();
         }

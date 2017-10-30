@@ -102,8 +102,7 @@ int a;
     int in=3;
 boolean flag=false;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         context = container.getContext();
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);

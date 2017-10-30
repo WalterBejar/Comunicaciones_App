@@ -10,33 +10,34 @@
     <TextView
         android:id="@+id/lblBusNombre"
         android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:text="nombre_bus"
-        android:textSize="12sp"
-        android:gravity="center"
-        app:layout_constraintRight_toLeftOf="@+id/lblBusHora"
-        android:layout_marginRight="8dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:text="nombre_bus"
+        android:textAlignment="viewStart"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/lblBusHora"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        app:layout_constraintVertical_bias="0.497" />
 
     <TextView
         android:id="@+id/lblBusHora"
-        android:layout_width="36dp"
-        android:layout_height="20dp"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="-24dp"
+        android:gravity="center"
         android:text="00:00"
         android:textSize="12sp"
-        android:gravity="center"
-        app:layout_constraintRight_toLeftOf="@+id/lblBusAsientosLibres"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.501"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintRight_toLeftOf="@+id/lblBusAsientosLibres"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lblBusAsientosLibres"
@@ -45,13 +46,12 @@
         android:text="00"
         android:textSize="12sp"
         android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/lblBusAsientosOcupados"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintRight_toLeftOf="@+id/lblBusAsientosOcupados"
         android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.501" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/lblBusAsientosOcupados"
@@ -60,25 +60,11 @@
         android:text="00"
         android:textSize="12sp"
         android:gravity="center"
-        app:layout_constraintRight_toLeftOf="@+id/imgBusReservado"
-        android:layout_marginRight="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
+        android:textColor="@color/colorRojo"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.501" />
-
-    <ImageView
-        android:id="@+id/imgBusReservado"
-        android:tint="@android:color/holo_green_dark"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/lblBusAsientosLibres"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_check_box_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.501" />
+        android:layout_marginBottom="8dp" />
+
 </android.support.constraint.ConstraintLayout>

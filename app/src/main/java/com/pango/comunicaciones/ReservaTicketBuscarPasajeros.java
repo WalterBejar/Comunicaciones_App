@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,13 +42,18 @@ import java.util.List;
 public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
 
     String codigoTicket;
-    int cantidad = 10;
+    int cantidad = 6;
+    int page2=1;
+    int contPasajeros=0;
+    boolean buscar=false;
 
     ProgressDialog progressDialog;
-    PasajeroModel[] listaPasajeros;
+    ArrayList<PasajeroModel> listaPasajeros;
+
     boolean[] listaCheckBoxPasajeros;
     BuscarAdapter buscarAdapter;
     ListView listaBuscarPasajeros;
+    ImageButton btn_borrarDNI,btn_borrarNombre,btn_borrarEmpresa;
     Button botonAgregar;
     String strDNI = "-", strNombre = "-", strEmpresa = "-";
     EditText editTextDNI, editTextNombre, editTextEmpresa;
@@ -58,6 +64,8 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         setContentView(R.layout.activity_reserva_ticket_buscar_pasajeros);
         setTitle("Reserva de Buses");
 
+        listaPasajeros = new ArrayList<PasajeroModel>();
+        listaCheckBoxPasajeros= new boolean[0];
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus2);
         setSupportActionBar(toolbar);
         botonAgregar=(Button) findViewById(R.id.botonAgregarPasajeroALista) ;
@@ -65,8 +73,9 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         editTextNombre = (EditText) findViewById(R.id.textboxPasajeroNombre);
         editTextEmpresa = (EditText) findViewById(R.id.textboxPasajeroEmpresa);
         listaBuscarPasajeros = (ListView) findViewById(R.id.listaBuscarPasajeros);
-
-
+        btn_borrarDNI = (ImageButton) findViewById(R.id.btn_deleteDNI);
+        btn_borrarNombre = (ImageButton) findViewById(R.id.btn_deleteName);
+        btn_borrarEmpresa = (ImageButton) findViewById(R.id.btn_deleteEmpresa);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Conectándose al servidor");
         progressDialog.setMessage("Por favor, espere...");
@@ -75,10 +84,45 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         buscarAdapter = new BuscarAdapter();
         listaBuscarPasajeros.setAdapter(buscarAdapter);
 
+        btn_borrarDNI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextDNI.setText("");
+            }
+        });
+        btn_borrarNombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextNombre.setText("");
+            }
+        });
+        btn_borrarEmpresa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextEmpresa.setText("");
+            }
+        });
 
         // Recibir codigo ticket
         Bundle extras = getIntent().getExtras();
         codigoTicket = extras.getString("CodigoTicket");
+
+
+        listaBuscarPasajeros.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount){
+
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+                //loadNextDataFromApi(page);
+                if(listaPasajeros.size()!=contPasajeros) {
+                    new BuscarPasajeros().execute(String.valueOf(page2));
+                    return true; // ONLY if more data is actually being loaded; false otherwise.
+                }else{
+                    return false;
+                }
+            }
+        });
     }
 
     public void clickEnBuscar(View view){
@@ -87,6 +131,9 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
 
         inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                 InputMethodManager.HIDE_NOT_ALWAYS);
+
+        buscar=true;
+        page2=1;
         new BuscarPasajeros().execute();
     }
 
@@ -116,7 +163,6 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         @Override
         protected void onPostExecute(String str) {
             super.onPostExecute(str);
-
             switch (str) {
                 case "404":
                     break;
@@ -125,8 +171,36 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                 default:
                     Gson gson = new Gson();
                     GetPasajeroModel getPasajeroModel = gson.fromJson(str, GetPasajeroModel.class);
-                    listaPasajeros = getPasajeroModel.Data;
-                    listaCheckBoxPasajeros = new boolean[listaPasajeros.length];
+                    contPasajeros= getPasajeroModel.Count;
+                    // add selectect
+                    ArrayList<PasajeroModel> PasajerosCheckt = new ArrayList<PasajeroModel>();
+                    for (int i = 0 ; i < listaPasajeros.size() ; i++ )
+                        if (listaCheckBoxPasajeros[i])
+                            PasajerosCheckt.add(listaPasajeros.get(i));
+                    //remove selected of new list
+                    for (PasajeroModel l: PasajerosCheckt) {
+                        for (PasajeroModel p: getPasajeroModel.Data) {
+                            if(p.DNI.equals(l.DNI))
+                                getPasajeroModel.Data.remove(p);
+                        }
+                    }
+
+                    if(buscar){
+
+                        listaPasajeros.clear();
+                        listaPasajeros.addAll(PasajerosCheckt);
+                        listaPasajeros.addAll(getPasajeroModel.Data);// getPasajeroModel.Data;
+
+                        listaCheckBoxPasajeros = new boolean[contPasajeros + PasajerosCheckt.size()];
+                       for(int i=0;i<PasajerosCheckt.size();i++)
+                           listaCheckBoxPasajeros[i]=true;
+                        buscar=false;
+                    }
+                    else
+                        listaPasajeros.addAll(getPasajeroModel.Data);
+
+
+                    page2++;
                     buscarAdapter.notifyDataSetChanged();
             }
             progressDialog.dismiss();
@@ -135,7 +209,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                URL url = new URL(Utils.getUrlForReservaTicketBuscarPasajeros(strDNI, strNombre, strEmpresa, cantidad));
+                URL url = new URL(Utils.getUrlForReservaTicketBuscarPasajeros(strDNI, strNombre, strEmpresa,page2, cantidad));
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestProperty("Authorization", "Bearer " + Utils.token);
                 con.setRequestMethod("GET");
@@ -182,7 +256,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"La operación se ha realizado con éxito",Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                     Intent data = new Intent();
-                    data.setData(Uri.parse(gson.toJson(getPasajeroModel.Data)));
+                    data.setData(Uri.parse(gson.toJson(getPasajeroModel)));
                     setResult(RESULT_OK, data);
                     //finishActivity(1);
                     finish();
@@ -194,9 +268,9 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
             try {
                 List<PersonaPostReservaModel> listaPasajerosAAgregar = new ArrayList<PersonaPostReservaModel>();
                 Gson gson = new Gson();
-                for (int i = 0 ; i < listaPasajeros.length ; i++ )
+                for (int i = 0 ; i < listaPasajeros.size() ; i++ )
                     if (listaCheckBoxPasajeros[i])
-                        listaPasajerosAAgregar.add(Utils.fromPasajeroToPersona(listaPasajeros[i], codigoTicket));
+                        listaPasajerosAAgregar.add(Utils.fromPasajeroToPersona(listaPasajeros.get(i), codigoTicket));
 
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost;
@@ -236,7 +310,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         public int getCount() {
             if (listaPasajeros == null)
                 return 0;
-            return listaPasajeros.length;
+            return listaPasajeros.size();
         }
 
         @Override
@@ -254,7 +328,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
             if (listaPasajeros == null)
                 return  null;
             convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_listapasajeros, null);
-            String nombreCompleto = listaPasajeros[position].NOMBRES;
+            String nombreCompleto = listaPasajeros.get(position).NOMBRES;
             /*
             if (listaPasajeros[position].ApellidoPaterno != null)
                 nombreCompleto = nombreCompleto + " " + listaPasajeros[position].ApellidoPaterno;
@@ -265,10 +339,10 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
             pasajeroNombre.setText(nombreCompleto);
 
             TextView pasajeroEmpresa = (TextView) convertView.findViewById(R.id.lblPasajeroEmpresa);
-            pasajeroEmpresa.setText(listaPasajeros[position].EMPRESA);
+            pasajeroEmpresa.setText(listaPasajeros.get(position).EMPRESA);
 
             TextView pasajeroDNI = (TextView) convertView.findViewById(R.id.lblPasajeroDNI);
-            pasajeroDNI.setText(listaPasajeros[position].DNI);
+            pasajeroDNI.setText(listaPasajeros.get(position).DNI);
 
             CheckBox pasajeroCheckSeleccionar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
             pasajeroCheckSeleccionar.setChecked(listaCheckBoxPasajeros[position]);
@@ -283,7 +357,6 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                         }
                     }
                     botonAgregar.setEnabled(flag);
-
                 }
             });
 

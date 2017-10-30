@@ -158,10 +158,7 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                 NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),GlobalVariables.noticias2);
                 recList.setAdapter(ca);
                     progressDialog.dismiss();
-
                 }
-
-
                 // GlobalVariables.noticias2=GlobalVariables.noticias2.add(noticiaList) ;
 
                 //  GlobalVariables.noticias2.get(0);

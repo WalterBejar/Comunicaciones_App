@@ -3,10 +3,13 @@ package com.pango.comunicaciones;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -38,7 +41,7 @@ import java.util.List;
 public class ReservaTicketListaPasajeros extends AppCompatActivity {
 
     String codigoTicket;
-    PasajeroModel[] listaPasajeros = {};
+    ArrayList<PasajeroModel> listaPasajeros = new  ArrayList<PasajeroModel>();
     boolean[] listaCheckBoxPasajeros = {};
 
     ProgressDialog progressDialog;
@@ -53,8 +56,10 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_lista_pasajeros);
         setTitle("Reserva de Buses");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus4);
+        setSupportActionBar(toolbar);
 
-        botonEliminar=(Button) findViewById(R.id.botonEliminarPasajero);
+        botonEliminar=(Button) findViewById(R.id.botonAgregarPasajero);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Conectándose al servidor");
         progressDialog.setMessage("Por favor, espere...");
@@ -109,8 +114,8 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 Gson gson = new Gson();
-                listaPasajeros = gson.fromJson(data.getData().toString(), PasajeroModel[].class);
-                listaCheckBoxPasajeros = new boolean[listaPasajeros.length];
+                listaPasajeros = gson.fromJson(data.getData().toString(),GetPasajeroModel.class).Data;
+                listaCheckBoxPasajeros = new boolean[listaPasajeros.size()];
                 listaAdapter.notifyDataSetChanged();
             }
         }
@@ -136,7 +141,8 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                     Gson gson = new Gson();
                     GetPasajeroModel getPasajeroModel = gson.fromJson(str, GetPasajeroModel.class);
                     listaPasajeros = getPasajeroModel.Data;
-                    listaCheckBoxPasajeros = new boolean[listaPasajeros.length];
+                    listaCheckBoxPasajeros = new boolean[listaPasajeros.size()];
+                    Toast.makeText(getApplicationContext(),listaPasajeros.size()+" items",Toast.LENGTH_SHORT).show();
                     listaAdapter.notifyDataSetChanged();
             }
             progressDialog.dismiss();
@@ -194,7 +200,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                     Gson gson = new Gson();
                     GetPasajeroModel getPasajeroModel = gson.fromJson(str, GetPasajeroModel.class);
                     listaPasajeros = getPasajeroModel.Data;
-                    listaCheckBoxPasajeros = new boolean[listaPasajeros.length];
+                    listaCheckBoxPasajeros = new boolean[listaPasajeros.size()];
                     listaAdapter.notifyDataSetChanged();
             }
         }
@@ -204,9 +210,9 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             try {
                 List<PersonaPostReservaModel> listaPasajerosAEliminar = new ArrayList<PersonaPostReservaModel>();
                 Gson gson = new Gson();
-                for (int i = 0 ; i < listaPasajeros.length ; i++ )
+                for (int i = 0 ; i < listaPasajeros.size() ; i++ )
                     if (listaCheckBoxPasajeros[i])
-                        listaPasajerosAEliminar.add(Utils.fromPasajeroToPersona(listaPasajeros[i], codigoTicket));
+                        listaPasajerosAEliminar.add(Utils.fromPasajeroToPersona(listaPasajeros.get(i), codigoTicket));
 
                 HttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost;
@@ -246,7 +252,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
         public int getCount() {
             if (listaPasajeros == null)
                 return 0;
-            return listaPasajeros.length;
+            return listaPasajeros.size();
         }
 
         @Override
@@ -264,7 +270,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             if (listaPasajeros == null)
                 return  null;
             convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_listapasajeros, null);
-            String nombreCompleto = listaPasajeros[position].NOMBRES;
+            String nombreCompleto = listaPasajeros.get(position).NOMBRES;
             /*
             if (listaPasajeros[position].ApellidoPaterno != null)
                 nombreCompleto = nombreCompleto + " " + listaPasajeros[position].ApellidoPaterno;
@@ -275,13 +281,32 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             pasajeroNombre.setText(nombreCompleto);
 
             TextView pasajeroEmpresa = (TextView) convertView.findViewById(R.id.lblPasajeroEmpresa);
-            pasajeroEmpresa.setText(listaPasajeros[position].EMPRESA);
+            if(listaPasajeros.get(position).DSCR != null){
+                pasajeroEmpresa.setText(listaPasajeros.get(position).DSCR);
+
+                if(listaPasajeros.get(position).RESPUESTA>0){
+                    /*((TextView) convertView.findViewById(R.id.lblPasajeroDNI)).setTextColor(Color.parseColor("#1B5E20"));
+                    ((TextView) convertView.findViewById(R.id.lblPasajeroNombre)).setTextColor(Color.parseColor("#1B5E20"));*/
+                    ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#1B5E20"));
+                }
+                //    convertView.setBackgroundColor(Color.parseColor("#1B5E20"));
+                else{
+                    /*((TextView) convertView.findViewById(R.id.lblPasajeroDNI)).setTextColor(Color.parseColor("#DD2C00"));
+                    ((TextView) convertView.findViewById(R.id.lblPasajeroNombre)).setTextColor(Color.parseColor("#DD2C00"));*/
+                    ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#DD2C00"));
+                }
+                //convertView.setBackgroundColor(Color.parseColor("#DD2C00"));
+
+            }
+            else pasajeroEmpresa.setText(listaPasajeros.get(position).EMPRESA);
 
             TextView pasajeroDNI = (TextView) convertView.findViewById(R.id.lblPasajeroDNI);
-            pasajeroDNI.setText(listaPasajeros[position].DNI);
+            pasajeroDNI.setText(listaPasajeros.get(position).DNI);
 
             CheckBox pasajeroCheckEliminar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
-            pasajeroCheckEliminar.setEnabled(!listaPasajeros[position].DNI.equals("DNI Reservado"));
+
+            pasajeroCheckEliminar.setEnabled(!(listaPasajeros.get(position).DNI.equals("DNI Reservado")||listaPasajeros.get(position).RESPUESTA<1));
+
             pasajeroCheckEliminar.setChecked(listaCheckBoxPasajeros[position]);
             pasajeroCheckEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override

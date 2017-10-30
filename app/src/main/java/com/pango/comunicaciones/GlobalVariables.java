@@ -7,6 +7,7 @@ import com.pango.comunicaciones.model.Img_Gal;
 import com.pango.comunicaciones.model.NotDet;
 import com.pango.comunicaciones.model.Noticias;
 import com.pango.comunicaciones.model.Notificacion;
+import com.pango.comunicaciones.model.TicketModel;
 import com.pango.comunicaciones.model.Vid_Gal;
 import com.pango.comunicaciones.model.Video;
 
@@ -28,9 +29,15 @@ public class GlobalVariables {
     public static String CodPersona;
     public static String Nombres;
 
+    //VAR GLOBAL TICKET
+    public static List<TicketModel> ListTickets = new ArrayList<>();
+    public static int contTickets;
+    public static int num_tickets=3;
+
     //var global de noticias
     public static List<Noticias> noticias2 = new ArrayList<>();
     public static int contador;
+
 
     public static int contNoticia;
     public static int contComunicado;

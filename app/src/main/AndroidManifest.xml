@@ -28,12 +28,15 @@
 
 
         <activity android:name=".ReservaTicketFiltro"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".ReservaTicketDetalle"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity android:name=".ReservaTicketListaPasajeros"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             />
         <!--<activity android:name=".ReservaTicketBuscarPasajeros"></activity>-->
@@ -49,6 +52,7 @@
 
         <activity
             android:name=".ReservaTicketBuscarPasajeros"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
             />
