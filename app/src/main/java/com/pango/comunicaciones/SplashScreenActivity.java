@@ -39,13 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         ConnectivityManager cmanager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo info= cmanager.getActiveNetworkInfo();
-
-
-
-
-
-
-
+      // Boolean red= GlobalVariables.isOnlineNet();
 
         if(info!=null&&info.isConnected()){
             if (info.getType() == ConnectivityManager.TYPE_WIFI||info.getType()==ConnectivityManager.TYPE_MOBILE) {

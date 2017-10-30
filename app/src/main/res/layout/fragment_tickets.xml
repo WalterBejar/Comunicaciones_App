@@ -19,7 +19,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="120dp"
-            android:scaleType="centerCrop"
             android:src="@drawable/img_cab_bus" />
     </LinearLayout>
 

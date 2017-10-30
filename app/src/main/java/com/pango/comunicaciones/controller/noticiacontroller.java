@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
@@ -44,6 +45,8 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     List<Noticias> noticiaList=new ArrayList<Noticias>();
     ListView recList;
     int a;
+    boolean red;
+
     //int celda = 3;
 
     public noticiacontroller(View v,String url,String opcion, FragmentNoticias Frag){
@@ -58,13 +61,16 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected Void doInBackground(String... params) {
-        try {
+        //red= GlobalVariables.isOnlineNet();
+        red=false;
+            try {
             HttpResponse response;
             String a=params[0];
             String b=params[1];
 
-          //  getToken gettoken=new getToken();
-           // gettoken.getToken();
+                //  getToken gettoken=new getToken();
+                // gettoken.getToken();
+               // if(red==true){
 
             if(opcion=="get"){
                 try {
@@ -125,6 +131,7 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                     Log.w("Error get\n",ex);
                 }
             }
+            //}
         }
         catch (Throwable e) {
             Log.d("InputStream", e.getLocalizedMessage());
@@ -153,12 +160,20 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-                if(GlobalVariables.noticias2.size()<=3){
+
+               // if (red==true){
+
+                    if(GlobalVariables.noticias2.size()<=3){
 
                 NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),GlobalVariables.noticias2);
                 recList.setAdapter(ca);
                     progressDialog.dismiss();
                 }
+            /*}else{
+                    progressDialog.dismiss();
+
+                    Toast.makeText(v.getContext(),"Se perdio la conexión a  internet",Toast.LENGTH_SHORT).show();
+                }*/
                 // GlobalVariables.noticias2=GlobalVariables.noticias2.add(noticiaList) ;
 
                 //  GlobalVariables.noticias2.get(0);
