@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_noticias"
-            android:icon="@drawable/ic_noticia_final"
+            android:icon="@drawable/ic_notice_prueba"
             android:title="Noticias" />
         <item
             android:id="@+id/nav_publicaciones"
@@ -14,7 +14,7 @@
             android:title="Eventos" />
         <item
             android:id="@+id/nav_imagenes"
-            android:icon="@drawable/ic_galeria_final"
+            android:icon="@drawable/ic_galeria_prueba"
             android:title="Fotos" />
         <item
             android:id="@+id/nav_videos"
@@ -22,7 +22,7 @@
             android:title="Videos" />
         <item
             android:id="@+id/nav_tickets"
-            android:icon="@drawable/ic_bus_final"
+            android:icon="@drawable/ic_bus_prueba"
             android:title="Reserva de Buses" />
     </group>
 
@@ -35,11 +35,11 @@
 
             <item
                 android:id="@+id/nav_Contactenos"
-                android:icon="@drawable/ic_menu_contactar"
+                android:icon="@drawable/ic_contactanos_prueba"
                 android:title="Contáctenos" />
             <item
                 android:id="@+id/nav_RedesSociales"
-                android:icon="@drawable/ic_menu_redsocial"
+                android:icon="@drawable/ic_redes_final"
                 android:title="Redes Sociales" />
 
             <item

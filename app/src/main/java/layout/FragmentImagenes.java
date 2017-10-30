@@ -78,8 +78,7 @@ public class FragmentImagenes extends Fragment {
 /////////////////////////////////////////////////////////////////////////////////
     ListView recListImag;
     Context context;
-    private int pageCount = 0;
-
+    int res=1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,28 +87,35 @@ public class FragmentImagenes extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_imagenes, container, false);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
-        recListImag = (ListView) rootView.findViewById(R.id.list_imag);
 
+        recListImag = (ListView) rootView.findViewById(R.id.list_imag);
 
         if(GlobalVariables.imagen2.size()==0) {
             final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
-            obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid));
+            obj.execute(String.valueOf(1),String.valueOf(3));
         }else {
             ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
             recListImag.setAdapter(ca);
         }
 
-        //final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        //LayoutInflater inflater2 = getActivity().getLayoutInflater();
-        //View v = inflater.inflate(R.layout.act_imag, null);
-        //builder.setView(v);
+        /*final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater2 = getActivity().getLayoutInflater();
+
+        View v = inflater.inflate(R.layout.act_imag, null);
+        builder.setView(v);
+
+
+
+*/
+
+
 
         recListImag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("Click", "click en el elemento " + position + " de mi ListView");
 
-
+                // if(!GlobalVariables.isScrolling){
                 GlobalVariables.pos_item_img_det=position;
 
                 GlobalVariables.img_get= imagen2.get(position);
@@ -123,44 +129,37 @@ public class FragmentImagenes extends Fragment {
                 intent.putExtra("fecha",fecha);
 
                 startActivity(intent);
-
             }
+
+
+            // }
         });
 
-        recListImag.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalItemCount) {
 
-                int page2=page;
+//if(res!=1) {
 
+    recListImag.setOnScrollListener(new EndlessScrollListener() {
+        @Override
+        public boolean onLoadMore(int page, int totalItemCount) {
 
-                if(GlobalVariables.imagen2.size()<GlobalVariables.contFotos) {
+            int page2 = page;
+            int pageCount = 2;
 
+            if (GlobalVariables.imagen2.size() < GlobalVariables.contFotos) {
+                final ImgController obj = new ImgController(rootView, "url", "get", FragmentImagenes.this);
+                obj.execute(String.valueOf(GlobalVariables.contpublic), String.valueOf(GlobalVariables.num_vid));
+                //GlobalVariables.contpublic=GlobalVariables.contpublic+1;
 
-                    final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
-                    obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
-                    pageCount++;
+                return true; // ONLY if more data is actually being loaded; false otherwise.
+            } else {
+                //flag=true;
+                return false;
 
-
-                 /*
-                 String Url = "media/GetImagen/6767/Salud Mental 2016 - 1.jpg";
-                 String Urlmin = "media/GetminFile/6767/Salud Mental 2016 - 1.jpg";
-                 ArrayList<String> dataf = new ArrayList<>();
-                 dataf.add("6767");
-                 dataf.add(Url.replaceAll("\\s", "%20"));
-                 dataf.add(Urlmin.replaceAll("\\s", "%20"));
-
-                 GlobalVariables.noticias2.add(new Noticias("SC2017000549", "TP01", R.drawable.ic_menu_noticias, "Ojeda, Christiam A (", "2017-10-09T00:00:00", "CUIDEMOS NUESTRA SALUD MENTAL", "Una de cada cinco personas en ámbito laboral puede experimentar un trastorno de salud mental. Los problemas de salud mental tienen un impacto directo en los lugares de trabajo.", dataf));
-*/
-
-                    return true; // ONLY if more data is actually being loaded; false otherwise.
-                }else{
-                    //flag=true;
-                    return false;
-
-                }
             }
-        });
+        }
+    });
+
+//}
 
 
         return rootView;

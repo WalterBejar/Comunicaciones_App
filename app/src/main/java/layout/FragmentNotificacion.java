@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +19,8 @@ import com.pango.comunicaciones.ActComDetalle;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.controller.NotifiController;
+
+import static com.pango.comunicaciones.GlobalVariables.comlist;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,7 +75,7 @@ public class FragmentNotificacion extends Fragment {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     private ListView list_alertas;
-
+    private BottomNavigationView bottomNavigationView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -82,8 +86,15 @@ public class FragmentNotificacion extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
+       // MenuItem videoItem = bottomNavigationView.getMenu().getItem(4);
+       // videoItem.setIcon(R.drawable.ic_menu_send);
+
+
+
         final NotifiController obj = new NotifiController(rootView,"url","get", FragmentNotificacion.this);
         obj.execute();
+
+
 
 
         list_alertas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,23 +103,16 @@ public class FragmentNotificacion extends Fragment {
                 GlobalVariables.cod_public= GlobalVariables.notific_data.get(position).getCod_reg();
                 //GlobalVariables.doclic=true;
 
-
-
                 GlobalVariables.com_pos= null;//captura los datos en la posiscion que se hace clic y almacena en not2pos
                 //GlobalVariables.pos_item_com=position;
 
-               /* android.app.Fragment fragment = null;
-                fragment = new Frag_com_det();
-                if(null!=fragment) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                String titulo=GlobalVariables.notific_data.get(position).getTitulo();
+                String fecha=GlobalVariables.notific_data.get(position).getFecha();
 
-
-                }*/
                 Intent intent = new Intent(getActivity(), ActComDetalle.class);
+                intent.putExtra("titulo",titulo);
+                intent.putExtra("fecha",fecha);
+
                 startActivity(intent);
 
 
@@ -123,6 +127,10 @@ public class FragmentNotificacion extends Fragment {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -164,3 +172,23 @@ public class FragmentNotificacion extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 }
+
+
+
+
+
+
+
+
+
+               /* android.app.Fragment fragment = null;
+                fragment = new Frag_com_det();
+                if(null!=fragment) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+
+                }*/

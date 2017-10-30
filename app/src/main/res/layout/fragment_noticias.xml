@@ -24,7 +24,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_noticia_final2"
+                android:src="@drawable/ic_notice_prueba2"
                 tools:layout_editor_absoluteY="0dp"
                 app:layout_constraintRight_toLeftOf="@+id/textView21"
                 android:layout_marginRight="8dp"

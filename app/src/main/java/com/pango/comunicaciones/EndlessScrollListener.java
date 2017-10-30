@@ -31,11 +31,16 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         // no se tiene que modificar nada aca
+       /* if (scrollState == SCROLL_STATE_IDLE) {
+            GlobalVariables.isScrolling = false;
+        }*/
+
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         // lista es invalida y debe ser reseteada a su estado inicial
+        //GlobalVariables.isScrolling = true;
         if (totalItemCount < cuentaTotalPrevia) {
             this.paginaActual = this.indicePaginaInicio;
             this.cuentaTotalPrevia = totalItemCount;

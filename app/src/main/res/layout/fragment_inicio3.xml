@@ -48,7 +48,7 @@ android:background="@drawable/edit_img"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="28dp"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_noticia_final2" />
+                android:src="@drawable/ic_notice_prueba2" />
 
             <TextView
                 android:id="@+id/tx_menu1"
@@ -104,7 +104,7 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="39dp"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_bus_final2"
+                android:src="@drawable/ic_bus_prueba2"
 
                 />
 
@@ -324,7 +324,7 @@ android:background="@drawable/edit_img"
                 android:layout_height="50dp"
                 android:layout_marginTop="39dp"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_galeria_final2"
+                android:src="@drawable/ic_galeria_prueba2"
 
                 />
 

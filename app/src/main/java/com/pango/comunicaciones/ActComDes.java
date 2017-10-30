@@ -75,12 +75,15 @@ public class ActComDes extends AppCompatActivity {
 
     private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tbar_comdes);
+        toolbar.setLogo(R.drawable.imagen1234);
 
         if (toolbar == null) return;
 
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
+
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
     }

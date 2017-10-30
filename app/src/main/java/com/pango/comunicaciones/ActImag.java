@@ -33,10 +33,10 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
         rootView= getLayoutInflater().inflate(R.layout.act_imag, null);
                // inflater.inflate(R.layout.frag_noticia_det, container, false);
         //setTitle("Fotos");
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
-        toolbar.setLogo(R.drawable.imagen1234);
+        toolbar.setLogo(R.drawable.imagen1234);*/
 
         Bundle datos = this.getIntent().getExtras();
         titulo=datos.getString("titulo");
@@ -110,6 +110,7 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
 
     private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        toolbar.setLogo(R.drawable.imagen1234);
 
         if (toolbar == null) return;
 

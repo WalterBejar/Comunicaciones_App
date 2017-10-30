@@ -226,6 +226,11 @@ public class FragmentInicio2 extends Fragment {
         });
 
 
+
+
+
+
+
         return view;
     }
 

@@ -42,6 +42,8 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         this.context = context;
     }
 
+
+
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
         //ViewHolder viewHolder;
@@ -63,14 +65,14 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         ImageView iImag3 = (ImageView)  rowView.findViewById(R.id.imag3);
         ImageView iImag4 = (ImageView)  rowView.findViewById(R.id.imag4);
         //TextView nDescs= (TextView) rowView.findViewById(R.id.desc_inv);
-        linearLayout =(LinearLayout) rowView.findViewById(R.id.linlayh);
+        //linearLayout =(LinearLayout) rowView.findViewById(R.id.linlayh);
 
 
         //final String tempNombre=data.get(position).getNom_publicador();
         final String tempFecha=data.get(position).getFecha();
         final String tempTitulo=data.get(position).getTitulo();
         final int tempcant=data.get(position).getCount_img()-4;
-        final String codreg_img=data.get(position).getCod_reg();
+        //final String codreg_img=data.get(position).getCod_reg();
 
 
        // icono.setImageResource(R.drawable.ic_fotos3);
@@ -107,7 +109,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
 
         if(img.size()==0){
-            linearLayout.setVisibility(View.GONE);
+            //linearLayout.setVisibility(View.GONE);
             iImag1.setVisibility(View.GONE);
             iImag2.setVisibility(View.GONE);
             iImag3.setVisibility(View.GONE);

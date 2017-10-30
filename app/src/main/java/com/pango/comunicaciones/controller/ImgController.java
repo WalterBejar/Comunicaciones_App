@@ -163,6 +163,7 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                 if(GlobalVariables.imagen2.size()<=3) {
                     ImgAdapter ca = new ImgAdapter(v.getContext(), GlobalVariables.imagen2);
                     recListImag.setAdapter(ca);
+                    GlobalVariables.contpublic+=1;
                     progressDialog.dismiss();
 
                 }

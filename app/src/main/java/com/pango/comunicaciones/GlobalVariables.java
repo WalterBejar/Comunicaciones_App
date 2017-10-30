@@ -96,4 +96,12 @@ public class GlobalVariables {
 
     public static int num_vid=3;
 
+    public static int contNotificA;
+    public static int contNotific;
+
+    public static int contpublic=1;
+    public static boolean isScrolling;
+
+
+
 }

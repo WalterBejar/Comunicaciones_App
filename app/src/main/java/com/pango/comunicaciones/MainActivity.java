@@ -126,13 +126,7 @@ public class MainActivity extends AppCompatActivity
 
         getSupportActionBar().setTitle("");
 
-
-
-
-
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -225,6 +219,7 @@ public class MainActivity extends AppCompatActivity
             ClickMenuNotificacion();
             uncheckItemsMenu();
         }else if (id == R.id.nav_configuracion){
+
             ClickMenuConfiguracion();
             uncheckItemsMenu();
         }else if (id == R.id.nav_Contactenos){

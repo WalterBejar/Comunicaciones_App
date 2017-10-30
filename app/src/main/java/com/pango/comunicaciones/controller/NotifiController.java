@@ -65,7 +65,7 @@ public class NotifiController extends AsyncTask<String,Void,Void> {
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     JSONArray notific = respJSON.getJSONArray("Data");
-
+                    GlobalVariables.contNotific=respJSON.getInt("Count");
                     //GlobalVariables.cont_item=notific.length();
                     //GlobalVariables.contador=respJSON.getInt("Count");//obtiene el total de publicaciones en general
 
@@ -123,6 +123,29 @@ public class NotifiController extends AsyncTask<String,Void,Void> {
                 //ca.notifyDataSetChanged();
                 progressDialog.dismiss();
                 GlobalVariables.notific_data=notificList;
+
+
+/*
+
+                if(GlobalVariables.notific_data.size()==0) {
+                    GlobalVariables.notific_data=notificList;
+
+                }else  if(GlobalVariables.notific_data.size()==notificList.size()){
+
+                    GlobalVariables.notific_data=notificList;
+                }else
+                {
+
+                }
+*/
+
+
+
+                /*
+                if(GlobalVariables.notific_data.size()==notificList.size()){
+                    GlobalVariables.notific_data=notificList;
+                }*/
+
                 //  GlobalVariables.noticias2.get(0);
                 //loading = false;
             }

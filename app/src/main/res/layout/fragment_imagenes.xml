@@ -25,7 +25,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_galeria_final2"
+                android:src="@drawable/ic_galeria_prueba2"
 
                 tools:layout_editor_absoluteY="0dp"
                 app:layout_constraintRight_toLeftOf="@+id/textView21"
@@ -47,7 +47,6 @@
                 android:layout_marginRight="8dp"
                 android:padding="5dp"
                 android:text="Fotos"
-                android:textAlignment="viewStart"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="30sp"
                 app:layout_constraintHorizontal_bias="0.702"
@@ -65,8 +64,7 @@
         android:id="@+id/list_imag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="8dp"
-        android:elevation="10dp"
+        android:dividerHeight="5dp"
         android:background="@android:color/transparent"
 
 

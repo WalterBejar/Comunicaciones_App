@@ -42,6 +42,8 @@ public class DesComAdap extends ArrayAdapter<ComDet> {
 
         View rowView=inflater.inflate(R.layout.comlistdes, null,true);
 
+
+
         ImageButton icono = (ImageButton) rowView.findViewById(R.id.com_icon_des);
         icono.setTag(position);
 
@@ -84,5 +86,8 @@ public class DesComAdap extends ArrayAdapter<ComDet> {
 
         return rowView;
     }
+
+
+
 
 }

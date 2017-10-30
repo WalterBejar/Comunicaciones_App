@@ -1,5 +1,6 @@
 package com.pango.comunicaciones;
 
+import com.pango.comunicaciones.model.Notificacion;
 import com.pango.comunicaciones.model.PasajeroModel;
 import com.pango.comunicaciones.model.PersonaPostReservaModel;
 import com.pango.comunicaciones.model.TicketModel;
@@ -7,8 +8,10 @@ import com.pango.comunicaciones.model.TicketModel;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by NILRAD on 25/09/2017.
@@ -143,5 +146,26 @@ public class Utils {
 
         return urlOk;
     }
+
+   /* public static String notific_new(List<Notificacion> notificList){
+
+
+        if(GlobalVariables.notific_data.size()==0) {
+                    GlobalVariables.notific_data=notificList;
+
+                }else  if(GlobalVariables.notific_data.size()==notificList.size()){
+
+                    GlobalVariables.notific_data=notificList;
+                }else
+        {
+
+        }
+
+
+
+        return "0";
+    }
+*/
+
 
 }
