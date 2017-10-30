@@ -19,6 +19,7 @@
     <color name="colorNaranja">#ff6702</color>  <!--#f27d23-->
     <color name="colorRojo">#ff2222</color>
     <color name="colorBtnPlomo">#C0C0C0</color>
+    <color name="colorBtnPlomoOscuro">#A9A9A9</color>
     <color name="colorBtnBeige">#708090</color>
 
     <color name="colorNaranja1">#ffc42c</color>

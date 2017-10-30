@@ -142,7 +142,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                     GetPasajeroModel getPasajeroModel = gson.fromJson(str, GetPasajeroModel.class);
                     listaPasajeros = getPasajeroModel.Data;
                     listaCheckBoxPasajeros = new boolean[listaPasajeros.size()];
-                    Toast.makeText(getApplicationContext(),listaPasajeros.size()+" items",Toast.LENGTH_SHORT).show();
+                    if(listaPasajeros.size() ==0)Toast.makeText(getApplicationContext(),"0 pasajeros",Toast.LENGTH_SHORT).show();
                     listaAdapter.notifyDataSetChanged();
             }
             progressDialog.dismiss();
@@ -271,6 +271,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                 return  null;
             convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_listapasajeros, null);
             String nombreCompleto = listaPasajeros.get(position).NOMBRES;
+            boolean delete=true;
             /*
             if (listaPasajeros[position].ApellidoPaterno != null)
                 nombreCompleto = nombreCompleto + " " + listaPasajeros[position].ApellidoPaterno;
@@ -281,6 +282,8 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             pasajeroNombre.setText(nombreCompleto);
 
             TextView pasajeroEmpresa = (TextView) convertView.findViewById(R.id.lblPasajeroEmpresa);
+
+            if(listaPasajeros.get(position).DNI.equals("DNI Reservado"))delete=false;
             if(listaPasajeros.get(position).DSCR != null){
                 pasajeroEmpresa.setText(listaPasajeros.get(position).DSCR);
 
@@ -289,14 +292,11 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                     ((TextView) convertView.findViewById(R.id.lblPasajeroNombre)).setTextColor(Color.parseColor("#1B5E20"));*/
                     ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#1B5E20"));
                 }
-                //    convertView.setBackgroundColor(Color.parseColor("#1B5E20"));
                 else{
-                    /*((TextView) convertView.findViewById(R.id.lblPasajeroDNI)).setTextColor(Color.parseColor("#DD2C00"));
-                    ((TextView) convertView.findViewById(R.id.lblPasajeroNombre)).setTextColor(Color.parseColor("#DD2C00"));*/
-                    ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#DD2C00"));
-                }
-                //convertView.setBackgroundColor(Color.parseColor("#DD2C00"));
 
+                    ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#DD2C00"));
+                    delete=false;
+                }
             }
             else pasajeroEmpresa.setText(listaPasajeros.get(position).EMPRESA);
 
@@ -305,7 +305,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
 
             CheckBox pasajeroCheckEliminar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
 
-            pasajeroCheckEliminar.setEnabled(!(listaPasajeros.get(position).DNI.equals("DNI Reservado")||listaPasajeros.get(position).RESPUESTA<1));
+            pasajeroCheckEliminar.setEnabled(delete);
 
             pasajeroCheckEliminar.setChecked(listaCheckBoxPasajeros[position]);
             pasajeroCheckEliminar.setOnClickListener(new View.OnClickListener() {

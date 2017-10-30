@@ -107,6 +107,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_weight="1"
                         android:hint="Usuario"
+                        android:textCursorDrawable="@color/colorBtnPlomoOscuro"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toLeftOf="@+id/btn_deleteUser"
                         app:layout_constraintTop_toTopOf="parent"
