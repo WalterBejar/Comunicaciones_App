@@ -142,30 +142,16 @@ public class FragmentVideos extends Fragment {
             }
         });
 
-        recListVid.setOnScrollListener(new EndlessScrollListener() {
+       /* recListVid.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemCount) {
                 int page2=page;
 
-
                 if(GlobalVariables.vidlist.size()<GlobalVariables.contVideos) {
-
 
                     final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
                     obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
                     pageCount++;
-
-
-                 /*
-                 String Url = "media/GetImagen/6767/Salud Mental 2016 - 1.jpg";
-                 String Urlmin = "media/GetminFile/6767/Salud Mental 2016 - 1.jpg";
-                 ArrayList<String> dataf = new ArrayList<>();
-                 dataf.add("6767");
-                 dataf.add(Url.replaceAll("\\s", "%20"));
-                 dataf.add(Urlmin.replaceAll("\\s", "%20"));
-
-                 GlobalVariables.noticias2.add(new Noticias("SC2017000549", "TP01", R.drawable.ic_menu_noticias, "Ojeda, Christiam A (", "2017-10-09T00:00:00", "CUIDEMOS NUESTRA SALUD MENTAL", "Una de cada cinco personas en ámbito laboral puede experimentar un trastorno de salud mental. Los problemas de salud mental tienen un impacto directo en los lugares de trabajo.", dataf));
-*/
 
                     return true; // ONLY if more data is actually being loaded; false otherwise.
                 }else{
@@ -174,7 +160,7 @@ public class FragmentVideos extends Fragment {
 
                 }
             }
-        });
+        });*/
 
 
         return rootView;

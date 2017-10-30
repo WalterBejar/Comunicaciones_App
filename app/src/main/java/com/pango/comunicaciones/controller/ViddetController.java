@@ -112,7 +112,6 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                         String url_file=h.getString("Url");
                         String urlmin=h.getString("Urlmin");
 
-
                         view_video.add(new Vid_Gal(correlativo,url_file.replaceAll("\\s","%20"),urlmin.replaceAll("\\s","%20")));
 
                     }
@@ -142,6 +141,12 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
         if(opcion=="get") {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(actVid, "Loading", "Cargando publicaciones...");
+           /* progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener(){
+                public void onCancel(DialogInterface dialog) {
+                    myTask.cancel(true);
+                    //finish();
+                }
+            });*/
         }
     }
     @Override
@@ -157,7 +162,7 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                 txv2 = (TextView) actVid.findViewById(R.id.txvfecha);
                 txv3 = (TextView) actVid.findViewById(R.id.vid_titulo);
 
-                imagv1.setImageResource(R.drawable.ic_video3);
+                imagv1.setImageResource(R.drawable.ic_video_final2);
 
 
                 //txv1.setText(VidDetArray.get(0));

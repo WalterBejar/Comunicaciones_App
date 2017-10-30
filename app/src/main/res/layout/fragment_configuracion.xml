@@ -83,20 +83,20 @@ tools:context="layout.FragmentConfiguracion"
 android:text="anyaccess"
     />
 
-<Button
-    android:text="Guardar cambios"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:id="@+id/b_save"
-    android:textColor="@color/colorBlanco"
-    android:layout_alignParentRight="true"
-    android:layout_alignParentEnd="true"
-    android:background="@color/colorNaranja"
+    <Button
+        android:id="@+id/b_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorBtnPlomo"
+        android:text="Guardar cambios"
+        android:textColor="@color/colorBlanco"
 
-    />
+        />
 
 
 </RelativeLayout>
