@@ -161,7 +161,6 @@ public class FragmentImagenes extends Fragment {
 
 //}
 
-
         return rootView;
     }
 

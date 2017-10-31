@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
@@ -45,7 +46,7 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
     ListView recListImag;
     int a;
     int celda = 3;
-
+    boolean red;
     public ImgController(View v, String url, String opcion, FragmentImagenes Frag) {
         this.v = v;
         this.url = url;
@@ -63,15 +64,23 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
             String a = params[0];
             String b = params[1];
 
+            red= GlobalVariables.isOnlineNet();
           //  getToken gettoken=new getToken();
            // gettoken.getToken();
+           // if(red==false){
 
             if (opcion == "get") {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase + "entrada/getpaginated/" + a + "/" + b + "/TP03");
-                   // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    get.setHeader("Content-type", "application/json");
+
+                    // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
+
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+
+
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
@@ -128,7 +137,7 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                 } catch (Exception ex) {
                     Log.w("Error get\n", ex);
                 }
-            }
+            }//}
         } catch (Throwable e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
@@ -160,13 +169,22 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
         try {
             if (opcion == "get") {
 
+
+                   // if (red==true){
                 if(GlobalVariables.imagen2.size()<=3) {
                     ImgAdapter ca = new ImgAdapter(v.getContext(), GlobalVariables.imagen2);
                     recListImag.setAdapter(ca);
                     GlobalVariables.contpublic+=1;
                     progressDialog.dismiss();
 
-                }
+
+
+               /* }}else{
+                        progressDialog.dismiss();
+
+                        Toast.makeText(v.getContext(),"Se perdió la conexión a  internet",Toast.LENGTH_SHORT).show();*/
+                    }
+
                 //GlobalVariables.imagen2 = imagenList;
                 //  GlobalVariables.noticias2.get(0);
             }
