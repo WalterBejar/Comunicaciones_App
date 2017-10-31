@@ -65,8 +65,8 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
         progressDialog.setMessage("Por favor, espere...");
         progressDialog.setCancelable(false);
         builder = new AlertDialog.Builder(this);
-        builder.setTitle("Está a punto de eliminar un conjunto de reservas.");
-        builder.setMessage("¿Desea continuar?");
+        builder.setTitle("¿Desea continuar?");//("Está a punto de eliminar un conjunto de reservas.");
+
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // Gestionar la reserva y cerrar el diálogo
@@ -95,6 +95,8 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
     }
 
     public void clickEnEliminarPasajeros(View view) {
+        builder.setIcon(R.drawable.erroricon);
+        builder.setMessage("Está a punto de eliminar un conjunto de reservas.");
         alertDialog = builder.create();
         alertDialog.show();
     }

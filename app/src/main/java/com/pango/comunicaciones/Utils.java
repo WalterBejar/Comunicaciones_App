@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Utils {
 
-    public static String baseUrl = "https://app.antapaccay.com.pe/proportal/scom_service/api";
+    public static String baseUrl = GlobalVariables.Urlbase;//"https://app.antapaccay.com.pe/proportal/scom_service/api";
     public static String loginDominio = "anyaccess";
     public static String token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2IiwidHlwIjoiSldUIn0.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYW50YXBhY2NheSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMDAwMDA3OTU4MCIsImV4cCI6MTUwNjYzNjUzMCwiaXNzIjoiaHR0cDovL2lzc3Vlci5jb20iLCJhdWQiOiJodHRwOi8vbXlzaXRlLmNvbSJ9.gse25ySe4fptGQasIEioL3THSrj1BzQAcGC4EqOsEGzjXeQwf8DG2kHGMmLdNHOID1TF06WlSkJU4lxCK297bxkNJLqdo86rPKOcvCHQMMFtHWYGTbdLgVdPS4CWfK-KIl1WTQNWavna-pSqn_WM-aBGnifqsARbdMMjOLvO2XHY9eKBhn8u0uleaeWobW5oKBTFiUpgO7JaVGbZL23yVOpCPJBil_XzzyaCt1ixodO7yuqOlClJw2IyW0RAO_lJu2cXUVYT8D0fM5KI-qnx6ClxY4j91YmGhcM5vR1yovKCbzND0-1PRrHzxSTi3M-LcqIIRChlsWHdtDik7-DbPA";
 
@@ -47,6 +47,9 @@ public class Utils {
         return baseUrl + "/ticket/get_ticket/" + codigoTicket;
     }
 
+    public static String getUrlForPublicacion(String tipo, String pagina,int cantidadTickets) {
+        return baseUrl+GlobalVariables.Urlbase2+"entrada/getpaginated/"+pagina+"/"+cantidadTickets+"/"+tipo;
+    }
 
     public static String getTicketProperty(TicketModel ticket, String s) {
         DateFormat formatoInicial = new SimpleDateFormat("yyyyMMdd'T'HH:mm:ss");

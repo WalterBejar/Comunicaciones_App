@@ -87,8 +87,8 @@ public class FragmentNoticias extends Fragment {
         }
     }
 
-///////////////////
-int a;
+    ///////////////////
+    int a;
     Context context;
 
     int pag=1;
@@ -100,7 +100,7 @@ int a;
     //Noticias noticia2;
     ListView recList;
     int in=3;
-boolean flag=false;
+    boolean flag=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -110,7 +110,7 @@ boolean flag=false;
         final View rootView = inflater.inflate(R.layout.fragment_noticias, container, false);
         recList = (ListView) rootView.findViewById(R.id.l_frag_not);
 
-       // LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        // LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         //llm.setOrientation(LinearLayoutManager.VERTICAL);
 
 
@@ -146,7 +146,7 @@ boolean flag=false;
 
 
 
-        /*recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -172,7 +172,7 @@ boolean flag=false;
 
 
             }
-        });*/
+        });
 
         recList.setOnScrollListener(new EndlessScrollListener() {
             @Override
@@ -182,29 +182,7 @@ boolean flag=false;
                 // Add whatever code is needed to append new items to your AdapterView
                 //loadNextDataFromApi(page);
                 int page2=page;
-                //final boolean[] flag = {false};
 
-               // final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
-               // obj.execute(String.valueOf(2),String.valueOf(10));
-
-                // or loadNextDataFromApi(totalItemsCount);
-
-             /*   final Handler h = new Handler();
-                h.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (obj.getStatus() == AsyncTask.Status.FINISHED) {
-                            flag[0] =true;
-
-                        } else {
-                            h.postDelayed(this, 250);
-                        }
-
-
-                    }
-                }, 250);*/
-
-//&&flag==true
 
              if(GlobalVariables.noticias2.size()<GlobalVariables.contNoticia) {
 
@@ -213,17 +191,6 @@ boolean flag=false;
                   obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
                  pageCount++;
 
-
-                 /*
-                 String Url = "media/GetImagen/6767/Salud Mental 2016 - 1.jpg";
-                 String Urlmin = "media/GetminFile/6767/Salud Mental 2016 - 1.jpg";
-                 ArrayList<String> dataf = new ArrayList<>();
-                 dataf.add("6767");
-                 dataf.add(Url.replaceAll("\\s", "%20"));
-                 dataf.add(Urlmin.replaceAll("\\s", "%20"));
-
-                 GlobalVariables.noticias2.add(new Noticias("SC2017000549", "TP01", R.drawable.ic_menu_noticias, "Ojeda, Christiam A (", "2017-10-09T00:00:00", "CUIDEMOS NUESTRA SALUD MENTAL", "Una de cada cinco personas en ámbito laboral puede experimentar un trastorno de salud mental. Los problemas de salud mental tienen un impacto directo en los lugares de trabajo.", dataf));
-*/
 
                  return true; // ONLY if more data is actually being loaded; false otherwise.
              }else{

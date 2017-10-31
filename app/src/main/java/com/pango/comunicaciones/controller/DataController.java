@@ -37,7 +37,7 @@ int varcant;
     SplashScreenActivity splashScreenActivity;
 
     ProgressDialog progressDialog;
-    List<Noticias> noticiaData=new ArrayList<Noticias>();
+    ArrayList<Noticias> noticiaData=new ArrayList<Noticias>();
     List<Imagen> imagenData=new ArrayList<Imagen>();
     List<Comunicado> comunicadoData=new ArrayList<Comunicado>();
     List<Video> videoData=new ArrayList<Video>();

@@ -2,10 +2,12 @@ package com.pango.comunicaciones;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -57,6 +59,8 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
     Button botonAgregar;
     String strDNI = "-", strNombre = "-", strEmpresa = "-";
     EditText editTextDNI, editTextNombre, editTextEmpresa;
+    AlertDialog.Builder builder;
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,23 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         codigoTicket = extras.getString("CodigoTicket");
 
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("¿Desea continuar?");//("Está a punto de eliminar un conjunto de reservas.");
+
+        builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Gestionar la reserva y cerrar el diálogo
+                new AgregarPasajeros().execute();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Cerrar diálogo
+                dialog.dismiss();
+            }
+        });
 
         listaBuscarPasajeros.setOnScrollListener(new EndlessScrollListener() {
             @Override
@@ -138,7 +159,11 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
     }
 
     public void clickEnAgregarSeleccionados(View view){
-        new AgregarPasajeros().execute();
+        //new AgregarPasajeros().execute();
+        builder.setIcon(R.drawable.confirmicon);
+        builder.setMessage("Está a punto de agregar un conjunto de reservas.");
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public class BuscarPasajeros extends AsyncTask<String, String, String> {
