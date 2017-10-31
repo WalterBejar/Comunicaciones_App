@@ -19,7 +19,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="120dp"
-            android:src="@drawable/img_cab_bus" />
+            android:scaleType="fitXY"
+            android:src="@drawable/img_prueba_bus" />
     </LinearLayout>
 
 
