@@ -48,7 +48,7 @@ public class Utils {
     }
 
     public static String getUrlForPublicacion(String tipo, String pagina,int cantidadTickets) {
-        return baseUrl+GlobalVariables.Urlbase2+"entrada/getpaginated/"+pagina+"/"+cantidadTickets+"/"+tipo;
+        return baseUrl+"entrada/getpaginated/"+pagina+"/"+cantidadTickets+"/"+tipo;
     }
 
     public static String getTicketProperty(TicketModel ticket, String s) {

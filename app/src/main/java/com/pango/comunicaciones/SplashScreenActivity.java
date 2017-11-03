@@ -52,6 +52,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         // Start the next activity
                         Intent mainIntent = new Intent().setClass(
                                 SplashScreenActivity.this, MainActivity.class);
+                        mainIntent.putExtra("respuesta", false); //Optional parameters
                         startActivity(mainIntent);
                         finish();
 

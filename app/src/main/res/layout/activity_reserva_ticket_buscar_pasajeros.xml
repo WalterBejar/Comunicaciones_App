@@ -27,12 +27,10 @@
         app:layout_constraintHorizontal_bias="0.0" />
 
 
-
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="140dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
@@ -44,34 +42,38 @@
         <TextView
             android:id="@+id/textView12"
             android:layout_width="65dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:gravity="center"
             android:text="EMPRESA"
+            android:textAlignment="viewStart"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
         <ImageButton
             android:id="@+id/btn_deleteDNI"
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             app:layout_constraintRight_toLeftOf="@+id/botonBuscarPasajero"
-            app:srcCompat="@drawable/delete_text"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" />
+            app:srcCompat="@drawable/delete_text" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="65dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="NOMBRE"
+            android:textAlignment="viewStart"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView12"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -79,33 +81,34 @@
         <ImageButton
             android:id="@+id/btn_deleteName"
             android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
+            android:layout_height="40dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton3"
+            android:background="@android:color/transparent"
             app:layout_constraintRight_toLeftOf="@+id/botonBuscarPasajero"
             app:layout_constraintTop_toBottomOf="@+id/btn_deleteDNI"
-            app:layout_constraintVertical_bias="0.4"
-            app:srcCompat="@drawable/delete_text" />
+            app:srcCompat="@drawable/delete_text"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_deleteEmpresa" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="65dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="DNI"
+            android:textAlignment="viewStart"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btn_deleteEmpresa"
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp"
             android:layout_marginRight="8dp"
             android:background="@android:color/transparent"
@@ -116,7 +119,7 @@
         <EditText
             android:id="@+id/textboxPasajeroEmpresa"
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="0dp"
@@ -130,34 +133,34 @@
         <EditText
             android:id="@+id/textboxPasajeroNombre"
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Ingrese Nombre"
             android:inputType="textPersonName"
-            app:layout_constraintLeft_toRightOf="@+id/textView11"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintRight_toLeftOf="@+id/btn_deleteName"
-            android:layout_marginRight="0dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textboxPasajeroEmpresa"
-            android:layout_marginTop="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/textView11"
+            app:layout_constraintRight_toLeftOf="@+id/btn_deleteName"
             app:layout_constraintTop_toBottomOf="@+id/textboxPasajeroDNI" />
 
         <EditText
             android:id="@+id/textboxPasajeroDNI"
             android:layout_width="0dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="0dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Ingrese DNI"
             android:inputType="textPersonName"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toRightOf="@+id/textView10"
             app:layout_constraintRight_toLeftOf="@+id/btn_deleteDNI"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="8dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/botonBuscarPasajero"
@@ -167,6 +170,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorBtnPlomo"
+            android:drawableTop="@drawable/ic_search"
             android:onClick="clickEnBuscar"
             android:text="BUSCAR"
             android:textColor="@color/colorBlanco"

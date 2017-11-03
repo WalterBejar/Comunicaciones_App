@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 
@@ -26,6 +27,7 @@ import layout.FragmentComunicados;
 import layout.FragmentConfiguracion;
 import layout.FragmentContactenos;
 import layout.FragmentImagenes;
+import layout.FragmentNotices;
 import layout.FragmentNoticias;
 import layout.FragmentNotificacion;
 import layout.FragmentRedesSociales;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView.OnNavigationItemSelectedListener,
         FragmentInicio2.OnFragmentInteractionListener,
         FragmentNoticias.OnFragmentInteractionListener,
+        FragmentNotices.OnFragmentInteractionListener,
         FragmentComunicados.OnFragmentInteractionListener,
         FragmentImagenes.OnFragmentInteractionListener,
         FragmentVideos.OnFragmentInteractionListener,
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity
 
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
-
     @Override
     public void onFragmentInteraction(Uri uri) {
     }
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity
     public enum NavigationFragment{
         Inicio,
         Noticias,
+        Noticias2,
         Comunicados,
         Imagenes,
         Videos,
@@ -119,12 +122,23 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // ponemos el contenido inicial
-        ChangeFragment(NavigationFragment.Inicio);
-        uncheckItemsMenu();
-        bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
-        bottomNavigationView.setVisibility(View.GONE);
+        Bundle extras = getIntent().getExtras();
+        if(extras.getBoolean("respuesta")){
+            ChangeFragment(NavigationFragment.Tickets);
+            bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(),"Tu sesión ha expirado ...",Toast.LENGTH_SHORT).show();
+        }
+        else {
+            ChangeFragment(NavigationFragment.Inicio);
+            uncheckItemsMenu();
+            bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+            bottomNavigationView.setVisibility(View.GONE);
 
-        getSupportActionBar().setTitle("");
+            getSupportActionBar().setTitle("");
+        }
+
+
 
     }
 
@@ -411,6 +425,7 @@ public class MainActivity extends AppCompatActivity
         switch (value) {
             case Inicio:    fragment = new FragmentInicio2(); break;
             case Noticias:    fragment = new FragmentNoticias(); break;
+            case Noticias2:    fragment = new FragmentNotices(); break;
             case Comunicados: fragment = new FragmentComunicados(); break;
             case Imagenes: fragment = new FragmentImagenes(); break;
             case Videos: fragment = new FragmentVideos(); break;

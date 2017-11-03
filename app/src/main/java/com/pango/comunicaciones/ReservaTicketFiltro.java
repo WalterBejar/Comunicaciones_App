@@ -1,6 +1,7 @@
 package com.pango.comunicaciones;
-
+import android.util.Log;
 import android.app.DatePickerDialog;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -20,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pango.comunicaciones.model.GetTicketModel;
@@ -37,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import layout.FragmentTickets;
 
 public class ReservaTicketFiltro extends AppCompatActivity {
 
@@ -64,9 +69,11 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     boolean escogioFecha;
     boolean buscar;
     FiltroAdapter filtroAdapter;
+    boolean showTotal=true;
 
-
-
+    boolean listenerFlag;
+    boolean upFlag;
+    boolean downFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +83,8 @@ public class ReservaTicketFiltro extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus1);
         setSupportActionBar(toolbar);
-
+        destinoEscogido="-";
+        origenEscogido="-";
         botonBuscarTickets = (Button) findViewById(R.id.botonBuscarTickets);
         botonEscogerFecha = (Button) findViewById(R.id.botonEscogerFecha);
         spinnerOrigen = (Spinner) findViewById(R.id.spinnerOrigen);
@@ -89,7 +97,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         cantidadTickets = 6;
         contTickets=0;
 
-        buscar= false;
+        buscar= true;
         tickets = new ArrayList<TicketModel>();
 
         myCalendar = Calendar.getInstance();
@@ -114,8 +122,8 @@ public class ReservaTicketFiltro extends AppCompatActivity {
 
         };
 
-        new GetTerminales().execute();
-
+        //new GetTerminales().execute();
+        setTerminal();
         listaTickets = (ListView) findViewById(R.id.listaTickets);
         filtroAdapter = new FiltroAdapter();
         listaTickets.setAdapter(filtroAdapter);
@@ -123,13 +131,20 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         listaTickets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketDetalle.class);
-                toReservaTicketDetalle.putExtra("CodigoTicket", tickets.get(position).IDPROG);
-                startActivity(toReservaTicketDetalle);
+                if (Utils.esAdmin){
+                    Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketListaPasajeros.class);
+                    toReservaTicketDetalle.putExtra("CodigoTicket", tickets.get(position).IDPROG);
+                    startActivity(toReservaTicketDetalle);
+                }
+                else {
+                    Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketDetalle.class);
+                    toReservaTicketDetalle.putExtra("CodigoTicket", tickets.get(position).IDPROG);
+                    startActivity(toReservaTicketDetalle);
+                }
             }
         });
 
-        listaTickets.setOnScrollListener(new EndlessScrollListener() {
+       /* listaTickets.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount){
 
@@ -140,17 +155,125 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                     new BuscarTickets().execute(String.valueOf(page2));
                     return true; // ONLY if more data is actually being loaded; false otherwise.
                 }else{
+
+                    if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contTickets,Toast.LENGTH_SHORT).show();
+                    showTotal=false;
                     return false;
                 }
             }
+        });*/
+
+        listaTickets.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (upFlag && scrollState == SCROLL_STATE_IDLE) {
+                    upFlag = false;
+                    Toast.makeText(getApplicationContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
+                    new BuscarTickets().execute("1",String.valueOf(tickets.size()));
+                    buscar=true;
+                }
+                if (downFlag && scrollState == SCROLL_STATE_IDLE) {
+                    downFlag = false;
+                    if(tickets.size()!=contTickets) {
+                        Toast.makeText(getApplicationContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+                        new BuscarTickets().execute(String.valueOf(page2),String.valueOf(cantidadTickets));
+                      //  return true; // ONLY if more data is actually being loaded; false otherwise.
+                    }else{
+
+                        if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contTickets,Toast.LENGTH_SHORT).show();
+                        showTotal=false;
+                        //return false;
+                    }
+
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    Log.d("started","comenzo");
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
+                }
+            }
         });
+
         new BuscarTickets().execute();
     }
 
+    public void setTerminal(){
+
+        terminalesNombres= new ArrayList<>();
+        String[] terminal={"- SELECCIONE ORIGEN -", "AEROPUERTO AREQUIPA",                "AREQUIPA",                "AREQUIPA NORTE",                "CUSCO",                "TINTAYA"};
+        for(int i =0; i< terminal.length;i++)
+            terminalesNombres.add(terminal[i]);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(com.pango.comunicaciones.ReservaTicketFiltro.this,
+                android.R.layout.simple_spinner_item, terminalesNombres);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerOrigen.setAdapter(adapter);
+
+
+        ArrayList<String> TerminalDestino = new ArrayList<String>();
+        TerminalDestino.add("- SELECCIONE DESTINO -");
+        for(int i =1; i< terminal.length;i++)
+            TerminalDestino.add(terminal[i]);
+
+        ArrayAdapter<String> adapterD = new ArrayAdapter<String>(com.pango.comunicaciones.ReservaTicketFiltro.this,android.R.layout.simple_spinner_item, TerminalDestino);
+        adapterD.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinnerDestino.setAdapter(adapterD);
+
+        spinnerDestino.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                ((TextView) parentView.getChildAt(0)).setTextSize(14);
+                destinoEscogido = terminalesNombres.get(position);
+                escogioDestino = true;
+                if (escogioOrigen && escogioDestino && escogioFecha)
+                    botonBuscarTickets.setEnabled(true);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                destinoEscogido = "- SEL. DESTINO -";
+            }
+        });
+        spinnerOrigen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                ((TextView) parentView.getChildAt(0)).setTextSize(14);
+                origenEscogido = terminalesNombres.get(position);
+                escogioOrigen = true;
+                if (escogioOrigen && escogioDestino && escogioFecha)
+                    botonBuscarTickets.setEnabled(true);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                origenEscogido = "- SEL. ORIGEN -";
+            }
+        });
+    }
 
     public void clickEnBuscarViajes(View view){
         buscar=true;
         page2=1;
+        showTotal=true;
         new BuscarTickets().execute();
     }
 
@@ -181,10 +304,11 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.show();
-            if (!escogioDestino)
+            if(buscar) progressDialog.show();
+            else Toast.makeText(getApplicationContext(),"Cargando mas datos... Espere",Toast.LENGTH_SHORT).show();
+            if (!escogioDestino || destinoEscogido.contains("SELECCIONE"))
                 destinoEscogido = "-";
-            if (!escogioOrigen)
+            if (!escogioOrigen || origenEscogido.contains("SELECCIONE"))
                 origenEscogido = "-";
             if (!escogioFecha)
                 fechaEscogida = "-";//Utils.getFechaHoy();
@@ -194,9 +318,20 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         protected void onPostExecute(String str) {
             super.onPostExecute(str);
             switch (str) {
-                case "404":
+                case "401":
+                    Intent myIntent = new Intent(ReservaTicketFiltro.this, MainActivity.class);
+                    myIntent.putExtra("respuesta", true); //Optional parameters
+                    ReservaTicketFiltro.this.startActivity(myIntent);
+                    finish();
+                    break;
+                case "307":
+                    Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();
+                    break;
+                case "450":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error de conexion",Toast.LENGTH_SHORT).show();
                     break;
                 case "500":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Gson gson = new Gson();
@@ -215,38 +350,44 @@ public class ReservaTicketFiltro extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            int page;
-            if(params.length==0) page=1;
-            else page=Integer.parseInt(params[0]);
 
             try {
-                String url2 =Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida,page, cantidadTickets);
-                URL url = new URL(Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida,page, cantidadTickets));
+                int page=1;
+                int elementPager=cantidadTickets;
+                    if(params.length>0){
+                        page=Integer.parseInt(params[0]);
+                        elementPager=Integer.parseInt(params[1]);
+                    }
+
+
+                URL url = new URL(Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida,page, elementPager));
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestProperty("Authorization", "Bearer " + Utils.token);
                 con.setRequestMethod("GET");
                 con.connect();
 
-                switch (con.getResponseCode()) {
-                    case 200:
-                        InputStream in = con.getInputStream();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                        StringBuilder result = new StringBuilder();
-                        String line;
-                        while((line = reader.readLine()) != null) {
-                            result.append(line);
-                        }
-                        return result.toString();
-                    default:
-                        return "" + con.getResponseCode();
-                }
+                    switch (con.getResponseCode()) {
+                        case 200:
+                            InputStream in = con.getInputStream();
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                            StringBuilder result = new StringBuilder();
+                            String line;
+                            while((line = reader.readLine()) != null) {
+                                result.append(line);
+                            }
+                            return result.toString();
+                        default:
+                            return "" + con.getResponseCode();
+                    }
+                //}
                 //Toast.makeText(getApplicationContext(),con.getResponseCode(),Toast.LENGTH_SHORT).show();
                 //return "" + con.getResponseCode();
                 //return token;
             } catch (Exception e) {
                 System.out.println(e.getStackTrace());
+                return "450";
             }
-            return null;
+
         }
     }
 

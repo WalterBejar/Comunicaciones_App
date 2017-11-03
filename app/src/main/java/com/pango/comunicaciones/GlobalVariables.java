@@ -38,7 +38,6 @@ public class GlobalVariables {
     public static List<Noticias> noticias2 = new ArrayList<>();
     public static int contador;
 
-
     public static int contNoticia;
     public static int contComunicado;
     public static int contFotos;

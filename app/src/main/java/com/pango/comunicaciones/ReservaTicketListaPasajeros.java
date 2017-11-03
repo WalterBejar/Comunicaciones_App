@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import com.pango.comunicaciones.model.GetPasajeroModel;
 import com.pango.comunicaciones.model.PasajeroModel;
 import com.pango.comunicaciones.model.PersonaPostReservaModel;
+import com.pango.comunicaciones.model.TicketModel;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -50,6 +52,11 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
     Button botonEliminar;
 
     ListaAdapter listaAdapter;
+
+    TicketModel ticket;
+
+    String[] busDetalleListaNombre = {"Nro Programa","Nombre Bus","Origen", "Destino", "Fecha", "Hora","Disponibles","Ocupados","Total Asientos", "Reservas Hecha", "Tipo Bus","Patente", "Marca", "Modelo", "Tipo Vehiculo"};
+    DetalleAdapter detalleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +93,28 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         codigoTicket = extras.getString("CodigoTicket");
 
+        // Asignar adapter a lista
+        detalleAdapter = new DetalleAdapter();
+        ListView listaDetalles = (ListView) findViewById(R.id.listaDetalles);
+        listaDetalles.setAdapter(detalleAdapter);
+
+        //LLamar a GetBusDetalles
+        new GetBusDetalles().execute();
+
         ListView listaTickets = (ListView) findViewById(R.id.listaPasajeros);
         listaAdapter = new ListaAdapter();
         listaTickets.setAdapter(listaAdapter);
         new GetLista().execute();
 
 
+    }
+
+    public void showListviewDetalle(View view){
+        ListView listaDetalles = (ListView) findViewById(R.id.listaDetalles);
+        if (listaDetalles.getVisibility() == View.GONE)
+            listaDetalles.setVisibility(View.VISIBLE);
+        else
+            listaDetalles.setVisibility(View.GONE);
     }
 
     public void clickEnEliminarPasajeros(View view) {
@@ -135,9 +158,20 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             super.onPostExecute(str);
 
             switch (str) {
-                case "404":
+                case "401":
+                    Intent myIntent = new Intent(ReservaTicketListaPasajeros.this, MainActivity.class);
+                    myIntent.putExtra("respuesta", true); //Optional parameters
+                    ReservaTicketListaPasajeros.this.startActivity(myIntent);
+                    finish();
+                    break;
+                case "307":
+                    Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();
+                    break;
+                case "450":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error de conexion",Toast.LENGTH_SHORT).show();
                     break;
                 case "500":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Gson gson = new Gson();
@@ -174,8 +208,9 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 System.out.println(e.getStackTrace());
+                return "450";
             }
-            return null;
+
         }
     }
 
@@ -274,30 +309,25 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_listapasajeros, null);
             String nombreCompleto = listaPasajeros.get(position).NOMBRES;
             boolean delete=true;
-            /*
-            if (listaPasajeros[position].ApellidoPaterno != null)
-                nombreCompleto = nombreCompleto + " " + listaPasajeros[position].ApellidoPaterno;
-            if (listaPasajeros[position].ApellidoMaterno != null)
-                nombreCompleto = nombreCompleto + " " + listaPasajeros[position].ApellidoMaterno;
-*/
+
             TextView pasajeroNombre = (TextView) convertView.findViewById(R.id.lblPasajeroNombre);
             pasajeroNombre.setText(nombreCompleto);
 
             TextView pasajeroEmpresa = (TextView) convertView.findViewById(R.id.lblPasajeroEmpresa);
-
+            int colorInicial=0;
             if(listaPasajeros.get(position).DNI.equals("DNI Reservado"))delete=false;
             if(listaPasajeros.get(position).DSCR != null){
                 pasajeroEmpresa.setText(listaPasajeros.get(position).DSCR);
 
                 if(listaPasajeros.get(position).RESPUESTA>0){
-                    /*((TextView) convertView.findViewById(R.id.lblPasajeroDNI)).setTextColor(Color.parseColor("#1B5E20"));
-                    ((TextView) convertView.findViewById(R.id.lblPasajeroNombre)).setTextColor(Color.parseColor("#1B5E20"));*/
-                    ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#1B5E20"));
+                    colorInicial=listaPasajeros.get(position).RESPUESTA;
+                    if(colorInicial==1)convertView.setBackgroundColor(Color.parseColor("#A9DFBF"));
+                    else  convertView.setBackgroundColor(Color.parseColor("#F9E79F"));
                 }
                 else{
-
-                    ((TextView) convertView.findViewById(R.id.lblPasajeroEmpresa)).setTextColor(Color.parseColor("#DD2C00"));
+                    convertView.setBackgroundColor(Color.parseColor("#FADBD8"));
                     delete=false;
+                    colorInicial=-1;
                 }
             }
             else pasajeroEmpresa.setText(listaPasajeros.get(position).EMPRESA);
@@ -310,10 +340,20 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             pasajeroCheckEliminar.setEnabled(delete);
 
             pasajeroCheckEliminar.setChecked(listaCheckBoxPasajeros[position]);
+            final View finalConvertView = convertView;
+            final int finalColorInicial = colorInicial;
             pasajeroCheckEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listaCheckBoxPasajeros[position] = !listaCheckBoxPasajeros[position];
+                    String BackgrColor= "#FFFFFF";
+                    if(listaCheckBoxPasajeros[position])  BackgrColor= "#D6EAF8";
+                    else if(finalColorInicial >0){
+                        if(finalColorInicial==1) BackgrColor= "#A9DFBF";
+                        else BackgrColor= "#F9E79F";
+                    }
+                    else if(finalColorInicial <0)BackgrColor= "#FADBD8";
+                    finalConvertView.setBackgroundColor(Color.parseColor(BackgrColor));
                     boolean flag=false;
                     for(int i=0;i<listaCheckBoxPasajeros.length;i++){
                         if(listaCheckBoxPasajeros[i]){
@@ -323,6 +363,96 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                     botonEliminar.setEnabled(flag);
                 }
             });
+            return convertView;
+        }
+    }
+
+ // Detalle Tickets
+    public class GetBusDetalles extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //progressDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String str) {
+            super.onPostExecute(str);
+
+            switch (str) {
+                case "404":
+                    break;
+                case "500":
+                    break;
+                default:
+                    Gson gson = new Gson();
+                    ticket = gson.fromJson(str, TicketModel.class);
+                    // Actualizar lista
+                    detalleAdapter.notifyDataSetChanged();
+            }
+           // progressDialog.dismiss();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                URL url = new URL(Utils.getUrlForReservaTicketDetalle(codigoTicket));
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestProperty("Authorization", "Bearer " + Utils.token);
+                con.setRequestMethod("GET");
+                con.connect();
+
+                switch (con.getResponseCode()) {
+                    case 200:
+                        InputStream in = con.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                        StringBuilder result = new StringBuilder();
+                        String line;
+                        while((line = reader.readLine()) != null) {
+                            result.append(line);
+                        }
+                        return result.toString();
+                    default:
+                        return "" + con.getResponseCode();
+                }
+            } catch (Exception e) {
+                System.out.println(e.getStackTrace());
+            }
+            return null;
+        }
+    }
+
+    public class DetalleAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            if (ticket == null)
+                return 0;
+            return busDetalleListaNombre.length;
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (ticket == null)
+                return  null;
+
+            convertView = getLayoutInflater().inflate(R.layout.reserva_tickets_detalle, null);
+
+            TextView ladoIzquierdo = (TextView) convertView.findViewById(R.id.lblBusCaracteristica);
+            ladoIzquierdo.setText(busDetalleListaNombre[position]);
+
+            TextView ladoDerecho = (TextView) convertView.findViewById(R.id.lblBusDetalle);
+            ladoDerecho.setText(Utils.getTicketProperty(ticket,busDetalleListaNombre[position]));
+
             return convertView;
         }
     }

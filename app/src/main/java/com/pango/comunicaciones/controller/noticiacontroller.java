@@ -169,6 +169,8 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                 recList.setAdapter(ca);
                     progressDialog.dismiss();
                 }
+
+
             /*}else{
                     progressDialog.dismiss();
 

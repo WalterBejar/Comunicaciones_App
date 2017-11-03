@@ -1,6 +1,7 @@
 package com.pango.comunicaciones.controller;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +44,7 @@ import layout.FragmentNoticias;
 public class NoticeController extends AsyncTask<String, String, String> {
 
 
-    View v;
+    Context context;
     String url;
     String opcion;
     FragmentNoticias Frag;
@@ -55,8 +56,9 @@ public class NoticeController extends AsyncTask<String, String, String> {
 
     NoticeAdapter noticeAdapter;
 
-    public NoticeController(NoticeAdapter noticeAdapter){
+    public NoticeController(NoticeAdapter noticeAdapter,Context context){
         this.noticeAdapter=noticeAdapter;
+        this.context=context;
     }
 
     @Override
@@ -64,36 +66,49 @@ public class NoticeController extends AsyncTask<String, String, String> {
 
             super.onPreExecute();
             if(GlobalVariables.noticias2.size()<3) {
-                progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+                progressDialog = ProgressDialog.show(context, "Loading", "Cargando publicaciones...");
             }
     }
 
     @Override
     protected  void onPostExecute(String str){
-        super.onPostExecute(str);
-        switch (str) {
-            case "404":
-                break;
-            case "500":
-                break;
-            default:
-                Gson gson = new Gson();
-                GetNoticiaModel getNoticiaModel = gson.fromJson(str, GetNoticiaModel.class);
-                GlobalVariables.noticias2.addAll(getNoticiaModel.Data);
-              //  GlobalVariables.pageNotice++;
-                GlobalVariables.contNoticia = getNoticiaModel.Count;
-                // NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),GlobalVariables.noticias2);
-               // recList.setAdapter(ca);
-                noticeAdapter.notifyDataSetChanged();
+        try {
+            super.onPostExecute(str);
+            switch (str) {
+                case "404":
+                    break;
+                case "500":
+                    break;
+                default:
+                    Gson gson = new Gson();
+                    GetNoticiaModel getNoticiaModel = gson.fromJson(str, GetNoticiaModel.class);
+                    GlobalVariables.noticias2.addAll(getNoticiaModel.Data);
+                  //  GlobalVariables.pageNotice++;
+                    GlobalVariables.contNoticia = getNoticiaModel.Count;
+                    // NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),GlobalVariables.noticias2);
+                   // recList.setAdapter(ca);
+
+                    if(GlobalVariables.noticias2.size()<=3){
+
+                        noticeAdapter = new NoticeAdapter(context);
+                        recList.setAdapter(noticeAdapter);
+                        //noticeAdapter.notifyDataSetChanged();
+                        progressDialog.dismiss();
+                    }
+
+
+
+            }
+        }catch (Exception ex){
+            Log.w("Error",ex);
         }
-        progressDialog.dismiss();
     }
 
     @Override
     protected String doInBackground(String... params) {
             HttpResponse response;
             String a=params[0];
-        if(a == "0" && GlobalVariables.noticias2.size()!=0) return null;
+       // if(a == "0" && GlobalVariables.noticias2.size()!=0) return "";
                 try {
 
                     URL url = new URL(Utils.getUrlForPublicacion("TP01",a, GlobalVariables.ElementPerpager));

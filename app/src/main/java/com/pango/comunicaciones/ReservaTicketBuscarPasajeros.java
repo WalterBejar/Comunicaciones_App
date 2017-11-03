@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
     int page2=1;
     int contPasajeros=0;
     boolean buscar=false;
-
+    boolean showTotal=true;
     ProgressDialog progressDialog;
     ArrayList<PasajeroModel> listaPasajeros;
 
@@ -140,6 +141,8 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                     new BuscarPasajeros().execute(String.valueOf(page2));
                     return true; // ONLY if more data is actually being loaded; false otherwise.
                 }else{
+                    if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contPasajeros,Toast.LENGTH_SHORT).show();
+                    showTotal=false;
                     return false;
                 }
             }
@@ -182,7 +185,8 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                 strEmpresa = "-";
             else
                 strEmpresa = editTextEmpresa.getText().toString();
-            progressDialog.show();
+            if(buscar) progressDialog.show();
+            else Toast.makeText(getApplicationContext(),"Cargando mas datos... Espere",Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -271,9 +275,20 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
         protected void onPostExecute(String str) {
             super.onPostExecute(str);
             switch (str) {
-                case "404":
+                case "401":
+                    Intent myIntent = new Intent(ReservaTicketBuscarPasajeros.this, MainActivity.class);
+                    myIntent.putExtra("respuesta", true); //Optional parameters
+                    ReservaTicketBuscarPasajeros.this.startActivity(myIntent);
+                    finish();
+                    break;
+                case "307":
+                    Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();
+                    break;
+                case "450":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error de conexion",Toast.LENGTH_SHORT).show();
                     break;
                 case "500":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Gson gson = new Gson();
@@ -324,8 +339,8 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 System.out.println(e.getStackTrace());
+                return "450";
             }
-            return null;
         }
     }
 
@@ -371,10 +386,14 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
 
             CheckBox pasajeroCheckSeleccionar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
             pasajeroCheckSeleccionar.setChecked(listaCheckBoxPasajeros[position]);
+            final View finalConvertView = convertView;
             pasajeroCheckSeleccionar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listaCheckBoxPasajeros[position] = !listaCheckBoxPasajeros[position];
+                    String BackgrColor= "#FFFFFF";
+                    if(listaCheckBoxPasajeros[position])  BackgrColor= "#D6EAF8";
+                    finalConvertView.setBackgroundColor(Color.parseColor(BackgrColor));
                     boolean flag=false;
                     for(int i=0;i<listaCheckBoxPasajeros.length;i++){
                         if(listaCheckBoxPasajeros[i]){

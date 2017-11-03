@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pango.comunicaciones.model.GetPasajeroModel;
@@ -199,9 +200,20 @@ public class ReservaTicketDetalle extends AppCompatActivity {
             super.onPostExecute(str);
 
             switch (str) {
-                case "404":
+                case "401":
+                    Intent myIntent = new Intent(ReservaTicketDetalle.this, MainActivity.class);
+                    myIntent.putExtra("respuesta", true); //Optional parameters
+                    ReservaTicketDetalle.this.startActivity(myIntent);
+                    finish();
+                    break;
+                case "307":
+                    Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();
+                    break;
+                case "450":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error de conexion",Toast.LENGTH_SHORT).show();
                     break;
                 case "500":
+                    Toast.makeText(getApplicationContext(),"Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     Gson gson = new Gson();
@@ -258,8 +270,6 @@ public class ReservaTicketDetalle extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
 
-
-
                 PersonaPostReservaModel[] persona = {Utils.getPersonaPostReservaModel(ticket.IDPROG)};
                 Gson gson = new Gson();
 
@@ -277,11 +287,6 @@ public class ReservaTicketDetalle extends AppCompatActivity {
                 HttpResponse response = httpClient.execute(httpPost);
 
 
-
-
-
-
-
                 switch (response.getStatusLine().getStatusCode()) {
                     case 200:
                         InputStream in = response.getEntity().getContent();
@@ -297,8 +302,8 @@ public class ReservaTicketDetalle extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 System.out.println(e.getStackTrace());
+                return "450";
             }
-            return null;
         }
     }
 

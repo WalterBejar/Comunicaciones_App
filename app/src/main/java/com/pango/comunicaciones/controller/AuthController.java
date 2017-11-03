@@ -31,7 +31,7 @@ import layout.FragmentTickets;
 
 public class AuthController extends AsyncTask<String,Void,Void> {
     View v;
-    boolean st;
+    int st;
     String url;
     String opcion;
     FragmentTickets Frag;
@@ -72,7 +72,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
                 try {
 
                     if(GlobalVariables.con_status==200){
-                    st=true;
+
 
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"persona/Get_Usuario");
@@ -81,28 +81,27 @@ public class AuthController extends AsyncTask<String,Void,Void> {
                     String respstring = EntityUtils.toString(response.getEntity());
 
                     JSONObject respJSON = new JSONObject(respstring);
+                        GlobalVariables.con_status=httpClient.execute(get).getStatusLine().getStatusCode();
+                        if(GlobalVariables.con_status ==200)
+                        {
+                            CodPersona=respJSON.getString("DNI");
+                            Nombres=respJSON.getString("Nombres");
 
-                        CodPersona=respJSON.getString("DNI");
-                        Nombres=respJSON.getString("Nombres");
-
-                        JSONArray Data2 = respJSON.getJSONArray("Roles");
-                        for (int j = 0; j < Data2.length(); j++) {
-                            Roles.add((Integer) Data2.get(j));
-
+                            JSONArray Data2 = respJSON.getJSONArray("Roles");
+                            for (int j = 0; j < Data2.length(); j++) {
+                                Roles.add((Integer) Data2.get(j));
+                            }
+                            st=1;
                         }
-
+                        else st=0;
 
                     }else{
-                        st=false;
+                        st=-1;
                     }
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
                 }
             }
-
-
-
-
 
         }
         catch (Throwable e) {
@@ -133,11 +132,18 @@ public class AuthController extends AsyncTask<String,Void,Void> {
         try {
             if (opcion == "get") {
 
-                if(st==false){
-                    Toast.makeText(v.getContext(),"Usuario y/o contraseña incorrecta",Toast.LENGTH_SHORT).show();
+                if(st<0){
+                    if(GlobalVariables.con_status==0)
+                    Toast.makeText(v.getContext(),"Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
+                    else Toast.makeText(v.getContext(),GlobalVariables.con_status+" Usuario y/o contraseña incorrecta",Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
 
-                }else{
+                }
+                else if(st== 0){
+                    Toast.makeText(v.getContext(),GlobalVariables.con_status+" Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+                else{
                     Toast.makeText(v.getContext(),"logueo correcto",Toast.LENGTH_SHORT).show();
 
                     Utils.codPersona=CodPersona;
@@ -177,15 +183,15 @@ public class AuthController extends AsyncTask<String,Void,Void> {
             get.setHeader("Content-type", "application/json");
             response = httpClient.execute(get);
             String respstring2 = EntityUtils.toString(response.getEntity());
-
+            GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
             if(respstring2.equals(""))
                 {
                     GlobalVariables.token_auth=null;
-                    GlobalVariables.con_status =0;
+                   // GlobalVariables.con_status =0;
                 }else {
                     GlobalVariables.token_auth = respstring2.substring(1, respstring2.length() - 1);
                     Utils.token=respstring2.substring(1, respstring2.length() - 1);
-                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+
                 }
 
 

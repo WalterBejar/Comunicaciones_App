@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,19 +29,20 @@ import java.util.List;
  * Created by BOB on 30/10/2017.
  */
 
-public class NoticeAdapter extends BaseAdapter {
+public class NoticeAdapter extends ArrayAdapter<Noticias> {
 
     DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
     DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
     private Context context;
     private List<Noticias> data = new ArrayList<Noticias>();
+
     public NoticeAdapter(Context context) {
-       // super(context);
+        super(context, R.layout.public_noticias,GlobalVariables.noticias2);
+        this.data = GlobalVariables.noticias2;
         this.context = context;
-        data= GlobalVariables.noticias2;
     }
 
-    @Override
+   /* @Override
     public int getCount() {
         if (data != null)
             return data.size();
@@ -55,7 +57,7 @@ public class NoticeAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return 0;
-    }
+    }*/
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
