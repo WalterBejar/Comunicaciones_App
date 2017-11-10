@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActVid;
 import com.pango.comunicaciones.GlobalVariables;
@@ -85,37 +86,41 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
                    // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
-                    response = httpClient.execute(get);
 
-                    String respstring = EntityUtils.toString(response.getEntity());
-                    JSONObject respJSON = new JSONObject(respstring);
-                    //notdetArray.add(R.drawable.ic_menu_noticias);
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    if(GlobalVariables.con_status==200) {
 
-                   // VidDetArray.add(respJSON.getString("Autor"));
-                    VidDetArray.add(fecha);
-                    VidDetArray.add(titulo);
-                    // ImgdetArray.add(respJSON.getString("Subtitulo"));
-                    //  ImgdetArray.add(respJSON.getString("Descripcion"));
+                        response = httpClient.execute(get);
 
-                    JSONObject Files = respJSON.getJSONObject("Files");
-                    JSONArray Data2 = Files.getJSONArray("Data");
+                        String respstring = EntityUtils.toString(response.getEntity());
+                        JSONObject respJSON = new JSONObject(respstring);
+                        //notdetArray.add(R.drawable.ic_menu_noticias);
 
-                    for (int i = 0; i < Data2.length(); i++) {
-                        JSONObject h = Data2.getJSONObject(i);
+                        // VidDetArray.add(respJSON.getString("Autor"));
+                        VidDetArray.add(fecha);
+                        VidDetArray.add(titulo);
+                        // ImgdetArray.add(respJSON.getString("Subtitulo"));
+                        //  ImgdetArray.add(respJSON.getString("Descripcion"));
+
+                        JSONObject Files = respJSON.getJSONObject("Files");
+                        JSONArray Data2 = Files.getJSONArray("Data");
+
+                        for (int i = 0; i < Data2.length(); i++) {
+                            JSONObject h = Data2.getJSONObject(i);
 /*
                         private String Correlativo;
                         private String url_img;
                         private String urlmin_imag;*/
 
-                        String correlativo=Integer.toString(i);
-                        // int tamanio=h.getInt("Tamanio");
-                        String url_file=h.getString("Url");
-                        String urlmin=h.getString("Urlmin");
+                            String correlativo = Integer.toString(i);
+                            // int tamanio=h.getInt("Tamanio");
+                            String url_file = h.getString("Url");
+                            String urlmin = h.getString("Urlmin");
 
-                        view_video.add(new Vid_Gal(correlativo,url_file.replaceAll("\\s","%20"),urlmin.replaceAll("\\s","%20")));
+                            view_video.add(new Vid_Gal(correlativo, url_file.replaceAll("\\s", "%20"), urlmin.replaceAll("\\s", "%20")));
 
+                        }
                     }
-
                     // des_data
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
@@ -152,7 +157,7 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
+            if (opcion == "get"&&GlobalVariables.con_status==200) {
                 DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
                 DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
                 GlobalVariables.listdetvid=view_video;//datos correlativo,url,urlmin
@@ -183,7 +188,11 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
                 gridView.setAdapter(adaptador);
                 progressDialog.dismiss();
 
+            }else {
+                progressDialog.dismiss();
+                Toast.makeText(actVid,"Error en el servidor",Toast.LENGTH_SHORT).show();
             }
+
         }catch (Exception ex){
             Log.w("Error",ex);
         }

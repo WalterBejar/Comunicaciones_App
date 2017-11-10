@@ -6,7 +6,7 @@
     android:id="@+id/mainlayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.pango.comunicaciones.ReservaTicketFiltro"
+    tools:context=".ReservaTicketFiltro"
     android:background="@drawable/bus_edit"
     >
 
@@ -187,7 +187,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="0dp">
 
@@ -230,7 +229,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginBottom="8dp"
                         android:layout_marginTop="8dp"
-                        android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/delete_text"
                         android:text="Button"
@@ -252,7 +250,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="Compañia Minera Antapaccay S.A. 2017"
-
+            android:layout_weight="0.05"
             android:textAlignment="center" />
 
 

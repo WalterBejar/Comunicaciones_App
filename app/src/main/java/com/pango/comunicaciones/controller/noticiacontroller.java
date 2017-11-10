@@ -2,9 +2,11 @@ package com.pango.comunicaciones.controller;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.GlobalVariables;
@@ -46,6 +48,11 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     ListView recList;
     int a;
     boolean red;
+    boolean cargaData=true;
+    Boolean loadingTop;
+    int value_loadingTop;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView2;
 
     //int celda = 3;
 
@@ -55,7 +62,8 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
         this.opcion=opcion;
         this.Frag=Frag;
         recList=(ListView) v.findViewById(R.id.l_frag_not);
-
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout);
+        textView2 =(TextView)v.findViewById(R.id.textView);
         //recList.setOnScrollListener(this);
 
     }
@@ -67,6 +75,8 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
             HttpResponse response;
             String a=params[0];
             String b=params[1];
+            loadingTop=Boolean.parseBoolean(params[2]);
+                //value_loadingTop=Integer.parseInt()
 
                 //  getToken gettoken=new getToken();
                 // gettoken.getToken();
@@ -78,22 +88,24 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+GlobalVariables.Urlbase2+a+"/"+b+"/TP01");
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     get.setHeader("Content-type", "application/json");
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    if(GlobalVariables.con_status==200) {
 
-                    response = httpClient.execute(get);
-                    String respstring = EntityUtils.toString(response.getEntity());
+                        response = httpClient.execute(get);
+                        String respstring = EntityUtils.toString(response.getEntity());
 
-                    JSONObject respJSON = new JSONObject(respstring);
+                        JSONObject respJSON = new JSONObject(respstring);
 
-                    JSONArray noticias = respJSON.getJSONArray("Data");
+                        JSONArray noticias = respJSON.getJSONArray("Data");
 
-                    GlobalVariables.cont_item=noticias.length();
-                    GlobalVariables.contNoticia=respJSON.getInt("Count");//obtiene el total de publicaciones en general
+                        GlobalVariables.cont_item = noticias.length();
+                        GlobalVariables.contNoticia = respJSON.getInt("Count");//obtiene el total de publicaciones en general
 
-                    for (int i = 0; i < noticias.length(); i++) {
-                        JSONObject c = noticias.getJSONObject(i);
-                        //String T =c.getString("Tipo");
-                        //String A="TP02";
-                        //if(T.equals("TP01")) {
+                        for (int i = 0; i < noticias.length(); i++) {
+                            JSONObject c = noticias.getJSONObject(i);
+                            //String T =c.getString("Tipo");
+                            //String A="TP02";
+                            //if(T.equals("TP01")) {
 
                             String CodRegistro = c.getString("CodRegistro");
                             //String Tipo = c.getString("Tipo");
@@ -105,30 +117,24 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                             JSONObject Files = c.getJSONObject("Files");
                             JSONArray Data2 = Files.getJSONArray("Data");
 
-                            ArrayList<String> dataf = new ArrayList<>();
-                            for (int j = 0; j < Data2.length(); j++) {
-                                JSONObject h = Data2.getJSONObject(j);
+                            JSONObject h = Data2.getJSONObject(0);
+                            String Urlmin2 = h.getString("Urlmin");
 
-                                String Url = h.getString("Url");
-                                String Urlmin2 = h.getString("Urlmin");
+                            String[] parts = Urlmin2.split("550px;");
+                            //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                            //String part2 = parts[1]; //obtiene: 19-A
 
-                                String[] parts = Urlmin2.split("550px;");
-                                //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
-                                //String part2 = parts[1]; //obtiene: 19-A
+                            String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
-                                String Urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+                            noticiaList.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+                            GlobalVariables.noticias2.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
 
-                                dataf.add(Utils.ChangeUrl(Url));
-                                dataf.add(Utils.ChangeUrl(Urlmin));
-                            }
-                            //dataf.get(0);
-                            noticiaList.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
-                            GlobalVariables.noticias2.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
-
-                        //}
+                            //}
+                        }
                     }
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+                    cargaData=false;
                 }
             }
             //}
@@ -149,27 +155,61 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected void onPreExecute() {
-        if(opcion=="get") {
+        if(opcion=="get"&&GlobalVariables.flag_up_toast) {
             super.onPreExecute();
-            if(GlobalVariables.noticias2.size()<3) {
-                progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
-            }
+            //if(GlobalVariables.noticias2.size()<GlobalVariables.num_vid) {
+            Toast.makeText(v.getContext(),"Actualizando, por favor espere...",Toast.LENGTH_SHORT).show();
+            GlobalVariables.flag_up_toast=false;
+            //progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            //}
+        }else{
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
         }
     }
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
+            if (opcion == "get"&&GlobalVariables.con_status==200&&cargaData) {
 
                // if (red==true){
 
-                    if(GlobalVariables.noticias2.size()<=3){
+                  //  if(GlobalVariables.noticias2.size()<=GlobalVariables.num_vid){
 
                 NoticiaAdapter ca = new NoticiaAdapter(v.getContext(),GlobalVariables.noticias2);
                 recList.setAdapter(ca);
-                    progressDialog.dismiss();
+               // }
+                ca.notifyDataSetChanged();
+                if(GlobalVariables.flagUpSc==true){
+                    recList.setSelection(0);
+                    GlobalVariables.flagUpSc=false;
+                }else
+                if(GlobalVariables.noticias2.size()>3&&GlobalVariables.noticias2.size()<GlobalVariables.contNoticia) {
+                    //recListImag.smoothScrollToPosition(GlobalVariables.imagen2.size()-3);
+                    recList.setSelection(GlobalVariables.noticias2.size()-4);
+
+                }else if(GlobalVariables.noticias2.size()==GlobalVariables.contNoticia){
+                    recList.setSelection(GlobalVariables.noticias2.size());
                 }
 
+              /*  if(loadingTop)
+                {
+                    loadingTop=false;
+                    swipeRefreshLayout.setRefreshing(false);
+                    textView2.setVisibility(View.GONE);
+                    swipeRefreshLayout.setEnabled( false );
+                }
+*/
+
+              /*  if(GlobalVariables.noticias2.size()==6) {
+                    GlobalVariables.contpublicNot=3;
+                }else {
+                    GlobalVariables.contpublicNot += 1;
+
+                }*/
+               // GlobalVariables.noticias2.size();
+                GlobalVariables.contpublicNot += 1;
+                progressDialog.dismiss();
 
             /*}else{
                     progressDialog.dismiss();
@@ -179,10 +219,36 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                 // GlobalVariables.noticias2=GlobalVariables.noticias2.add(noticiaList) ;
 
                 //  GlobalVariables.noticias2.get(0);
+            }else if(GlobalVariables.con_status!=200){
+                progressDialog.dismiss();
+                int y=GlobalVariables.con_status;
+
+                Toast.makeText(v.getContext(),"Error en el servidor"+"("+y+")",Toast.LENGTH_SHORT).show();
+            }else {
+                progressDialog.dismiss();
+
+                Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
             }
+
+            /*if(loadingTop)
+            {
+                loadingTop=false;
+                swipeRefreshLayout.setRefreshing(false);
+                textView2.setVisibility(View.GONE);
+                swipeRefreshLayout.setEnabled( false );
+            }*/
         }catch (Exception ex){
             Log.w("Error",ex);
         }
+        if(loadingTop)
+        {
+            loadingTop=false;
+            swipeRefreshLayout.setRefreshing(false);
+            textView2.setVisibility(View.GONE);
+            swipeRefreshLayout.setEnabled( false );
+        }
+
+
     }
 
 

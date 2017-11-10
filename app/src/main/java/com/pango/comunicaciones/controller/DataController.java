@@ -11,6 +11,7 @@ import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.model.Comunicado;
 import com.pango.comunicaciones.model.Imagen;
 import com.pango.comunicaciones.model.Img_Gal;
+import com.pango.comunicaciones.model.Img_Gal_List;
 import com.pango.comunicaciones.model.Noticias;
 import com.pango.comunicaciones.model.Vid_Gal;
 import com.pango.comunicaciones.model.Video;
@@ -144,20 +145,17 @@ int varcant;
                     JSONObject Files = h.getJSONObject("Files");
 
                     JSONArray Data2 = Files.getJSONArray("Data");
-                    ArrayList<String> dataf = new ArrayList<>();
-                    for (int j = 0; j < Data2.length(); j++) {
-                        JSONObject h1 = Data2.getJSONObject(j);
 
-                        String Correlativo = h1.getString("Correlativo");
-                        String Url = h1.getString("Url");
-                        String Urlmin = h1.getString("Urlmin");
+                    JSONObject w = Data2.getJSONObject(0);
+                    String Urlmin2 = w.getString("Urlmin");
 
-                        dataf.add(Correlativo);
-                        dataf.add(Utils.ChangeUrl(Url));
-                        dataf.add(Utils.ChangeUrl(Urlmin));
-                    }
+                    String[] parts = Urlmin2.split("550px;");
+                    //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                    //String part2 = parts[1]; //obtiene: 19-A
 
-                    noticiaData.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+                    String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
+
+                    noticiaData.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
 
                 }
 
@@ -206,19 +204,21 @@ int varcant;
 
                         JSONObject Files = h.getJSONObject("Files");
                         JSONArray Data2 = Files.getJSONArray("Data");
-                        ArrayList<String> dataf = new ArrayList<>();
-                        for (int j = 0; j < Data2.length(); j++) {
-                            JSONObject h1 = Data2.getJSONObject(j);
 
-                            String Correlativo = h1.getString("Correlativo");
-                            String Url = h1.getString("Url");
-                            String Urlmin = h1.getString("Urlmin");
 
-                            dataf.add(Correlativo);
-                            dataf.add(Utils.ChangeUrl(Url));
-                            dataf.add(Utils.ChangeUrl(Urlmin));
-                        }
-                        comunicadoData.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+                        JSONObject t = Data2.getJSONObject(0);
+                        String Urlmin2 = t.getString("Urlmin");
+
+                        String[] parts = Urlmin2.split("550px;");
+                        //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                        //String part2 = parts[1]; //obtiene: 19-A
+
+                        String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
+
+                        comunicadoData.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+
+
+
                     }
                     // des_data
                 }catch (Exception ex){
@@ -267,15 +267,15 @@ int varcant;
                         int cant_img = Files.getInt("Count");
                         JSONArray Data2 = Files.getJSONArray("Data");
 
-                        List<Img_Gal> datafImg = new ArrayList<>();
+                        List<Img_Gal_List> datafImg = new ArrayList<>();
                         for (int j = 0; j < Data2.length(); j++) {
                             JSONObject m = Data2.getJSONObject(j);
 
                             String Correlativo = m.getString("Correlativo");
-                            String Url = Utils.ChangeUrl(m.getString("Url"));
+                            //String Url = Utils.ChangeUrl(m.getString("Url"));
                             String Urlmin = Utils.ChangeUrl(m.getString("Urlmin"));
 
-                            datafImg.add(new Img_Gal(Correlativo, Url, Urlmin));
+                            datafImg.add(new Img_Gal_List(Correlativo, Urlmin));
                         }
 
                         imagenData.add(new Imagen(CodRegistro, icon, Fecha, Titulo, datafImg, cant_img));

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActComDetalle;
 import com.pango.comunicaciones.GlobalVariables;
@@ -81,15 +82,31 @@ Button btn_adjuntos;
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+
+
+                    if(GlobalVariables.con_status==200) {
+
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     //notdetArray.add(R.drawable.ic_menu_noticias);
                    // comdetArray.add(respJSON.getString("Autor"));
-                    comdetArray.add(fecha);
-                    comdetArray.add(titulo);
+                        if(fecha.equals("")&&titulo.equals("")){
+                            comdetArray.add(respJSON.getString("Fecha"));
+                            comdetArray.add(respJSON.getString("Autor"));
+                        }else {
+
+
+                            comdetArray.add(fecha);
+                            comdetArray.add(titulo);
+                        }
+
                     comdetArray.add(respJSON.getString("Descripcion"));
+
+
 
                     JSONObject Files = respJSON.getJSONObject("Files");
                     JSONArray Data2 = Files.getJSONArray("Data");
@@ -112,7 +129,11 @@ Button btn_adjuntos;
 
                     }
 
+
+
                     // des_data
+                    }
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
                 }
@@ -142,11 +163,12 @@ Button btn_adjuntos;
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
+            if (opcion == "get"&&GlobalVariables.con_status==200) {
                 DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
                 DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
                 GlobalVariables.listdetcom=des_data;
 
+                GlobalVariables.flag_notificacion=false;
 
                 imag0 =(ImageView) actComDetalle.findViewById(R.id.comdet_icon);
 
@@ -179,7 +201,7 @@ Button btn_adjuntos;
                 }*/
 
 
-                content.setWebViewClient(new ComdetController.MyWebViewClient());
+                content.setWebViewClient(new MyWebViewClient());
                 content.loadDataWithBaseURL("",comdetArray.get(2) , "text/html", "UTF-8", "");
                 WebSettings settings=content.getSettings();
                 settings.setJavaScriptEnabled(true);
@@ -200,6 +222,9 @@ Button btn_adjuntos;
                 GlobalVariables.noticias2=noticiaList;*/
                 //  GlobalVariables.noticias2.get(0);
 
+            }else {
+                progressDialog.dismiss();
+                Toast.makeText(v.getContext(),"Error en el servidor",Toast.LENGTH_SHORT).show();
             }
         }catch (Exception ex){
             Log.w("Error",ex);

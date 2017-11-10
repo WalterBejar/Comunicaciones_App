@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActNotDetalle;
 import com.pango.comunicaciones.GlobalVariables;
@@ -87,42 +88,43 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     get.setHeader("Content-type", "application/json");
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    if(GlobalVariables.con_status==200) {
+                        response = httpClient.execute(get);
 
-                    response = httpClient.execute(get);
+                        String respstring = EntityUtils.toString(response.getEntity());
+                        JSONObject respJSON = new JSONObject(respstring);
+                        //notdetArray.add(R.drawable.ic_menu_noticias);
+                        //notdetArray.add(respJSON.getString("Autor"));
+                        notdetArray.add(fecha_not);
+                        notdetArray.add(titulo_not);
+                        //notdetArray.add(respJSON.getString("Subtitulo"));
+                        notdetArray.add(respJSON.getString("Descripcion"));
 
-                    String respstring = EntityUtils.toString(response.getEntity());
-                    JSONObject respJSON = new JSONObject(respstring);
-                    //notdetArray.add(R.drawable.ic_menu_noticias);
-                    //notdetArray.add(respJSON.getString("Autor"));
-                    notdetArray.add(fecha_not);
-                    notdetArray.add(titulo_not);
-                    //notdetArray.add(respJSON.getString("Subtitulo"));
-                    notdetArray.add(respJSON.getString("Descripcion"));
-
-                    JSONObject Files = respJSON.getJSONObject("Files");
-                    JSONArray Data2 = Files.getJSONArray("Data");
-                    int count=Files.getInt("Count");
-                    if(count!=0){
-                    for (int i = 0; i < Data2.length(); i++) {
-                        JSONObject h = Data2.getJSONObject(i);
+                        JSONObject Files = respJSON.getJSONObject("Files");
+                        JSONArray Data2 = Files.getJSONArray("Data");
+                        int count = Files.getInt("Count");
+                        if (count != 0) {
+                            for (int i = 0; i < Data2.length(); i++) {
+                                JSONObject h = Data2.getJSONObject(i);
 
 
-                        String nombre=h.getString("Nombre");
-                        int tamanio=h.getInt("Tamanio");
-                        String tipoarc=h.getString("TipoArchivo");
-                        String url_file=h.getString("Url");
-                        String tipo_det=h.getString("Tipo");
+                                String nombre = h.getString("Nombre");
+                                int tamanio = h.getInt("Tamanio");
+                                String tipoarc = h.getString("TipoArchivo");
+                                String url_file = h.getString("Url");
+                                String tipo_det = h.getString("Tipo");
 
-                        if(tipo_det.equals("FL01")){
-                            count_files=count_files+1;
+                                if (tipo_det.equals("FL01")) {
+                                    count_files = count_files + 1;
 
-                            des_data.add(new NotDet(nombre,tamanio,tipoarc,url_file,tipo_det));
+                                    des_data.add(new NotDet(nombre, tamanio, tipoarc, url_file, tipo_det));
 
+                                }
+
+                            }
                         }
-
                     }
-                    }
-
                    // des_data
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
@@ -154,7 +156,7 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
     protected  void onPostExecute(Void result){
         try {
 
-            if (opcion == "get") {
+            if (opcion == "get"&&GlobalVariables.con_status==200) {
                 DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
                 DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
 
@@ -216,7 +218,13 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
 
 
 
+            }else {
+                progressDialog.dismiss();
+                Toast.makeText(actNotDet,"Error en el servidor",Toast.LENGTH_SHORT).show();
             }
+
+
+
         }catch (Exception ex){
             Log.w("Error",ex);
         }

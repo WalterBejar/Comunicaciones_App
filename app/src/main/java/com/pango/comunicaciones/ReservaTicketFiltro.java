@@ -1,4 +1,6 @@
 package com.pango.comunicaciones;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.app.DatePickerDialog;
 import android.app.FragmentTransaction;
@@ -40,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import layout.FragmentTickets;
 
@@ -61,6 +64,8 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     String fechaEscogida;
 
     ListView listaTickets;
+    TextView textLoading;
+    SwipeRefreshLayout swipeRefreshLayout;
     int cantidadTickets;
     int contTickets;
     int page2=1;
@@ -70,7 +75,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     boolean buscar;
     FiltroAdapter filtroAdapter;
     boolean showTotal=true;
-
+    boolean loadingTop=false;
     boolean listenerFlag;
     boolean upFlag;
     boolean downFlag;
@@ -100,6 +105,10 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         buscar= true;
         tickets = new ArrayList<TicketModel>();
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        textLoading =(TextView)findViewById(R.id.textLoading);
+        textLoading.setVisibility(View.GONE);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
         myCalendar = Calendar.getInstance();
         date = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -144,24 +153,17 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             }
         });
 
-       /* listaTickets.setOnScrollListener(new EndlessScrollListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public boolean onLoadMore(int page, int totalItemsCount){
 
-            // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
-                //loadNextDataFromApi(page);
-                if(tickets.size()!=contTickets) {
-                    new BuscarTickets().execute(String.valueOf(page2));
-                    return true; // ONLY if more data is actually being loaded; false otherwise.
-                }else{
-
-                    if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contTickets,Toast.LENGTH_SHORT).show();
-                    showTotal=false;
-                    return false;
-                }
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                loadingTop=true;
+                textLoading.setVisibility(View.VISIBLE);
+                new BuscarTickets().execute("1",String.valueOf(tickets.size()));
+                buscar=true;
             }
-        });*/
+        });
 
         listaTickets.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -172,16 +174,14 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 }
                 if (upFlag && scrollState == SCROLL_STATE_IDLE) {
                     upFlag = false;
-                    Toast.makeText(getApplicationContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
-                    new BuscarTickets().execute("1",String.valueOf(tickets.size()));
-                    buscar=true;
+                    swipeRefreshLayout.setEnabled( true );
                 }
                 if (downFlag && scrollState == SCROLL_STATE_IDLE) {
                     downFlag = false;
                     if(tickets.size()!=contTickets) {
-                        Toast.makeText(getApplicationContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
                         new BuscarTickets().execute(String.valueOf(page2),String.valueOf(cantidadTickets));
-                      //  return true; // ONLY if more data is actually being loaded; false otherwise.
+                        //  return true; // ONLY if more data is actually being loaded; false otherwise.
                     }else{
 
                         if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contTickets,Toast.LENGTH_SHORT).show();
@@ -192,6 +192,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 }
                 if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
                     listenerFlag = true;
+                    swipeRefreshLayout.setEnabled( false );
                     Log.d("started","comenzo");
                 }
             }
@@ -203,7 +204,6 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 Log.d("+1:",""+view.canScrollVertically(1));
                 Log.d("-1:",""+view.canScrollVertically(-1));
                 // Log.d("x:",""+view.getScrollX());
-
                 if (listenerFlag && !view.canScrollVertically(1)){
                     downFlag = true;
                     upFlag = false;
@@ -275,6 +275,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         page2=1;
         showTotal=true;
         new BuscarTickets().execute();
+        swipeRefreshLayout.setEnabled( true );
     }
 
     public void showHideGrupo(View view){
@@ -299,13 +300,13 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-// controlador
+    // controlador
     public class BuscarTickets extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             if(buscar) progressDialog.show();
-            else Toast.makeText(getApplicationContext(),"Cargando mas datos... Espere",Toast.LENGTH_SHORT).show();
+            else if(!loadingTop)Toast.makeText(getApplicationContext(),"Cargando mas datos... Espere",Toast.LENGTH_SHORT).show();
             if (!escogioDestino || destinoEscogido.contains("SELECCIONE"))
                 destinoEscogido = "-";
             if (!escogioOrigen || origenEscogido.contains("SELECCIONE"))
@@ -343,6 +344,14 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                     else tickets.addAll(getTicketModel.Data);
                     page2++;
                     contTickets = getTicketModel.Count;
+
+                    if(loadingTop)
+                    {
+                        loadingTop=false;
+                        swipeRefreshLayout.setRefreshing(false);
+                        textLoading.setVisibility(View.GONE);
+                        if(contTickets!=tickets.size()) swipeRefreshLayout.setEnabled( false );
+                    }
                     filtroAdapter.notifyDataSetChanged();
             }
             progressDialog.dismiss();
@@ -354,10 +363,10 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             try {
                 int page=1;
                 int elementPager=cantidadTickets;
-                    if(params.length>0){
-                        page=Integer.parseInt(params[0]);
-                        elementPager=Integer.parseInt(params[1]);
-                    }
+                if(params.length>0){
+                    page=Integer.parseInt(params[0]);
+                    elementPager=Integer.parseInt(params[1]);
+                }
 
 
                 URL url = new URL(Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida,page, elementPager));
@@ -366,19 +375,19 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 con.setRequestMethod("GET");
                 con.connect();
 
-                    switch (con.getResponseCode()) {
-                        case 200:
-                            InputStream in = con.getInputStream();
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                            StringBuilder result = new StringBuilder();
-                            String line;
-                            while((line = reader.readLine()) != null) {
-                                result.append(line);
-                            }
-                            return result.toString();
-                        default:
-                            return "" + con.getResponseCode();
-                    }
+                switch (con.getResponseCode()) {
+                    case 200:
+                        InputStream in = con.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                        StringBuilder result = new StringBuilder();
+                        String line;
+                        while((line = reader.readLine()) != null) {
+                            result.append(line);
+                        }
+                        return result.toString();
+                    default:
+                        return "" + con.getResponseCode();
+                }
                 //}
                 //Toast.makeText(getApplicationContext(),con.getResponseCode(),Toast.LENGTH_SHORT).show();
                 //return "" + con.getResponseCode();
@@ -410,7 +419,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 default:
                     Gson gson = new Gson();
                     final Terminal arrayTerminales = gson.fromJson(str, Terminal.class);
-                   // terminalesCodigos = new String[arrayTerminales.length];
+                    // terminalesCodigos = new String[arrayTerminales.length];
                     terminalesNombres= new ArrayList<>();
                     terminalesNombres.add("-");
                     terminalesNombres.addAll(arrayTerminales.Data);

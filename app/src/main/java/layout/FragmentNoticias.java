@@ -5,16 +5,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActNotDetalle;
 import com.pango.comunicaciones.EndlessScrollListener;
@@ -23,10 +29,13 @@ import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.SplashScreenActivity;
 import com.pango.comunicaciones.adapter.NoticiaAdapter;
+import com.pango.comunicaciones.controller.ImgController;
+import com.pango.comunicaciones.controller.contadorController;
 import com.pango.comunicaciones.controller.noticiacontroller;
 import com.pango.comunicaciones.model.Noticias;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.pango.comunicaciones.GlobalVariables.noticias2;
 
@@ -81,8 +90,6 @@ public class FragmentNoticias extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -92,34 +99,37 @@ public class FragmentNoticias extends Fragment {
 ///////////////////
 int a;
     Context context;
-
-    int pag=1;
-    int celda=20;
-    int aum=3;
-    private int pageCount = 2;
-    private boolean isThereMore;
-    //List<Noticias> lnot2;
-    //Noticias noticia2;
     ListView recList;
     int in=3;
-boolean flag=false;
+    boolean upFlag;
+    boolean downFlag;
+    boolean listenerFlag;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView2;
+    boolean loadingTop=false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         context = container.getContext();
-
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
         final View rootView = inflater.inflate(R.layout.fragment_noticias, container, false);
         recList = (ListView) rootView.findViewById(R.id.l_frag_not);
 
-       //   LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-       //   llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout);
+        textView2 =(TextView)rootView.findViewById(R.id.textView);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+
+
+        // LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        //llm.setOrientation(LinearLayoutManager.VERTICAL);
+        //GlobalVariables.contpublic=1;
 
         if(GlobalVariables.noticias2.size()==0){
             final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
-            obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid));
-            //GlobalVariables.pageNotice=1;
+            obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
         }else{
             NoticiaAdapter ca = new NoticiaAdapter(context, GlobalVariables.noticias2);
             recList.setAdapter(ca);
@@ -146,6 +156,213 @@ boolean flag=false;
                 startActivity(intent);
             }
         });
+
+
+
+        recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("Click", "click en el elemento " + position + " de mi ListView");
+                GlobalVariables.not2pos= noticias2.get(position);//captura los datos en la posiscion que se hace clic y almacena en not2pos
+
+                GlobalVariables.doclic=true;
+
+                String titulo=noticias2.get(position).getTitulo();
+                String fecha=noticias2.get(position).getFecha();
+                //int icono=noticias2.get(position).getIcon();
+
+
+                // GlobalVariables.pos_item_img=position;
+                //se conecta a un activity//
+                Intent intent = new Intent(getActivity(), ActNotDetalle.class);
+
+                intent.putExtra("titulo",titulo);
+                intent.putExtra("fecha",fecha);
+
+                startActivity(intent);
+
+
+
+            }
+        });
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                textView2.setVisibility(View.VISIBLE);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        swipeRefreshLayout.setRefreshing(true);
+                        loadingTop=true;
+                        textView2.setVisibility(View.VISIBLE);
+
+                        GlobalVariables.noticias2.clear();
+                        GlobalVariables.contpublicNot=2;
+                        GlobalVariables.flagUpSc=true;
+                        GlobalVariables.flag_up_toast=true;
+                        final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
+                        obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop));
+                        //new BuscarTickets().execute("1",String.valueOf(tickets.size()));
+                        //buscar=true;
+
+                    }
+                },3000);
+            }
+        });
+
+
+
+
+
+
+        recList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (upFlag && scrollState == SCROLL_STATE_IDLE) {
+                    upFlag = false;
+                   // Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setEnabled( true );
+
+
+
+
+
+/*
+
+                    final contadorController obj1 = new contadorController(rootView,"url","get");
+                    obj1.execute(String.valueOf(GlobalVariables.contNoticia),"/TP01");
+                    final Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
+
+                                if(GlobalVariables.contNoticia!=GlobalVariables.cont_pub_new){
+                                    GlobalVariables.noticias2.clear();
+                                    GlobalVariables.contpublicNot=2;
+                                    GlobalVariables.flagUpSc=true;
+                                    GlobalVariables.flag_up_toast=true;
+                                    final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
+                                    obj.execute(String.valueOf(1),String.valueOf(6));
+                                }
+                            } else {
+                                h.postDelayed(this, 50);
+                            }
+                        }
+                    }, 250);
+
+*/
+
+                }
+                if (downFlag && scrollState == SCROLL_STATE_IDLE) {
+                    downFlag = false;
+
+                   // Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+                    if(GlobalVariables.noticias2.size()!=GlobalVariables.contNoticia) {
+
+                        final noticiacontroller obj = new noticiacontroller(rootView, "url", "get", FragmentNoticias.this);
+                        obj.execute(String.valueOf(GlobalVariables.contpublicNot), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+                    }
+
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    swipeRefreshLayout.setEnabled( false );
+                    Log.d("started","comenzo");
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                   // swipeRefreshLayout.setEnabled( false );
+
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
+                }
+            }
+
+               /* if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    Log.i("SCROLLING DOWN","TRUE");
+                    ///if()
+                }
+
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    Log.i("SCROLLING UP","TRUE");
+
+
+                }
+                mLastFirstVisibleItem=firstVisibleItem;*/
+
+
+        });
+
+        listenerFlag = false;
+
+
+
+
+
+      /*  recList.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemCount) {
+
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to your AdapterView
+                //loadNextDataFromApi(page);
+                int page2=page;
+
+
+             if(GlobalVariables.noticias2.size()<GlobalVariables.contNoticia) {
+
+
+                  final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
+                  obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
+                 pageCount++;
+
+
+                 return true; // ONLY if more data is actually being loaded; false otherwise.
+             }else{
+                 //flag=true;
+                 return false;
+
+             }
+
+
+            }
+        });*/
+
+
+
+
+
+
+
 
         return rootView;
 

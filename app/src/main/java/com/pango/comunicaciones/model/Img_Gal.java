@@ -11,6 +11,11 @@ public class Img_Gal {
 
     public Img_Gal() {
     }
+/*
+    public Img_Gal(String correlativo, String urlmin_imag) {
+        Correlativo = correlativo;
+        this.urlmin_imag = urlmin_imag;
+    }*/
 
     public Img_Gal(String correlativo, String url_img, String urlmin_imag) {
         Correlativo = correlativo;

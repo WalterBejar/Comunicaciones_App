@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.pango.comunicaciones.ActImgNot;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.model.Comunicado;
 
 import java.text.DateFormat;
@@ -77,7 +78,8 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         cTitulo.setText(tempTitulo);
         cDescripcion.setText(tempDescripcion);
 
-        int ds=data.get(position).getFiledata().size();
+        int ds=data.get(position).getUrlmin().length();
+
         if(ds==0) {
             //cDescs.setVisibility(View.VISIBLE);
             //cDescripcion.setVisibility(View.GONE);
@@ -86,7 +88,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         }else {
 
             Glide.with(context)
-                    .load(GlobalVariables.Urlbase + data.get(position).getFiledata().get(2).replaceAll("\\s", "%20"))
+                    .load(GlobalVariables.Urlbase + Utils.ChangeUrl(data.get(position).getUrlmin()))
                     .into(cImagNot);
         }
 
@@ -94,12 +96,14 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         cImagNot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                GlobalVariables.listdetimg.clear();
+                GlobalVariables.flag_orienta=true;
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
                 Intent intent=new Intent(v.getContext(), ActImgNot.class);
                 intent.putExtra("codreg",data.get(position).getCod_reg());
 
-                intent.putExtra("url_img", GlobalVariables.Urlbase + data.get(position).getFiledata().get(1).replaceAll("\\s", "%20"));
+                //intent.putExtra("url_img", GlobalVariables.Urlbase + data.get(position).getFiledata().get(1).replaceAll("\\s", "%20"));
+                intent.putExtra("posIn",0);
                 // intent.putExtra("val",0);
                 //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
                 v.getContext().startActivity(intent);

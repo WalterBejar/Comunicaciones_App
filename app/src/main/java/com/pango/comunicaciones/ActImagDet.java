@@ -36,11 +36,6 @@ public class ActImagDet extends AppCompatActivity {
 
 
 
-
-
-
-
-
        // cargarImagenExtendida();
 
         viewPager = (ViewPager)findViewById(R.id.viewPager);

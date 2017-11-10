@@ -2,9 +2,12 @@ package com.pango.comunicaciones.controller;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
@@ -44,7 +47,10 @@ public class ComController extends AsyncTask<String,Void,Void> {
     List<Comunicado> comList=new ArrayList<Comunicado>();
     ListView recListCom;
     int a;
-    //int celda = 3;
+    boolean cargaData=true;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView2;
+    Boolean loadingTop;
 
     public ComController(View v,String url,String opcion, FragmentComunicados Frag){
         this.v=v;
@@ -52,6 +58,8 @@ public class ComController extends AsyncTask<String,Void,Void> {
         this.opcion=opcion;
         this.Frag=Frag;
         recListCom=(ListView) v.findViewById(R.id.l_frag_com);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout2);
+        textView2 =(TextView)v.findViewById(R.id.textView2);
         //recList.setOnScrollListener(this);
     }
     @Override
@@ -60,32 +68,37 @@ public class ComController extends AsyncTask<String,Void,Void> {
             HttpResponse response;
             String a=params[0];
             String b=params[1];
+            loadingTop=Boolean.parseBoolean(params[2]);
 
             //getToken gettoken=new getToken();
             //gettoken.getToken();
 
-            if(opcion=="get"){
+            if(opcion=="get"&&GlobalVariables.flagcom==true){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+a+"/"+b+"/TP02");
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
-                    response = httpClient.execute(get);
+                    get.setHeader("Content-type", "application/json");
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    if(GlobalVariables.con_status==200) {
 
-                    String respstring = EntityUtils.toString(response.getEntity());
-                    JSONObject respJSON = new JSONObject(respstring);
-                    JSONArray comunic = respJSON.getJSONArray("Data");
+                        response = httpClient.execute(get);
 
-                    GlobalVariables.cont_item=comunic.length();
-                    GlobalVariables.contComunicado=respJSON.getInt("Count");//obtiene el total de publicaciones en general
-                    int inc=0;
-                    for (int i = 0; i < comunic.length(); i++) {
-                        JSONObject c = comunic.getJSONObject(i);
-                        //String T =c.getString("Tipo");
-                        //String A="TP02"
+                        String respstring = EntityUtils.toString(response.getEntity());
+                        JSONObject respJSON = new JSONObject(respstring);
+                        JSONArray comunic = respJSON.getJSONArray("Data");
 
-                        //comunicado:2
-                       // if(T.equals("TP02")) {
-                            inc+=1;
+                        GlobalVariables.cont_item = comunic.length();
+                        GlobalVariables.contComunicado = respJSON.getInt("Count");//obtiene el total de publicaciones en general
+                        int inc = 0;
+                        for (int i = 0; i < comunic.length(); i++) {
+                            JSONObject c = comunic.getJSONObject(i);
+                            //String T =c.getString("Tipo");
+                            //String A="TP02"
+
+                            //comunicado:2
+                            // if(T.equals("TP02")) {
+                            inc += 1;
                             String CodRegistro = c.getString("CodRegistro");
                             //String Tipo = c.getString("Tipo");
                             int icon = R.drawable.ic_menu_publicaciones;
@@ -97,31 +110,25 @@ public class ComController extends AsyncTask<String,Void,Void> {
                             JSONObject Files = c.getJSONObject("Files");
                             JSONArray Data2 = Files.getJSONArray("Data");
 
-                            ArrayList<String> dataf = new ArrayList<>();
-                            //ArrayList<String> datafc = new ArrayList<>();
+                            JSONObject h = Data2.getJSONObject(0);
+                            String Urlmin2 = h.getString("Urlmin");
 
-                            int hg=Data2.length();
-                            for (int j = 0; j <hg; j++) {
-                                JSONObject h = Data2.getJSONObject(j);
+                            String[] parts = Urlmin2.split("550px;");
+                            //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                            //String part2 = parts[1]; //obtiene: 19-A
 
-                                String Correlativo = Integer.toString(j);
-                                String Url = Utils.ChangeUrl(h.getString("Url"));
-                                String Urlmin =Utils.ChangeUrl(h.getString("Urlmin"));
+                            String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
-                                dataf.add(Correlativo);
-                                dataf.add(Url);
-                                dataf.add(Urlmin);
-                            }
-                         /*   if (hg != 0) {
-                                dataf.get(0);
-                            }*/
-                            comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
-                        GlobalVariables.comlist.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, dataf));
+                            comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+                            GlobalVariables.comlist.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
 
-                        //}
+                            //}
+                        }
                     }
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+                    cargaData=false;
+
                 }
             }
         }
@@ -141,32 +148,74 @@ public class ComController extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected void onPreExecute() {
-        if(opcion=="get") {
+        if(opcion=="get"&&GlobalVariables.flag_up_toast) {
             super.onPreExecute();
 
-            if(GlobalVariables.comlist.size()<3) {
-                progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
-            }
+            //if(GlobalVariables.comlist.size()<GlobalVariables.num_vid) {
+                Toast.makeText(v.getContext(),"Actualizando, por favor espere...",Toast.LENGTH_SHORT).show();
+                GlobalVariables.flag_up_toast=false;
+        //}
+        }else{
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
         }
     }
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
-                if(GlobalVariables.comlist.size()<=3){
+            if (opcion == "get"&&GlobalVariables.con_status==200&&cargaData) {
+                //if(GlobalVariables.comlist.size()<=GlobalVariables.num_vid){
                 ComAdapter ca = new ComAdapter(v.getContext(),GlobalVariables.comlist);
                 recListCom.setAdapter(ca);
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
                 //GlobalVariables.comlist=comList;
+                //}
 
+                ca.notifyDataSetChanged();
+                if(GlobalVariables.flagUpSc==true){
+                    recListCom.setSelection(0);
+                    GlobalVariables.flagUpSc=false;
+                }else
+                if(GlobalVariables.comlist.size()>3&&GlobalVariables.comlist.size()<GlobalVariables.contComunicado) {
+                    //recListImag.smoothScrollToPosition(GlobalVariables.imagen2.size()-3);
+                    recListCom.setSelection(GlobalVariables.comlist.size()-4);
+
+                }else if(GlobalVariables.comlist.size()==GlobalVariables.contComunicado){
+                    recListCom.setSelection(GlobalVariables.comlist.size());
+                    GlobalVariables.flagcom=false;
                 }
+
+                GlobalVariables.contpublicCom+=1;
+                progressDialog.dismiss();
+
+            }else  if(GlobalVariables.con_status!=200){
+                progressDialog.dismiss();
+                Toast.makeText(v.getContext(),"Error en el servidor",Toast.LENGTH_SHORT).show();
+            }else {
+                progressDialog.dismiss();
+
+                Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
             }
+
+
+
         }catch (Exception ex){
             Log.w("Error",ex);
         }
+
+
+        if(loadingTop)
+        {
+            loadingTop=false;
+            swipeRefreshLayout.setRefreshing(false);
+            textView2.setVisibility(View.GONE);
+            swipeRefreshLayout.setEnabled( false );
+        }
+
+
+
+
     }
-
-
 
 
 }

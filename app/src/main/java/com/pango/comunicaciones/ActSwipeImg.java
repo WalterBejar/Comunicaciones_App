@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.pango.comunicaciones.adapter.ViewPagerAdapter;
-import com.pango.comunicaciones.adapter.ViewPagerAdapter2;
 import com.pango.comunicaciones.controller.ImgdetController;
 import com.pango.comunicaciones.controller.ListImgdetController;
 
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+import static com.pango.comunicaciones.GlobalVariables.flag_orienta;
 import static com.pango.comunicaciones.GlobalVariables.imagen2;
 
 
@@ -24,7 +24,7 @@ public class ActSwipeImg extends AppCompatActivity {
     int posPublic;
 
     ViewPager viewPager;
-    ViewPagerAdapter2 adapter;
+    ViewPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +45,20 @@ public class ActSwipeImg extends AppCompatActivity {
 
         String code =GlobalVariables.img_get.getCod_reg();
 
+        String orientacion=Utils.getRotation(this);
+
+        if(orientacion.equals("vertical")&&flag_orienta==true) {
+            flag_orienta=false;
+            final ListImgdetController obj = new ListImgdetController("url", "get", ActSwipeImg.this);
+            obj.execute(code, String.valueOf(positionIn), String.valueOf(posPublic));
 
 
-        final ListImgdetController obj = new ListImgdetController("url","get", ActSwipeImg.this);
-        obj.execute(code,String.valueOf(positionIn),String.valueOf(posPublic));
-
-
+        }else{
+            viewPager = (ViewPager) findViewById(R.id.viewPager2);
+            adapter = new ViewPagerAdapter(ActSwipeImg.this,GlobalVariables.listdetimg,positionIn);
+            viewPager.setAdapter(adapter);
+            viewPager.setCurrentItem(positionIn,true);
+        }
 
 
 

@@ -3,15 +3,21 @@ package layout;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActComDetalle;
 import com.pango.comunicaciones.EndlessScrollListener;
@@ -19,6 +25,9 @@ import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.adapter.ComAdapter;
 import com.pango.comunicaciones.controller.ComController;
+import com.pango.comunicaciones.controller.ImgController;
+import com.pango.comunicaciones.controller.contadorController;
+import com.pango.comunicaciones.controller.noticiacontroller;
 import com.pango.comunicaciones.model.Comunicado;
 
 import java.util.List;
@@ -28,7 +37,7 @@ import static com.pango.comunicaciones.GlobalVariables.comlist;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentComunicados.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link FragmentComunicados#newInstance} factory method to
  * create an instance of this fragment.
@@ -87,6 +96,14 @@ public class FragmentComunicados extends Fragment {
     Comunicado comunicado;
     ListView recListCom;
     int in=3;
+    boolean upFlag;
+    boolean downFlag;
+    boolean listenerFlag;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView2;
+    boolean loadingTop=false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,15 +116,20 @@ public class FragmentComunicados extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_comunicados, container, false);
         recListCom = (ListView) rootView.findViewById(R.id.l_frag_com);
 
-        final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
-        obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid));
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout2);
+        textView2 =(TextView)rootView.findViewById(R.id.textView2);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
 
-      /*  if(GlobalVariables.comlist.size()==0) {
+
+
+        if(GlobalVariables.comlist.size()==0) {
+              final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
+        obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
 
         }else {
             ComAdapter ca = new ComAdapter(context, GlobalVariables.comlist);
             recListCom.setAdapter(ca);
-        }*/
+        }
         recListCom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -133,33 +155,140 @@ public class FragmentComunicados extends Fragment {
             }
         });
 
-        recListCom.setOnScrollListener(new EndlessScrollListener() {
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public boolean onLoadMore(int page, int totalItemCount) {
 
-                int page2=page;
-
-
-                if(GlobalVariables.comlist.size()<GlobalVariables.contComunicado) {
-
-
-                    final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
-                    obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
-                    pageCount++;
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                textView2.setVisibility(View.VISIBLE);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
 
-                    return true; // ONLY if more data is actually being loaded; false otherwise.
-                }else{
-                    //flag=true;
-                    return false;
+                        swipeRefreshLayout.setRefreshing(true);
+                        loadingTop=true;
+                        textView2.setVisibility(View.VISIBLE);
 
-                }
+
+                        GlobalVariables.comlist.clear();
+                        GlobalVariables.contpublicCom=2;
+                        GlobalVariables.flagcom=true;
+                        GlobalVariables.flagUpSc=true;
+
+                        GlobalVariables.flag_up_toast=true;
+                        final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
+                        obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop));
+
+
+                    }
+                },3000);
             }
         });
 
 
 
+        recListCom.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
 
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (upFlag && scrollState == SCROLL_STATE_IDLE) {
+                    upFlag = false;
+                   // Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setEnabled( true );
+
+
+                  /*  final contadorController obj1 = new contadorController(rootView,"url","get");
+                    obj1.execute(String.valueOf(GlobalVariables.contComunicado),"/TP02");
+                    final Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
+
+                                if(GlobalVariables.contNoticia!=GlobalVariables.cont_pub_new){
+                                    GlobalVariables.comlist.clear();
+                                    GlobalVariables.contpublicCom=1;
+                                    GlobalVariables.flagcom=true;
+                                    GlobalVariables.flagUpSc=true;
+
+                                    GlobalVariables.flag_up_toast=true;
+                                    final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
+                                    obj.execute(String.valueOf(1),String.valueOf(6));
+                                }
+                            } else {
+                                h.postDelayed(this, 50);
+                            }
+                        }
+                    }, 250);*/
+
+
+
+                }
+                if (downFlag && scrollState == SCROLL_STATE_IDLE) {
+                    downFlag = false;
+                  //  Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+
+                    if(GlobalVariables.comlist.size()!=GlobalVariables.contComunicado) {
+
+                        final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
+                        obj.execute(String.valueOf(GlobalVariables.contpublicCom), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+                    }
+
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    swipeRefreshLayout.setEnabled( false );
+
+                    Log.d("started","comenzo");
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
+                }
+            }
+
+
+
+
+               /* if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    Log.i("SCROLLING DOWN","TRUE");
+                    ///if()
+                }
+
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    Log.i("SCROLLING UP","TRUE");
+
+
+                }
+                mLastFirstVisibleItem=firstVisibleItem;*/
+
+
+        });
+
+        listenerFlag = false;
 
 
         return rootView;

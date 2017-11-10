@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActImag;
 import com.pango.comunicaciones.GlobalVariables;
@@ -92,41 +93,44 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
                   //  get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
-                    response = httpClient.execute(get);
+                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    if(GlobalVariables.con_status==200) {
 
-                    String respstring = EntityUtils.toString(response.getEntity());
-                    JSONObject respJSON = new JSONObject(respstring);
-                    //notdetArray.add(R.drawable.ic_menu_noticias);
+                        response = httpClient.execute(get);
 
-                    //ImgdetArray.add(respJSON.getString("Autor"));
+                        String respstring = EntityUtils.toString(response.getEntity());
+                        JSONObject respJSON = new JSONObject(respstring);
+                        //notdetArray.add(R.drawable.ic_menu_noticias);
 
-                    ImgdetArray.add(fecha);
-                    ImgdetArray.add(titulo);
-                   // ImgdetArray.add(respJSON.getString("Subtitulo"));
-                  //  ImgdetArray.add(respJSON.getString("Descripcion"));
+                        //ImgdetArray.add(respJSON.getString("Autor"));
 
-                    JSONObject Files = respJSON.getJSONObject("Files");
-                    JSONArray Data2 = Files.getJSONArray("Data");
+                        ImgdetArray.add(fecha);
+                        ImgdetArray.add(titulo);
+                        // ImgdetArray.add(respJSON.getString("Subtitulo"));
+                        //  ImgdetArray.add(respJSON.getString("Descripcion"));
 
-                    for (int i = 0; i < Data2.length(); i++) {
-                        JSONObject h = Data2.getJSONObject(i);
+                        JSONObject Files = respJSON.getJSONObject("Files");
+                        JSONArray Data2 = Files.getJSONArray("Data");
 
-                        String correlativo=Integer.toString(i);
-                       // int tamanio=h.getInt("Tamanio");
-                        String url_file=h.getString("Url");
-                        String urlmin2=h.getString("Urlmin");
+                        for (int i = 0; i < Data2.length(); i++) {
+                            JSONObject h = Data2.getJSONObject(i);
 
-                        String[] parts = urlmin2.split("550px;");
-                        //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
-                        //String part2 = parts[1]; //obtiene: 19-A
+                            String correlativo = Integer.toString(i);
+                            // int tamanio=h.getInt("Tamanio");
+                            String url_file = h.getString("Url");
+                            String urlmin2 = h.getString("Urlmin");
 
-                        String urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+                            String[] parts = urlmin2.split("550px;");
+                            //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                            //String part2 = parts[1]; //obtiene: 19-A
+
+                            String urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
 
-                        view_image.add(new Img_Gal(correlativo, Utils.ChangeUrl(url_file),Utils.ChangeUrl(urlmin)));
+                            view_image.add(new Img_Gal(correlativo, Utils.ChangeUrl(url_file), Utils.ChangeUrl(urlmin)));
 
+                        }
                     }
-
                     // des_data
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
@@ -157,7 +161,7 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
+            if (opcion == "get"&&GlobalVariables.con_status==200) {
                 DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
                 DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
                 GlobalVariables.listdetimg=view_image;//datos correlativo,url,urlmin
@@ -189,7 +193,12 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
                 progressDialog.dismiss();
                 GlobalVariables.noticias2=noticiaList;*/
                 //  GlobalVariables.noticias2.get(0);
+            }else {
+                progressDialog.dismiss();
+                Toast.makeText(actImag,"Error en el servidor",Toast.LENGTH_SHORT).show();
             }
+
+
         }catch (Exception ex){
             Log.w("Error",ex);
         }

@@ -14,14 +14,14 @@ public class Imagen {
     //private String nom_publicador;
     private String fecha;
     private String titulo;
-    private List<Img_Gal> filedata;
+    private List<Img_Gal_List> filedata;
     private int count_img;
 
 
     public Imagen() {
     }
 
-    public Imagen(String cod_reg, int icon, String fecha, String titulo, List<Img_Gal> filedata, int count_img) {
+    public Imagen(String cod_reg, int icon, String fecha, String titulo, List<Img_Gal_List> filedata, int count_img) {
         this.cod_reg = cod_reg;
         this.icon = icon;
         this.fecha = fecha;
@@ -62,11 +62,11 @@ public class Imagen {
         this.titulo = titulo;
     }
 
-    public List<Img_Gal> getFiledata() {
+    public List<Img_Gal_List> getFiledata() {
         return filedata;
     }
 
-    public void setFiledata(List<Img_Gal> filedata) {
+    public void setFiledata(List<Img_Gal_List> filedata) {
         this.filedata = filedata;
     }
 

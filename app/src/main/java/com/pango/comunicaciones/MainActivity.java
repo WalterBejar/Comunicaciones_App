@@ -1,5 +1,6 @@
 package com.pango.comunicaciones;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,13 +22,14 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.lang.reflect.Field;
 
 import layout.FragmentComunicados;
 import layout.FragmentConfiguracion;
 import layout.FragmentContactenos;
 import layout.FragmentImagenes;
-import layout.FragmentNotices;
 import layout.FragmentNoticias;
 import layout.FragmentNotificacion;
 import layout.FragmentRedesSociales;
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView.OnNavigationItemSelectedListener,
         FragmentInicio2.OnFragmentInteractionListener,
         FragmentNoticias.OnFragmentInteractionListener,
-        FragmentNotices.OnFragmentInteractionListener,
         FragmentComunicados.OnFragmentInteractionListener,
         FragmentImagenes.OnFragmentInteractionListener,
         FragmentVideos.OnFragmentInteractionListener,
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     public enum NavigationFragment{
         Inicio,
         Noticias,
-        Noticias2,
+
         Comunicados,
         Imagenes,
         Videos,
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         //toolbar.setNavigationIcon(R.mipmap.ic_logotitulo);
         toolbar.setLogo(R.drawable.imagen1234);
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
 
 
         //toolbar.setAlpha(1);
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        GlobalVariables.anchoMovil=metrics.widthPixels;
+        GlobalVariables.anchoMovil=metrics.widthPixels/2;
         //int width = metrics.widthPixels; // ancho absoluto en pixels
         //int height = metrics.heightPixels; // alto absoluto en pixels
 
@@ -138,9 +140,22 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle("");
         }
 
+        if(GlobalVariables.flag_notificacion==true){
+            //Intent
+            Intent intent = new Intent(this, ActComDetalle.class);
 
+            intent.putExtra("titulo","");
+            intent.putExtra("fecha","");
+
+            startActivity(intent);
+
+        }
 
     }
+
+
+    ///fin oncreate
+
 
     @Override
     public void onBackPressed() {
@@ -170,15 +185,13 @@ public class MainActivity extends AppCompatActivity
                 onNavigationItemSelected(homeItem);
 */
         }else {
+
             super.onBackPressed();
         }
 
 
 
-            /*{
 
-            super.onBackPressed();
-        }*/
     }
 
    /* @Override
@@ -425,7 +438,6 @@ public class MainActivity extends AppCompatActivity
         switch (value) {
             case Inicio:    fragment = new FragmentInicio2(); break;
             case Noticias:    fragment = new FragmentNoticias(); break;
-            case Noticias2:    fragment = new FragmentNotices(); break;
             case Comunicados: fragment = new FragmentComunicados(); break;
             case Imagenes: fragment = new FragmentImagenes(); break;
             case Videos: fragment = new FragmentVideos(); break;
@@ -448,7 +460,7 @@ public class MainActivity extends AppCompatActivity
     public String Recuperar_data() {
 
         SharedPreferences settings =  getSharedPreferences("datos", Context.MODE_PRIVATE);
-        String url_servidor = settings.getString("url","valorpordefecto");
+        String url_servidor = settings.getString("url","");
         //Toast.makeText(this, url_servidor, Toast.LENGTH_SHORT).show();
         return url_servidor;
     }

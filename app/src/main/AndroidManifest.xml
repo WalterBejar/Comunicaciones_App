@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logofinal"
@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_logofinal"
         android:supportsRtl="true"
 
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".SplashScreenActivity"
@@ -25,6 +25,33 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
+        <!-- firebase service-->
+
+        <service android:name=".firebase.MiFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebase.MiFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_logofinal"
+            />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorBlanco"
+            />
+        <!--   ///////////////////////////////////////////////////////////////////////////////    -->
+
+
 
 
 
@@ -57,10 +84,11 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
             />
+
         <activity
             android:name=".ActImagDet"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
         <activity
             android:name=".ActImag"
             android:screenOrientation="portrait"
@@ -71,7 +99,8 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".ActVidDet"
-            android:screenOrientation="landscape"
+
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".ActImgNot"
             android:theme="@style/Theme.AppCompat.NoActionBar"
@@ -98,3 +127,5 @@
     </application>
 
 </manifest>
+
+<!--  landscape -->

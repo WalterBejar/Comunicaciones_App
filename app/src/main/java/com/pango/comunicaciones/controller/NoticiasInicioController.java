@@ -72,7 +72,7 @@ public class NoticiasInicioController
                 noticiaModel.setTitulo(noticia.getTitulo());
                 noticiaModel.setDescripcion(noticia.getDescripcion());
                 noticiaModel.setFecha(formatoRender.format(formatoInicial.parse(noticia.getFecha())));
-                noticiaModel.setUrlImagen(noticia.getFiledata().get(2));
+                noticiaModel.setUrlImagen(noticia.getUrlmin());
                 listaNoticias.add(noticiaModel);
             }
 

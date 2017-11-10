@@ -44,7 +44,7 @@ public class ComunicadosInicioController {
                 ComunicadoModel comunicadoModel = new ComunicadoModel();
                 comunicadoModel.setTitulo(comunicado.getTitulo());
                 comunicadoModel.setFecha(formatoRender.format(formatoInicial.parse(comunicado.getFecha())));
-                comunicadoModel.setUrlImagen(comunicado.getFiledata().get(2));
+                comunicadoModel.setUrlImagen(comunicado.getUrlmin());
                 listaComunicados.add(comunicadoModel);
             }
         /*for (int i = 0; i < 10; i++)

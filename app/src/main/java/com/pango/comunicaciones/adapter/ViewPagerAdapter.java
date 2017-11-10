@@ -66,11 +66,13 @@ public class ViewPagerAdapter extends PagerAdapter {
         image.setMinimumHeight(height);
         image.setMinimumWidth(width);
 
+        String ad=GlobalVariables.Urlbase.substring(0,GlobalVariables.Urlbase.length()-4);
+
         try{
 
 
             Glide.with(image.getContext())
-                    .load(GlobalVariables.Urlbase+GlobalVariables.listdetimg.get(position).getUrl_img())
+                    .load(ad+GlobalVariables.listdetimg.get(position).getUrl_img())
                     .into(image);
            // positionIn= position;
 

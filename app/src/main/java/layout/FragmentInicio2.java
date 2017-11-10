@@ -173,7 +173,9 @@ public class FragmentInicio2 extends Fragment {
             public void onClick(View v) {
                 getActivity().setTitle("Reserva de Buses");
 
-
+                bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentTickets();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -182,9 +184,7 @@ public class FragmentInicio2 extends Fragment {
                 // Commit a la transacción
                 transaction.commit();
 
-                bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
+
 
             }
         });

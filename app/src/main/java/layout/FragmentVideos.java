@@ -3,8 +3,11 @@ package layout;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -12,16 +15,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActVid;
 import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.adapter.VidAdapter;
+import com.pango.comunicaciones.controller.ImgController;
 import com.pango.comunicaciones.controller.VidController;
+import com.pango.comunicaciones.controller.contadorController;
+import com.pango.comunicaciones.controller.noticiacontroller;
 import com.pango.comunicaciones.model.Imagen;
 
 import java.util.List;
@@ -29,7 +38,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentVideos.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link FragmentVideos#newInstance} factory method to
  * create an instance of this fragment.
@@ -90,6 +99,12 @@ public class FragmentVideos extends Fragment {
     List<Imagen> limg;
     Imagen imagen_t;
     int in=3;
+    boolean upFlag;
+    boolean downFlag;
+    boolean listenerFlag;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView2;
+    boolean loadingTop=false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,10 +119,15 @@ public class FragmentVideos extends Fragment {
         LinearLayoutManager llm_vid = new LinearLayoutManager(getActivity());
         llm_vid.setOrientation(LinearLayoutManager.VERTICAL);
 
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout4);
+        textView2 =(TextView)rootView.findViewById(R.id.textView4);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+
         if(GlobalVariables.vidlist.size()==0) {
 
             final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
-            obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid));
+            obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
         }else {
         VidAdapter ca = new VidAdapter(context, GlobalVariables.vidlist);
         recListVid.setAdapter(ca);
@@ -141,6 +161,140 @@ public class FragmentVideos extends Fragment {
 
             }
         });
+
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                textView2.setVisibility(View.VISIBLE);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        swipeRefreshLayout.setRefreshing(true);
+                        loadingTop=true;
+                        textView2.setVisibility(View.VISIBLE);
+
+                        GlobalVariables.vidlist.clear();
+                        GlobalVariables.contpublicVid=2;
+                        GlobalVariables.flagUpSc=true;
+                        GlobalVariables.flag_up_toast=true;
+                        final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
+                        obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop));
+                        //new BuscarTickets().execute("1",String.valueOf(tickets.size()));
+                        //buscar=true;
+
+                    }
+                },3000);
+            }
+        });
+
+
+        recListVid.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (upFlag && scrollState == SCROLL_STATE_IDLE) {
+                    upFlag = false;
+                  //  Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setEnabled( true );
+
+
+                    /*
+                    final contadorController obj1 = new contadorController(rootView,"url","get");
+                    obj1.execute(String.valueOf(GlobalVariables.contVideos),"/TP04");
+                    final Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
+
+                                if(GlobalVariables.contVideos!=GlobalVariables.cont_pub_new){
+                                    GlobalVariables.vidlist.clear();
+                                    GlobalVariables.contpublicVid=2;
+                                    GlobalVariables.flagUpSc=true;
+                                    GlobalVariables.flag_up_toast=true;
+                                    final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
+                                    obj.execute(String.valueOf(1),String.valueOf(6));
+                                }
+                            } else {
+                                h.postDelayed(this, 50);
+                            }
+                        }
+                    }, 250);
+*/
+
+
+                }
+                if (downFlag && scrollState == SCROLL_STATE_IDLE) {
+                    downFlag = false;
+                   // Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+                    if(GlobalVariables.vidlist.size()!=GlobalVariables.contVideos) {
+
+                        final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
+                        obj.execute(String.valueOf(GlobalVariables.contpublicVid), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+                    }
+
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    swipeRefreshLayout.setEnabled( false );
+
+                    Log.d("started","comenzo");
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
+                }
+            }
+
+
+
+
+               /* if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    Log.i("SCROLLING DOWN","TRUE");
+                    ///if()
+                }
+
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    Log.i("SCROLLING UP","TRUE");
+
+
+                }
+                mLastFirstVisibleItem=firstVisibleItem;*/
+
+
+        });
+
+        listenerFlag = false;
+
+
+
 
        /* recListVid.setOnScrollListener(new EndlessScrollListener() {
             @Override

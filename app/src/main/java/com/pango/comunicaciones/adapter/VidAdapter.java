@@ -128,9 +128,10 @@ public class VidAdapter extends ArrayAdapter<Video> {
             public void onClick(View v) {
                 GlobalVariables.cont_posvid=0;
                 Intent intent = new Intent(v.getContext(), ActVidDet.class);
-                intent.putExtra("post",position);
+                //intent.putExtra("post",position);
                 intent.putExtra("urltemp",tempUrl);
                 intent.putExtra("isList",true);
+
                 //intent.putExtra("val",0);
                 //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
                 v.getContext().startActivity(intent);

@@ -7,8 +7,8 @@ android {
         applicationId "com.pango.comunicaciones"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 23
-        versionName "2.8"
+        versionCode 26
+        versionName "3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,5 +36,9 @@ dependencies {
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.github.allenxuan:xuanimageview:0.4.0'
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
 }
+
+
+apply plugin: 'com.google.gms.google-services'

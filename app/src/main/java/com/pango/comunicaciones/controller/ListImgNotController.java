@@ -39,8 +39,6 @@ import java.util.List;
 
 public class ListImgNotController extends AsyncTask<String,Void,Void> {
 
-
-
     //View v;
     String url;
     String opcion;
@@ -48,6 +46,7 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
     TouchImageView imagenExtendida;
     ViewPager viewPager;
     ViewPagerAdapter adapter;
+    String posIn;
 
 
     ProgressDialog progressDialog;
@@ -75,7 +74,7 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
         try {
             HttpResponse response;
             String codreg=params[0];
-            //posIn=params[1];
+            posIn=params[1];
             //posPub=params[2];
 
 
@@ -106,22 +105,23 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
 
                     for (int i = 0; i < Data2.length(); i++) {
                         JSONObject h = Data2.getJSONObject(i);
+                        String tipo=h.getString("Tipo");
 
+                        if(tipo.equals("FL02")) {
+                            String correlativo = Integer.toString(i);
+                            // int tamanio=h.getInt("Tamanio");
+                            String url_file = h.getString("Url");
+                            String urlmin2 = h.getString("Urlmin");
 
-                        String correlativo=Integer.toString(i);
-                        // int tamanio=h.getInt("Tamanio");
-                        String url_file=h.getString("Url");
-                        String urlmin2=h.getString("Urlmin");
+                            String[] parts = urlmin2.split("550px;");
+                            //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                            //String part2 = parts[1]; //obtiene: 19-A
 
-                        String[] parts = urlmin2.split("550px;");
-                        //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
-                        //String part2 = parts[1]; //obtiene: 19-A
-
-                        String urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+                            String urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
 
                         view_image_not.add(new Img_Gal(correlativo, Utils.ChangeUrl(url_file),Utils.ChangeUrl(urlmin)));
-
+                        }
                     }
 
                     // des_data
@@ -160,9 +160,9 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
 
 
                 viewPager = (ViewPager)actImgNot.findViewById(R.id.viewPager3);
-                adapter = new ViewPagerAdapter(actImgNot,GlobalVariables.listdetimg,0);
+                adapter = new ViewPagerAdapter(actImgNot,GlobalVariables.listdetimg,Integer.parseInt(posIn));
                 viewPager.setAdapter(adapter);
-                viewPager.setCurrentItem(0,true);
+                viewPager.setCurrentItem(Integer.parseInt(posIn),true);
                 progressDialog.dismiss();
 
             }

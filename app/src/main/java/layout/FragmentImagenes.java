@@ -3,16 +3,22 @@ package layout;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActImag;
 import com.pango.comunicaciones.EndlessScrollListener;
@@ -21,6 +27,8 @@ import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.adapter.ImgAdapter;
 import com.pango.comunicaciones.controller.ComController;
 import com.pango.comunicaciones.controller.ImgController;
+import com.pango.comunicaciones.controller.contadorController;
+import com.pango.comunicaciones.controller.noticiacontroller;
 
 import static com.pango.comunicaciones.GlobalVariables.imagen2;
 import static com.pango.comunicaciones.GlobalVariables.noticias2;
@@ -28,7 +36,7 @@ import static com.pango.comunicaciones.GlobalVariables.noticias2;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentImagenes.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link FragmentImagenes#newInstance} factory method to
  * create an instance of this fragment.
@@ -79,20 +87,39 @@ public class FragmentImagenes extends Fragment {
     ListView recListImag;
     Context context;
     int res=1;
+    View rootView;
+    boolean userScrolled = false;
+    public static final String TAG = "INFOAPP";
+    boolean upFlag;
+    boolean downFlag;
+    boolean listenerFlag;
+    SwipeRefreshLayout swipeRefreshLayout;
+    TextView textView2;
+    boolean loadingTop=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         context = container.getContext();
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_imagenes, container, false);
+        rootView = inflater.inflate(R.layout.fragment_imagenes, container, false);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
 
+       // GlobalVariables.contpublic=1;
+
         recListImag = (ListView) rootView.findViewById(R.id.list_imag);
+
+       //final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
+        //obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid));
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout3);
+        textView2 =(TextView)rootView.findViewById(R.id.textView3);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+
 
         if(GlobalVariables.imagen2.size()==0) {
             final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
-            obj.execute(String.valueOf(1),String.valueOf(3));
+            obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
         }else {
             ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
             recListImag.setAdapter(ca);
@@ -135,9 +162,151 @@ public class FragmentImagenes extends Fragment {
             // }
         });
 
+        //recListImag.canScrollVertically();
 
 //if(res!=1) {
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                textView2.setVisibility(View.VISIBLE);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        swipeRefreshLayout.setRefreshing(true);
+                        loadingTop=true;
+                        textView2.setVisibility(View.VISIBLE);
+
+                        GlobalVariables.imagen2.clear();
+                        GlobalVariables.contpublicImg=2;
+                        GlobalVariables.flagUpSc=true;
+                        GlobalVariables.flag_up_toast=true;
+
+                        final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
+                        obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop),String.valueOf(loadingTop));
+                        //new BuscarTickets().execute("1",String.valueOf(tickets.size()));
+                        //buscar=true;
+
+                    }
+                },3000);
+            }
+        });
+
+
+
+
+        recListImag.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int mLastFirstVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (upFlag && scrollState == SCROLL_STATE_IDLE) {
+                    upFlag = false;
+                  //  Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setEnabled( true );
+
+                    /*
+                    final contadorController obj1 = new contadorController(rootView,"url","get");
+                    obj1.execute(String.valueOf(GlobalVariables.contFotos),"/TP03");
+                    final Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
+
+                                if(GlobalVariables.contFotos!=GlobalVariables.cont_pub_new){
+
+                                    GlobalVariables.imagen2.clear();
+                                    GlobalVariables.contpublicImg=2;
+                                    GlobalVariables.flagUpSc=true;
+                                    GlobalVariables.flag_up_toast=true;
+
+                                    final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
+                                    obj.execute(String.valueOf(1),String.valueOf(6));
+                                }
+                            } else {
+                                h.postDelayed(this, 50);
+                            }
+                        }
+                    }, 250);
+*/
+
+                   /* GlobalVariables.imagen2.clear();
+                    GlobalVariables.contpublicImg=2;
+                    GlobalVariables.flagUpSc=true;
+
+                    final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
+                    obj.execute(String.valueOf(1),String.valueOf(6));*/
+
+                }
+                if (downFlag && scrollState == SCROLL_STATE_IDLE) {
+                    downFlag = false;
+                   // Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+
+                    if(GlobalVariables.imagen2.size()!=GlobalVariables.contFotos) {
+
+                        final ImgController obj = new ImgController(rootView, "url", "get", FragmentImagenes.this);
+                        obj.execute(String.valueOf(GlobalVariables.contpublicImg), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+                    }
+
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    swipeRefreshLayout.setEnabled( false );
+                    Log.d("started","comenzo");
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
+                }
+            }
+
+
+
+
+               /* if(mLastFirstVisibleItem<firstVisibleItem)
+                {
+                    Log.i("SCROLLING DOWN","TRUE");
+                    ///if()
+                }
+
+                if(mLastFirstVisibleItem>firstVisibleItem)
+                {
+                    Log.i("SCROLLING UP","TRUE");
+
+
+                }
+                mLastFirstVisibleItem=firstVisibleItem;*/
+
+
+        });
+
+        listenerFlag = false;
+
+
+/*
     recListImag.setOnScrollListener(new EndlessScrollListener() {
         @Override
         public boolean onLoadMore(int page, int totalItemCount) {
@@ -158,14 +327,44 @@ public class FragmentImagenes extends Fragment {
             }
         }
     });
+*/
+
 
 //}
+        //implementScrollListener();
 
         return rootView;
     }
 
 
 
+
+
+    private void implementScrollListener() {
+       /* recListImag.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    userScrolled = true;
+                }
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (userScrolled
+                        && firstVisibleItem + visibleItemCount == totalItemCount) {
+
+                    userScrolled = false;
+                    //updateListView();
+                    final ImgController obj = new ImgController(rootView, "url", "get", FragmentImagenes.this);
+                    obj.execute(String.valueOf(GlobalVariables.contpublic), String.valueOf(GlobalVariables.num_vid));
+
+                }
+            }
+        });*/
+
+    }
 
     ////////////////////////////////////////////////////////////////////////
 

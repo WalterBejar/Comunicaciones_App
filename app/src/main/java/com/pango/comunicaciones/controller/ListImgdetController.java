@@ -82,15 +82,15 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
 
 
             //String b=params[1];
-            getToken gettoken=new getToken();
-            gettoken.getToken();
+           // getToken gettoken=new getToken();
+           // gettoken.getToken();
 
 
             if(opcion=="get"){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
-                    get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+                    //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
@@ -157,9 +157,9 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
     protected  void onPostExecute(Void result){
         try {
             if (opcion == "get") {
-
-                GlobalVariables.listdetimg=view_image;//datos correlativo,url,urlmin
-
+                //if(GlobalVariables.listdetimg.size()==0) {
+                    GlobalVariables.listdetimg = view_image;//datos correlativo,url,urlmin
+                //}
 
                 viewPager = (ViewPager)actSwipeImg.findViewById(R.id.viewPager2);
                 adapter = new ViewPagerAdapter(actSwipeImg,GlobalVariables.listdetimg,Integer.parseInt(posIn));

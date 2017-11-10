@@ -95,14 +95,14 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         for (int i = 0; i < data.get(position).getFiledata().size(); i++) {
 
             String a=data.get(position).getFiledata().get(i).getUrlmin_imag();
-            String b=data.get(position).getFiledata().get(i).getUrl_img();
+            //String b=data.get(position).getFiledata().get(i).getUrl_img();
             a.length();
-            b.length();
+           // b.length();
             String cad= a.substring( a.length()-4);
            // String cad2= b.substring( a.length()-4);
             if(cad.equals(".jpg")|cad.equals(".png")) {
                 img.add(a);
-                img2.add(b);
+                //img2.add(b);
             }
         }
 
@@ -214,7 +214,8 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
                // final ImgdetController obj = new ImgdetController("url","get", ActImag.this);
                 //obj.execute(GlobalVariables.img_get.getCod_reg());
-
+                GlobalVariables.listdetimg.clear();
+                GlobalVariables.flag_orienta=true;
                Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
                 //intent.putExtra(ActImagDet.EXTRA_PARAM_ID, 0);
                 intent.putExtra("post",0);
@@ -231,6 +232,8 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         iImag2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GlobalVariables.listdetimg.clear();
+                GlobalVariables.flag_orienta=true;
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
                // Intent intent=new Intent(v.getContext(), ActImgNot.class);
@@ -251,6 +254,8 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         iImag3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GlobalVariables.listdetimg.clear();
+                GlobalVariables.flag_orienta=true;
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
 
@@ -271,6 +276,8 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
         iImag4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GlobalVariables.listdetimg.clear();
+                GlobalVariables.flag_orienta=true;
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
                // Intent intent=new Intent(v.getContext(), ActImgNot.class);

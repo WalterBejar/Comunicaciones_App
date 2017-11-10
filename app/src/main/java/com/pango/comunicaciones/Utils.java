@@ -1,5 +1,10 @@
 package com.pango.comunicaciones;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.view.Surface;
+import android.view.WindowManager;
+
 import com.pango.comunicaciones.model.Notificacion;
 import com.pango.comunicaciones.model.PasajeroModel;
 import com.pango.comunicaciones.model.PersonaPostReservaModel;
@@ -169,6 +174,20 @@ public class Utils {
         return "0";
     }
 */
+
+
+    public static String getRotation(Context context){
+        final int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+            case Surface.ROTATION_180:
+                return "vertical";
+            case Surface.ROTATION_90:
+            default:
+                return "horizontal";
+        }}
+
+
 
 
 }

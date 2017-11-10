@@ -1,5 +1,9 @@
 package com.pango.comunicaciones;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import com.pango.comunicaciones.model.ComDet;
 import com.pango.comunicaciones.model.Comunicado;
 import com.pango.comunicaciones.model.Imagen;
@@ -24,7 +28,7 @@ public class GlobalVariables {
     public static String Urlbase= "https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/";
     public static String Urlbase2 = "entrada/getpaginated/";
     public static String url_token="membership/authenticate?username=antapaccay&password=Tintaya123.&domain=anyaccess";
-    public static int ElementPerpager = 3;
+
 
     public static String CodPersona;
     public static String Nombres;
@@ -37,6 +41,7 @@ public class GlobalVariables {
     //var global de noticias
     public static List<Noticias> noticias2 = new ArrayList<>();
     public static int contador;
+
 
     public static int contNoticia;
     public static int contComunicado;
@@ -99,11 +104,20 @@ public class GlobalVariables {
     public static int contNotific;
 
     public static int contpublic=1;
+
+    public static int contpublicNot=1;
+    public static int contpublicImg=1;
+    public static int contpublicVid=1;
+    public static int contpublicCom=1;
+
+
+
+
+
     public static boolean isScrolling;
 
 
-    public static Boolean isOnlineNet() {
-
+   /* public static Boolean isOnlineNet() {
         try {
             Process p = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com.pe");
             int val           = p.waitFor();
@@ -115,7 +129,31 @@ public class GlobalVariables {
             e.printStackTrace();
         }
         return false;
+    }*/
+
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
     }
 
 
+    public static boolean flagcom=true;
+
+    public static boolean flagUpSc=false;
+
+    public static boolean flag_notificacion=false;
+
+    //public static  boolean sw_hd_video;
+
+    public static String cal_sd_hd;
+
+    public static boolean flag_orienta=true;
+
+    public static int cont_pub_new;
+
+    public static boolean flag_up_toast=false;
+
+    public static int position=0;
 }

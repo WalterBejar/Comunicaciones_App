@@ -71,12 +71,11 @@ public class FragmentConfiguracion extends Fragment {
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-private Switch sw_sonido;
-
+    Switch sw_sonido, sw_video;
     EditText url_base, dom;
     Button b_save;
     Context context;
-
+    Boolean sw_hd_video;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,14 +84,37 @@ private Switch sw_sonido;
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
 
-        sw_sonido = (Switch) rootView.findViewById(R.id.switch_s);
+        sw_sonido = (Switch) rootView.findViewById(R.id.switch_sonido);
         Boolean switchState = sw_sonido.isChecked();
+
+        sw_video = (Switch) rootView.findViewById(R.id.switch_video);
+        sw_video.setChecked(obtener_estado());
+        sw_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean sw_hd_video = sw_video.isChecked();
+                GuardarEstado(sw_hd_video);
+                if(!sw_hd_video){
+                    GlobalVariables.cal_sd_hd="_SD.";
+                }else
+                {
+                    GlobalVariables.cal_sd_hd=".";
+                }
+            }
+        });
+
+
+        //Boolean sw_hd_video = sw_video.isChecked(); //verificar el estado del video
+
+        //sw_video.setChecked(true);
+
 
         url_base = (EditText) rootView.findViewById(R.id.url_base);
         //url_base.setText("https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/");
         dom = (EditText) rootView.findViewById(R.id.dom);
         //dom.setText("anyaccess");
         b_save = (Button) rootView.findViewById(R.id.b_save);
+
 
         ///registro por default
 
@@ -118,22 +140,29 @@ private Switch sw_sonido;
             @Override
             public void onClick(View v) {
                 // boolean isValidUrl(urlvalido);
-
-
                 //boolean est=URLUtil.isValidUrl("https:/app.antapaccay.com.pe/proportal/scom_service/api");
+
+                //sw_hd_video = sw_video.isChecked();
+
 
                 String a = url_base.getText().toString().replace(" ","");
 
                 boolean est=URLUtil.isValidUrl(url_base.getText().toString());
                 String ultimo = a.substring(a.length() - 1);
 
-
                 if(est==true&ultimo.equals("/")){
-                Registrar(v);
+                    Registrar(v);
                 Recuperar_data();
+                    /*boolean isHD=obtener_calidad();
+                    if(isHD){
+                        GlobalVariables.cal_sd_hd=".sd";
+                        sw_video.setChecked(isHD);
+                    }*/
+
                 //getActivity().getFragmentManager().popBackStack();
                 getActivity().finish();
                 GlobalVariables.cont_alert=1;////////////////////////////
+
                 Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
                 startActivity(intent);
                 }else{
@@ -200,13 +229,12 @@ private Switch sw_sonido;
         void onFragmentInteraction(Uri uri);
     }
 
-
     public void Registrar(View v) {
-
-
 
         SharedPreferences url_save = this.getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
         SharedPreferences dominio = this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);
+
+
 
         SharedPreferences.Editor editor = url_save.edit();
         editor.putString("url", url_base.getText().toString());
@@ -214,14 +242,12 @@ private Switch sw_sonido;
         SharedPreferences.Editor editor2 = dominio.edit();
         editor2.putString("domain", dom.getText().toString());
 
+
+
         editor.commit();
         editor2.commit();
-
         //v.finish();
-
-
     }
-
 
     public void Recuperar_data() {
 
@@ -230,6 +256,29 @@ private Switch sw_sonido;
         //Toast.makeText(this.getActivity(), nombre, Toast.LENGTH_SHORT).show();
 
         Toast.makeText(this.getActivity(),"Se guardaron los cambios", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+
+    public void GuardarEstado(boolean estado){
+        SharedPreferences cal_vid = this.getActivity().getSharedPreferences("calidad", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor3 = cal_vid.edit();
+        editor3.putBoolean("cal", estado);
+        editor3.commit();
+
+    }
+
+
+
+
+
+    public boolean obtener_estado(){
+        SharedPreferences cal_vid =  this.getActivity().getSharedPreferences("calidad", Context.MODE_PRIVATE);
+        Boolean calvid = cal_vid.getBoolean("cal",false);
+
+        return calvid;
     }
 
 

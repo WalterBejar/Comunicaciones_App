@@ -48,17 +48,31 @@ public class SplashScreenActivity extends AppCompatActivity {
                 TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
+                        /*if(GlobalVariables.flag_notificacion){
+                            //Intent
+                            Intent intent = new Intent(SplashScreenActivity.this, ActComDetalle.class);
 
-                        // Start the next activity
-                        Intent mainIntent = new Intent().setClass(
-                                SplashScreenActivity.this, MainActivity.class);
-                        mainIntent.putExtra("respuesta", false); //Optional parameters
-                        startActivity(mainIntent);
-                        finish();
+                            intent.putExtra("titulo","");
+                            intent.putExtra("fecha","");
 
+                            startActivity(intent);
+
+                            finish();
+                        }else {*/
+                            // Start the next activity
+                            Intent mainIntent = new Intent().setClass(
+                                    SplashScreenActivity.this, MainActivity.class);
+                            mainIntent.putExtra("respuesta", false); //Optional parameters
+                            startActivity(mainIntent);
+                            finish();
+                        //}
                         // Close the activity so the user won't able to go back this
                         // activity pressing Back button
                         // finish();
+
+
+
+
                     }
                 };
 

@@ -47,13 +47,13 @@
                 android:layout_marginRight="8dp"
                 android:padding="5dp"
                 android:text="Eventos"
-                android:textAlignment="viewStart"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="30sp"
                 app:layout_constraintHorizontal_bias="0.693"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="2dp" />
+                tools:layout_editor_absoluteY="2dp"
+                android:layout_marginStart="8dp" />
 
 
         </android.support.constraint.ConstraintLayout>
@@ -61,15 +61,74 @@
 
     </FrameLayout>
 
-    <ListView
-        android:id="@+id/l_frag_com"
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
+        app:layout_constraintHorizontal_bias="0.0"
+
+        >
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipelayout2"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="Actualizando Registros Espere...."
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Actualizando Registros Espere...."
+
+
+        />
+
+
+
+    <ListView
+        android:id="@+id/l_frag_com"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:dividerHeight="8dp"
 
         android:elevation="10dp"
         android:background="@android:color/transparent"
 
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="parent"
 
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="8dp"
+
+        android:layout_marginEnd="8dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

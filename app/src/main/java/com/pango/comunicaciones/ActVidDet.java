@@ -3,183 +3,222 @@ package com.pango.comunicaciones;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.SeekBar;
 import android.widget.VideoView;
 
-public class ActVidDet extends AppCompatActivity {
+import java.io.IOException;
+
+public class ActVidDet extends AppCompatActivity implements SurfaceHolder.Callback,MediaPlayer.OnPreparedListener,MediaController.MediaPlayerControl{
    // public static final String EXTRA_PARAM_ID = "";
     //public static final String VIEW_NAME_HEADER_IMAGE = "";
     //ActVid reg=new ActVid();
+  //  private static final String video= "https://app.antapaccay.com.pe/Proportal/SCOM_Service/Videos/2616_SD.mp4";
+    String video;
+    public int length=0;
 
-    private int position;
-    public String Url_video;
+    private VideoView surfaceView;
+    private ConstraintLayout top, button;
+    private MediaPlayer mediaPlayer;
+    private SurfaceHolder surfaceHolder;
+    private MediaController mediaController;
+    private Handler handler = new Handler();
+    protected PowerManager.WakeLock wakelock;
+    //private static final String video= "https://app.antapaccay.com.pe/Proportal/SCOM_Service/Videos/2616_SD.mp4";
+    public ProgressDialog pDialog;
+    private SeekBar seekbar;
+    public int percenloadin;
+
     public boolean isListvideo;
-    public int valor;
-    //private Vid_Gal itemDetallado;
+    private int position;
 
-    private VideoView videoExtendida;
-    //private PhotoViewAttacher photoView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final ProgressDialog pDialog;
+        /*final ProgressDialog pDialog;
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);*/
         super.onCreate(savedInstanceState);
-/*
-        ActionBar actionBar= getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);*/
+        percenloadin=0;
 
         setContentView(R.layout.act_vid_det);
-
         Bundle datos = this.getIntent().getExtras();
         position=datos.getInt("post");
         isListvideo=datos.getBoolean("isList");
-        //valor=datos.getInt("valor");
-        //Registrar(valor);
+        obtener_estado();
+        Registrar(0);
 
-        if(GlobalVariables.cont_posvid==0){
-            Registrar(0);
-            GlobalVariables.cont_posvid=GlobalVariables.cont_posvid+1;
+
+        if(isListvideo==true) {
+
+            String video_data=datos.getString("urltemp");
+
+            video=GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4)+video_data.replace(".",GlobalVariables.cal_sd_hd);//+video_data.replace(".",GlobalVariables.cal_sd_hd);
+
+        }else{
+            video = GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4) + GlobalVariables.listdetvid.get(position).getUrl_vid().replace(".",GlobalVariables.cal_sd_hd);
         }
-       // itemDetallado = Vid_Gal.getItem(getIntent().getIntExtra(EXTRA_PARAM_ID, 0));
-        videoExtendida = (VideoView) findViewById(R.id.video_extendida);
 
-        /*Uri vidUri = Uri.parse(itemDetallado.getUrl());
-        videoExtendida.setVideoURI(vidUri);
-*/
-        // Create a progressbar
+
+
+
+
+        surfaceView= (VideoView) findViewById(R.id.surfaceView);
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(mediaController != null){
+                    mediaController.show();
+                }
+                return false;
+            }
+        });
+
+        top= (ConstraintLayout) findViewById(R.id.padingtop);
+        button= (ConstraintLayout) findViewById(R.id.padingbutton);
+
         pDialog = new ProgressDialog(ActVidDet.this);
-        // Set progressbar title
-        // pDialog.setTitle("Cargando Videos");
-        // Set progressbar message
         pDialog.setMessage("Buffering...");
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(true);
-        // Show progressbar
         pDialog.show();
 
-
-        try {
-            // Start the MediaController
-            MediaController mediacontroller = new MediaController(
-                    ActVidDet.this);
-            mediacontroller.setAnchorView(videoExtendida);
-            Uri video;
-            // Get the URL from String VideoURL
-            if(isListvideo==true) {
-                //String asdf= GlobalVariables.listdetvid.get(position).getUrl_vid();
-                //String aadd = "Videos/2608.mp4";
-                Url_video=datos.getString("urltemp");
-
-                 video = Uri.parse(GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4) + Url_video);
-            }else{
-                 video = Uri.parse(GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4) + GlobalVariables.listdetvid.get(position).getUrl_vid());
-            }
-
-            videoExtendida.setMediaController(mediacontroller);
-            videoExtendida.setVideoURI(video);
-
-//////////////////////////////////////////////////////////////////////////////////////
-            /*if(savedInstanceState!=null){
-                int currentPos =  savedInstanceState.getInt("current position");
-                videoExtendida.seekTo(currentPos);
-            }*/
- ////////////////////////////////////////////////////////////////////////////////////////////7
-
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-
-        videoExtendida.requestFocus();
-        videoExtendida.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            // Close the progress bar and play the video
-            public void onPrepared(MediaPlayer mp) {
-                if (pDialog.isShowing()) pDialog.dismiss();
-
-
-                videoExtendida.start();
-                if (position == 0) {
-                    // Si tenemos una posición guardada, el vídeo comienza ahí.
-                    //videoExtendida.start();
-                    videoExtendida.start();
-
-
-                } else {
-                    // Si nuestro activity se reanuda, ponemos pausa.
-                    //videoExtendida.pause();
-                    videoExtendida.pause();
+        final PowerManager pm=(PowerManager)getSystemService(getBaseContext().POWER_SERVICE);
+        this.wakelock=pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "etiqueta");
+        surfaceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(mediaController != null){
+                    mediaController.show();
                 }
+                return false;
+            }
+        });
 
 
 
+    }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) //To fullscreen
+        {
+            top.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
+            surfaceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+
+        }
+        else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT)
+        {
+            top.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
+            surfaceView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 0.38f));
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //if(mediaPlayer !=null) mediaPlayer.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mediaPlayer !=null){
+            mediaPlayer.pause();
+            Registrar(mediaPlayer.getCurrentPosition());
+        }
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        if (pDialog.isShowing()) pDialog.dismiss();
+        mediaPlayer.seekTo( Integer.parseInt(Recuperar_data()));
+        mediaPlayer.start();
+        mediaController.setMediaPlayer(this);
+        mediaController.setAnchorView(surfaceView);
+        handler.post(new Runnable() {
+
+            public void run() {
+                mediaController.setEnabled(true);
+                mediaController.show();
+            }
+        });
+
+        this.wakelock.acquire();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                Registrar(0);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        wakelock.release();
+                    }
+                },3000);
+            }
+        });
+
+        int topContainerId = getResources().getIdentifier("mediacontroller_progress", "id", "android");
+        seekbar = (SeekBar) mediaController.findViewById(topContainerId);
+
+        mp.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+                percenloadin=percent;
             }
         });
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        /* Usamos onSaveInstanceState para guardar la posición de
-           reproducción del vídeo en caso de un cambio de orientación. */
-       // reg.Registrar(position);
-        Registrar(position);
-
-        savedInstanceState.putInt("Position",position);
-
-        // videoExtendida.getCurrentPosition()
-       // videoExtendida.pause();
-    }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        /*
-         * Usamos onRestoreInstanceState para reproducir el vídeo
-         * desde la posición guardada.
-         */
-
-
-        position = savedInstanceState.getInt("Position");
-        videoExtendida.seekTo(position);
-        videoExtendida.pause();
-
-
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Se obtiene la posición actual de la reproducción antes de la pausa.
-
-        if( videoExtendida.getCurrentPosition()>0) {
-
-        position = videoExtendida.getCurrentPosition();
-           Registrar(position);
+    public void surfaceCreated(SurfaceHolder holder) {
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setDisplay(surfaceHolder);
+        try{
+            mediaPlayer.setDataSource(video);
+            mediaPlayer.setOnPreparedListener(this);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.prepareAsync();
+            mediaController = new MediaController(this);
         }
-
-
+        catch (IOException e){
+            e.printStackTrace();
         }
+    }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        //Log.d(TAG, "onResume called");
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-        int posi= Integer.parseInt(Recuperar_data());
-        videoExtendida.seekTo(posi);
-        videoExtendida.start(); //Or use resume() if it doesn't work. I'm not sure
     }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
 
     public void Registrar(int mPosition) {
         SharedPreferences posicion_vid = this.getSharedPreferences("pos", Context.MODE_PRIVATE);
@@ -189,19 +228,83 @@ public class ActVidDet extends AppCompatActivity {
         editor.commit();
         //v.finish();
     }
-
-
-
     public String Recuperar_data() {
 
         SharedPreferences settings =  this.getSharedPreferences("pos", Context.MODE_PRIVATE);
-        String dominio_user = settings.getString("pos_url","valorpordefecto");
-
-        //Toast.makeText(this.getActivity(), nombre, Toast.LENGTH_SHORT).show();
-
-       // Toast.makeText(this,"se recupero"+dominio_user, Toast.LENGTH_SHORT).show();
+        String dominio_user = settings.getString("pos_url","0");
         return dominio_user;
     }
 
+
+
+    @Override
+    public void start() {
+        mediaPlayer.start();
+        this.wakelock.acquire();
+    }
+
+    @Override
+    public void pause() {
+        wakelock.release();
+        mediaPlayer.pause();
+    }
+
+    @Override
+    public int getDuration() {
+        return mediaPlayer.getDuration();
+    }
+
+    @Override
+    public int getCurrentPosition() {
+        return mediaPlayer.getCurrentPosition();
+    }
+
+    @Override
+    public void seekTo(int pos) {
+        mediaPlayer.seekTo(pos);
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return mediaPlayer.isPlaying();
+    }
+
+    @Override
+    public int getBufferPercentage() {
+        return percenloadin;
+    }
+
+    @Override
+    public boolean canPause() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekBackward() {
+        return true;
+    }
+
+    @Override
+    public boolean canSeekForward() {
+        return true;
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return mediaPlayer.getAudioSessionId();
+    }
+
+    public void obtener_estado(){
+        SharedPreferences cal_vid =  this.getSharedPreferences("calidad", Context.MODE_PRIVATE);
+        Boolean calvid = cal_vid.getBoolean("cal",false);
+
+        if(calvid){
+            GlobalVariables.cal_sd_hd=".";
+        }else{
+            GlobalVariables.cal_sd_hd="_SD.";
+
+        }
+
+    }
 
 }

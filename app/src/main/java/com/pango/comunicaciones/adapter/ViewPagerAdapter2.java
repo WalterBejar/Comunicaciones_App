@@ -62,7 +62,7 @@ public class ViewPagerAdapter2 extends PagerAdapter {
 
 
             Glide.with(image.getContext())
-                    .load(GlobalVariables.Urlbase+listaURL.get(position))
+                    .load(GlobalVariables.Urlbase.substring(0,GlobalVariables.Urlbase.length()-4)+listaURL.get(position))
                     .into(image);
            // positionIn= position;
 

@@ -8,7 +8,7 @@ public class Noticias {
     private String fecha;
     private String titulo;
     private String descripcion;
-    private ArrayList<String> filedata;
+    private String urlmin;
 
 
     /*
@@ -19,13 +19,13 @@ public class Noticias {
     public Noticias() {
     }
 
-    public Noticias(String cod_reg, int icon, String fecha, String titulo, String descripcion, ArrayList<String> filedata) {
+    public Noticias(String cod_reg, int icon, String fecha, String titulo, String descripcion, String urlmin) {
         this.cod_reg = cod_reg;
         this.icon = icon;
         this.fecha = fecha;
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.filedata = filedata;
+        this.urlmin = urlmin;
     }
 
     public String getCod_reg() {
@@ -68,11 +68,11 @@ public class Noticias {
         this.descripcion = descripcion;
     }
 
-    public ArrayList<String> getFiledata() {
-        return filedata;
+    public String getUrlmin() {
+        return urlmin;
     }
 
-    public void setFiledata(ArrayList<String> filedata) {
-        this.filedata = filedata;
+    public void setUrlmin(String urlmin) {
+        this.urlmin = urlmin;
     }
 }
