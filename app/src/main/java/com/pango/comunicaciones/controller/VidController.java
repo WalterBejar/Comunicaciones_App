@@ -79,7 +79,7 @@ public class VidController extends AsyncTask<String,Void,Void> {
             if (opcion == "get") {
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet get = new HttpGet(GlobalVariables.Urlbase + GlobalVariables.Urlbase2 + a + "/" + b + "/TP04");
+                    HttpGet get = new HttpGet(GlobalVariables.Urlbase + GlobalVariables.Urlbase2 + a + "/" + b + "/TP04/"+GlobalVariables.id_phone);
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     get.setHeader("Content-type", "application/json");
                     GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();

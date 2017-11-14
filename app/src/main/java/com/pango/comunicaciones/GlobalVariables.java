@@ -162,5 +162,9 @@ public class GlobalVariables {
 
 
     public static Stack<Fragment> fragmentStack= new Stack<Fragment>();
+    public static String id_phone;
+
+
+
 
 }

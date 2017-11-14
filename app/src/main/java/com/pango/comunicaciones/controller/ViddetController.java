@@ -84,7 +84,7 @@ public class ViddetController extends AsyncTask<String,Void,Void> {
             if(opcion=="get"){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg);//url de cada publicacion
+                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg+GlobalVariables.id_phone);//url de cada publicacion
                    // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
 
                     GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();

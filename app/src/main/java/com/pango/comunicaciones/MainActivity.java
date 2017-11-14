@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings.Secure;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         //toolbar.setNavigationIcon(R.mipmap.ic_logotitulo);
         toolbar.setLogo(R.drawable.imagen1234);
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
-
+        GlobalVariables.id_phone= "Android@"+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
         //fragmentManager = getSupportFragmentManager();
         //toolbar.setAlpha(1);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);

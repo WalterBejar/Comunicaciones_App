@@ -76,7 +76,7 @@ public class ComController extends AsyncTask<String,Void,Void> {
             if(opcion=="get"&&GlobalVariables.flagcom==true){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+a+"/"+b+"/TP02");
+                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+a+"/"+b+"/TP02/"+GlobalVariables.id_phone);
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     get.setHeader("Content-type", "application/json");
                     GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
