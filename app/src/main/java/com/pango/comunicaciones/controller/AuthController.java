@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import layout.FragmentInicio2;
 import layout.FragmentTickets;
 
 
@@ -34,6 +35,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
     int st;
     String url;
     String opcion;
+    //cambiar a fragmenttickets
     FragmentTickets Frag;
     String Resultado="";
     String CodRegistro;
@@ -49,7 +51,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
     //ListView recList;
   //  int a;
    // int celda = 3;
-
+//cambiar a fragmenttickets
     public AuthController(View v, String url, String opcion, FragmentTickets Frag){
         this.v=v;
         this.url=url;

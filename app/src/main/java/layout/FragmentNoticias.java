@@ -305,68 +305,18 @@ int a;
                 }
             }
 
-               /* if(mLastFirstVisibleItem<firstVisibleItem)
-                {
-                    Log.i("SCROLLING DOWN","TRUE");
-                    ///if()
-                }
-
-                if(mLastFirstVisibleItem>firstVisibleItem)
-                {
-                    Log.i("SCROLLING UP","TRUE");
-
-
-                }
-                mLastFirstVisibleItem=firstVisibleItem;*/
-
-
         });
 
         listenerFlag = false;
 
 
 
-
-
-      /*  recList.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public boolean onLoadMore(int page, int totalItemCount) {
-
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to your AdapterView
-                //loadNextDataFromApi(page);
-                int page2=page;
-
-
-             if(GlobalVariables.noticias2.size()<GlobalVariables.contNoticia) {
-
-
-                  final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
-                  obj.execute(String.valueOf(page2),String.valueOf(GlobalVariables.num_vid));
-                 pageCount++;
-
-
-                 return true; // ONLY if more data is actually being loaded; false otherwise.
-             }else{
-                 //flag=true;
-                 return false;
-
-             }
-
-
-            }
-        });*/
-
-
-
-
-
-
-
-
         return rootView;
 
     }
+
+
+
 
     public void loadNextDataFromApi(int offset) {
         // Send an API request to retrieve appropriate paginated data
@@ -415,9 +365,5 @@ int a;
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
-
-
 
 }

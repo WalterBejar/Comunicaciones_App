@@ -14,8 +14,11 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
+import com.pango.comunicaciones.controller.AuthController;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,7 +81,7 @@ public class FragmentInicio2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_inicio3, container, false);
+        final View view =inflater.inflate(R.layout.fragment_inicio3, container, false);
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
         //getActivity().setTitle("Antapaccay");
@@ -112,13 +115,20 @@ public class FragmentInicio2 extends Fragment {
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentNoticias();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, nuevoFragmento);
-                transaction.addToBackStack(null);
+                transaction.add(R.id.content, nuevoFragmento);
+                //transaction.replace(R.id.content, nuevoFragmento);
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+
+                //transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
 
 
 
+
+
+
+                Utils.apilarFrag(nuevoFragmento);
                 navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 bottomNavigationView.getMenu().findItem(R.id.navigation_noticias).setChecked(true);
@@ -137,12 +147,17 @@ public class FragmentInicio2 extends Fragment {
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentComunicados();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, nuevoFragmento);
-                transaction.addToBackStack(null);
+                transaction.add(R.id.content, nuevoFragmento);
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+
+                //transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+                Utils.apilarFrag(nuevoFragmento);
 
-                //bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
+                //bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(false);
+
+                bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
 
@@ -158,10 +173,13 @@ public class FragmentInicio2 extends Fragment {
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentImagenes();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, nuevoFragmento);
-                transaction.addToBackStack(null);
+                transaction.add(R.id.content, nuevoFragmento);
+                //transaction.addToBackStack(null);
                 // Commit a la transacción
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
                 transaction.commit();
+                Utils.apilarFrag(nuevoFragmento);
+
                 bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
@@ -171,7 +189,7 @@ public class FragmentInicio2 extends Fragment {
         card4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Reserva de Buses");
+                //getActivity().setTitle("Reserva de Buses");
 
                 bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
@@ -179,10 +197,18 @@ public class FragmentInicio2 extends Fragment {
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentTickets();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, nuevoFragmento);
-                transaction.addToBackStack(null);
+                transaction.add(R.id.content, nuevoFragmento);
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+                //transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
+                Utils.apilarFrag(nuevoFragmento);
+
+
+//comentar esto
+               /* final AuthController obj = new AuthController(view, "url", "get", FragmentInicio2.this);
+                obj.execute("admin","12345", "anyaccess");*/
+
 
 
 
@@ -196,10 +222,13 @@ public class FragmentInicio2 extends Fragment {
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentVideos();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, nuevoFragmento);
-                transaction.addToBackStack(null);
+                transaction.add(R.id.content, nuevoFragmento);
+               // transaction.addToBackStack(null);
                 // Commit a la transacción
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+
                 transaction.commit();
+                Utils.apilarFrag(nuevoFragmento);
 
                 bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
@@ -214,12 +243,17 @@ public class FragmentInicio2 extends Fragment {
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentRedesSociales();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, nuevoFragmento);
-                transaction.addToBackStack(null);
+                transaction.add(R.id.content, nuevoFragmento);
+                //transaction.addToBackStack(null);
                 // Commit a la transacción
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+
                 transaction.commit();
+                Utils.apilarFrag(nuevoFragmento);
 
                 //bottomNavigationView.getMenu().findItem(R.id.navigation_).setChecked(true);
+                bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
             }

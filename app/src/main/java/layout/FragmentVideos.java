@@ -26,13 +26,17 @@ import com.pango.comunicaciones.ActVid;
 import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.VidAdapter;
 import com.pango.comunicaciones.controller.ImgController;
 import com.pango.comunicaciones.controller.VidController;
 import com.pango.comunicaciones.controller.contadorController;
 import com.pango.comunicaciones.controller.noticiacontroller;
 import com.pango.comunicaciones.model.Imagen;
+import com.pango.comunicaciones.model.Vid_Gal;
+import com.pango.comunicaciones.model.Video;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -99,6 +103,7 @@ public class FragmentVideos extends Fragment {
     List<Imagen> limg;
     Imagen imagen_t;
     int in=3;
+    View rootView;
     boolean upFlag;
     boolean downFlag;
     boolean listenerFlag;
@@ -111,21 +116,31 @@ public class FragmentVideos extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_videos, container, false);
+        rootView = inflater.inflate(R.layout.fragment_videos, container, false);
         context = container.getContext();
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
         recListVid = (ListView) rootView.findViewById(R.id.recycler_vid);
-        LinearLayoutManager llm_vid = new LinearLayoutManager(getActivity());
-        llm_vid.setOrientation(LinearLayoutManager.VERTICAL);
+        //LinearLayoutManager llm_vid = new LinearLayoutManager(getActivity());
+        //llm_vid.setOrientation(LinearLayoutManager.VERTICAL);
 
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout4);
         textView2 =(TextView)rootView.findViewById(R.id.textView4);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+        /*List<Vid_Gal> dataf = new ArrayList<>();
+        dataf.add(new Vid_Gal("0","Videos/2616.mp4", Utils.ChangeUrl("media/GetminFile/2616/550px;Maratón 10k 2017.jpg")));
+
+        GlobalVariables.vidlist.add(new Video("SC2017000582",R.drawable.ic_menu_send,"2017-10-13T00:00:00","Maratón 10k 2017",dataf,1));
+        GlobalVariables.vidlist.add(new Video("SC2017000582",R.drawable.ic_menu_send,"2017-10-13T00:00:00","Maratón 10k 2017",dataf,1));
+        GlobalVariables.vidlist.add(new Video("SC2017000582",R.drawable.ic_menu_send,"2017-10-13T00:00:00","Maratón 10k 2017",dataf,1));
+
+        VidAdapter ca = new VidAdapter(context, GlobalVariables.vidlist);
+        recListVid.setAdapter(ca);*/
+
+
 
         if(GlobalVariables.vidlist.size()==0) {
-
             final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
             obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
         }else {
@@ -133,13 +148,13 @@ public class FragmentVideos extends Fragment {
         recListVid.setAdapter(ca);
         }
 
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        /*final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater2 = getActivity().getLayoutInflater();
 
 
         View v = inflater.inflate(R.layout.act_vid, null);
         builder.setView(v);
-
+*/
         recListVid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -3,6 +3,7 @@ package com.pango.comunicaciones;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.Fragment;
 
 import com.pango.comunicaciones.model.ComDet;
 import com.pango.comunicaciones.model.Comunicado;
@@ -17,6 +18,7 @@ import com.pango.comunicaciones.model.Video;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by Andre on 25/09/2017.
@@ -156,4 +158,9 @@ public class GlobalVariables {
     public static boolean flag_up_toast=false;
 
     public static int position=0;
+
+
+
+    public static Stack<Fragment> fragmentStack= new Stack<Fragment>();
+
 }

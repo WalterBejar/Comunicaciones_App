@@ -127,8 +127,12 @@ public class FragmentTickets extends Fragment {
 
 
                 // Toast.makeText(v.getContext(),"logueo",Toast.LENGTH_SHORT).show();
+
+                    //descomentar esto
                 final AuthController obj = new AuthController(rootView, "url", "get", FragmentTickets.this);
                 obj.execute(a, b, c);
+
+
             }
             //probar
            //     Intent intent = new Intent(v.getContext(), ActFiltro.class);

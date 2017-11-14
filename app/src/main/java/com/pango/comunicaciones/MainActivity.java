@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,9 +25,11 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.Util;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Field;
+import java.util.Stack;
 
 import layout.FragmentComunicados;
 import layout.FragmentConfiguracion;
@@ -55,9 +60,13 @@ public class MainActivity extends AppCompatActivity
 {
     //  private int mSelectedItem;
     //  private static final String SELECTED_ITEM = "arg_selected_item";
+    //private Stack<Fragment> fragmentStack;
 
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
+    private FragmentManager fragmentManager;
+    Toolbar toolbar;
+
     @Override
     public void onFragmentInteraction(Uri uri) {
     }
@@ -65,7 +74,6 @@ public class MainActivity extends AppCompatActivity
     public enum NavigationFragment{
         Inicio,
         Noticias,
-
         Comunicados,
         Imagenes,
         Videos,
@@ -82,13 +90,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //toolbar.setNavigationIcon(R.mipmap.ic_logotitulo);
         toolbar.setLogo(R.drawable.imagen1234);
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
 
-
+        //fragmentManager = getSupportFragmentManager();
         //toolbar.setAlpha(1);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
         //getSupportActionBar().setIcon(R.mipmap.ic_logotitulo);
@@ -156,6 +164,8 @@ public class MainActivity extends AppCompatActivity
 
     ///fin oncreate
 
+    //int  backpress=0;
+    private Boolean exit = false;
 
     @Override
     public void onBackPressed() {
@@ -184,11 +194,75 @@ public class MainActivity extends AppCompatActivity
                 //setSelectedItemId (homeItem.getItemId());
                 onNavigationItemSelected(homeItem);
 */
-        }else {
+        }else if (GlobalVariables.fragmentStack.size() == 2) {
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            GlobalVariables.fragmentStack.lastElement().onPause();
+            ft.remove(GlobalVariables.fragmentStack.pop());
+            GlobalVariables.fragmentStack.lastElement().onResume();
 
-            super.onBackPressed();
+            //Fragment fra=GlobalVariables.fragmentStack.lastElement();
+
+            ft.show(GlobalVariables.fragmentStack.lastElement());
+
+            ft.commit();
+
+            bottomNavigationView.setVisibility(View.GONE);
+            toolbar.setVisibility(View.VISIBLE);
+
+
+            // ChangeFragment(NavigationFragment.Inicio);
+        }else {
+        //super.onBackPressed();
+            if (exit) {
+                super.onBackPressed(); // finish activity
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        exit = false;
+                    }
+                }, 3 * 1000);
+
+            }
         }
 
+
+            /*{
+          //  super.onBackPressed();
+            if (exit) {
+                super.onBackPressed(); // finish activity
+            } else {
+                Toast.makeText(this, "Press Back again to Exit.",
+                        Toast.LENGTH_SHORT).show();
+                exit = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        exit = false;
+                    }
+                }, 3 * 1000);
+
+            }
+
+        }*/
+
+
+        /*
+                if (fragmentStack.size() == 2) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            fragmentStack.lastElement().onPause();
+            ft.remove(fragmentStack.pop());
+            fragmentStack.lastElement().onResume();
+            ft.show(fragmentStack.lastElement());
+            ft.commit();
+        } else {
+            super.onBackPressed();
+        }
+         */
 
 
 
@@ -229,7 +303,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_publicaciones) {
             ClickMenuComunicados();
             uncheckItemsMenu();
-            //bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
+            bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
         } else if (id == R.id.nav_imagenes) {
             ClickMenuImagenes();
             uncheckItemsMenu();
@@ -245,28 +319,28 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_notificaciones){
             ClickMenuNotificacion();
             uncheckItemsMenu();
-        }else if (id == R.id.nav_configuracion){
+            bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
 
+        }else if (id == R.id.nav_configuracion){
             ClickMenuConfiguracion();
             uncheckItemsMenu();
+            bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
         }else if (id == R.id.nav_Contactenos){
             ClickMenuContactenos();
             uncheckItemsMenu();
+            bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+
         }else if (id == R.id.nav_RedesSociales){
             ClickMenuRedesSociales();
             uncheckItemsMenu();
+            bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+
         }
-
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
-
 
     //menu inferior
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -283,20 +357,25 @@ public class MainActivity extends AppCompatActivity
                     uncheckItemsMenu();
                     return true;
                 case R.id.navigation_imagenes:
-                    //uncheckItemsMenu();
+                    uncheckItemsMenu();
                     //navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
                     ClickMenuImagenes();
                     return true;
                 case R.id.navigation_videos:
+                    uncheckItemsMenu();
+
                     ClickMenuVideos();
-                    //uncheckItemsMenu();
                     //navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
                     return true;
                 case R.id.navigation_noticias:
+                    uncheckItemsMenu();
+
                     ClickMenuNoticias();
                     return true;
                 case R.id.navigation_tickets:
-                    //uncheckItemsMenu();
+
+
+                    uncheckItemsMenu();
                     //navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
                     ClickMenuTickets();
                     return true;
@@ -322,7 +401,9 @@ public class MainActivity extends AppCompatActivity
         setTitle("Eventos");
 
         //bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
-       // bottomNavigationView.setVisibility(View.VISIBLE);
+       //  bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+        bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
         navigationView.getMenu().findItem(R.id.nav_publicaciones).setChecked(true);
         ChangeFragment(NavigationFragment.Comunicados);
@@ -363,6 +444,7 @@ public class MainActivity extends AppCompatActivity
     private void ClickMenuNotificacion() {
         uncheckItemsMenu();
         setTitle("Notificaciones");
+        bottomNavigationView.setVisibility(View.VISIBLE);
         navigationView.getMenu().findItem(R.id.nav_notificaciones).setChecked(true);
         ChangeFragment(NavigationFragment.Notificacion);
 
@@ -371,6 +453,7 @@ public class MainActivity extends AppCompatActivity
     private void ClickMenuConfiguracion() {
         uncheckItemsMenu();
         setTitle("Configuración");
+        bottomNavigationView.setVisibility(View.VISIBLE);
         navigationView.getMenu().findItem(R.id.nav_configuracion).setChecked(true);
         ChangeFragment(NavigationFragment.Configuracion);
     }
@@ -378,6 +461,8 @@ public class MainActivity extends AppCompatActivity
     private void ClickMenuContactenos() {
         uncheckItemsMenu();
         setTitle("Contáctenos");
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_Contactenos).setChecked(true);
         ChangeFragment(NavigationFragment.Contactenos);
     }
@@ -385,6 +470,8 @@ public class MainActivity extends AppCompatActivity
     private void ClickMenuRedesSociales() {
         uncheckItemsMenu();
         setTitle("Redes Sociales");
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
         navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
         ChangeFragment(NavigationFragment.RedesSociales);
     }
@@ -448,11 +535,28 @@ public class MainActivity extends AppCompatActivity
             case RedesSociales: fragment = new FragmentRedesSociales(); break;
 
         }
-        if(fragment!=null)
+        if(fragment!=null&&GlobalVariables.fragmentStack.size()==0){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.content, fragment)
+                    .add(R.id.content, fragment)
+                    //.hide(GlobalVariables.fragmentStack.lastElement())
                     .commit();
+                    Utils.apilarFrag(fragment);
+       /* if (GlobalVariables.fragmentStack.size()<=1) {
+            GlobalVariables.fragmentStack.push(fragment);
+        }else{
+            GlobalVariables.fragmentStack.pop();
+            GlobalVariables.fragmentStack.push(fragment);
+        }*/
+        }else if(fragment!=null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content, fragment)
+                    .hide(GlobalVariables.fragmentStack.lastElement())
+                    .commit();
+            Utils.apilarFrag(fragment);
+        }
+
     }
 
 

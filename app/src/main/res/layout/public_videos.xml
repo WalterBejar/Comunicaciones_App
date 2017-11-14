@@ -11,12 +11,16 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_alignParentEnd="true"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="5dp"
+    android:layout_margin="4dp"
+
     android:layout_alignParentRight="true"
     app:cardBackgroundColor="@color/colormedio"
 
     card_view:contentPadding="10dp"
-    card_view:cardElevation="5dp"
+    card_view:cardElevation="2dp"
+    android:background="@android:color/transparent"
+
     >
 
     <RelativeLayout
@@ -50,7 +54,7 @@
             />
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:id="@+id/rel_vid"
         >
 
@@ -66,8 +70,8 @@
                 android:id="@+id/imag_vid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/splash_logo"
-                android:transitionName="Imagen_compartida" />
+                android:transitionName="Imagen_compartida"
+                />
 
             <ImageView
                 android:id="@+id/vid_play"
@@ -99,7 +103,10 @@
             android:text="15"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+
+            />
 
         <TextView
             android:id="@+id/videtiq"
@@ -114,7 +121,10 @@
             android:layout_marginTop="42dp"
             android:text="VIDEOS"
             android:textAlignment="center"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+
+            />
 
 </RelativeLayout>
 

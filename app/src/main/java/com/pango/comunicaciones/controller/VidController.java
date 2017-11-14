@@ -83,6 +83,7 @@ public class VidController extends AsyncTask<String,Void,Void> {
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     get.setHeader("Content-type", "application/json");
                     GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+
                     if(GlobalVariables.con_status==200) {
 
                         response = httpClient.execute(get);

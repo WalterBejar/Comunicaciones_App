@@ -179,7 +179,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 if (downFlag && scrollState == SCROLL_STATE_IDLE) {
                     downFlag = false;
                     if(tickets.size()!=contTickets) {
-                        //Toast.makeText(getApplicationContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
                         new BuscarTickets().execute(String.valueOf(page2),String.valueOf(cantidadTickets));
                         //  return true; // ONLY if more data is actually being loaded; false otherwise.
                     }else{

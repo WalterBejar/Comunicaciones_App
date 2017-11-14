@@ -2,6 +2,7 @@ package com.pango.comunicaciones;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
 import android.view.Surface;
 import android.view.WindowManager;
 
@@ -188,6 +189,13 @@ public class Utils {
         }}
 
 
-
+    public static void apilarFrag(Fragment fragment){
+        if (GlobalVariables.fragmentStack.size()<=1) {
+            GlobalVariables.fragmentStack.push(fragment);
+        }else{
+            GlobalVariables.fragmentStack.pop();
+            GlobalVariables.fragmentStack.push(fragment);
+        }
+    }
 
 }

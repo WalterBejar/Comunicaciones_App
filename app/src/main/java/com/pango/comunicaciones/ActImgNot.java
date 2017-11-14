@@ -40,8 +40,6 @@ public class ActImgNot extends AppCompatActivity {
         img_not = (TouchImageView) findViewById(R.id.imagen_extendida);
 
 
-
-
         String orientacion=Utils.getRotation(this);
 
         if(orientacion.equals("vertical")&&flag_orienta==true) {
