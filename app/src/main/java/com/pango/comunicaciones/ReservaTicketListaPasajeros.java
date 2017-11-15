@@ -8,11 +8,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -52,11 +55,16 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
     Button botonEliminar;
 
     ListaAdapter listaAdapter;
-
+    boolean pass=true;
     TicketModel ticket;
-
+    TextView textLoading;
+    SwipeRefreshLayout swipeRefreshLayout;
     String[] busDetalleListaNombre = {"Nro Programa","Nombre Bus","Origen", "Destino", "Fecha", "Hora","Disponibles","Ocupados","Total Asientos", "Reservas Hecha", "Tipo Bus","Patente", "Marca", "Modelo", "Tipo Vehiculo"};
     DetalleAdapter detalleAdapter;
+    boolean loadingTop=false;
+    boolean listenerFlag;
+    boolean upFlag;
+    boolean downFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +96,12 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+        // refresh
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        textLoading =(TextView)findViewById(R.id.textLoading);
+        textLoading.setVisibility(View.GONE);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+
 
         // Recibir codigo ticket
         Bundle extras = getIntent().getExtras();
@@ -107,6 +121,55 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
         new GetLista().execute();
 
 
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                loadingTop=true;
+                textLoading.setVisibility(View.VISIBLE);
+                new GetBusDetalles().execute();
+                new GetLista().execute();
+            }
+        });
+
+
+        listaTickets.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (upFlag && scrollState == SCROLL_STATE_IDLE) {
+                    upFlag = false;
+                    swipeRefreshLayout.setEnabled( true );
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    swipeRefreshLayout.setEnabled( false );
+                    Log.d("started","comenzo");
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
+                }
+            }
+        });
     }
 
     public void showListviewDetalle(View view){
@@ -150,7 +213,7 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.show();
+           if(pass) progressDialog.show();
         }
 
         @Override
@@ -180,6 +243,11 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
                     listaCheckBoxPasajeros = new boolean[listaPasajeros.size()];
                     if(listaPasajeros.size() ==0)Toast.makeText(getApplicationContext(),"0 pasajeros",Toast.LENGTH_SHORT).show();
                     listaAdapter.notifyDataSetChanged();
+
+                    swipeRefreshLayout.setRefreshing(false);
+                    textLoading.setVisibility(View.GONE);
+                    loadingTop=false;
+                    pass=false;
             }
             progressDialog.dismiss();
         }
@@ -340,8 +408,16 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             pasajeroCheckEliminar.setEnabled(delete);
 
             pasajeroCheckEliminar.setChecked(listaCheckBoxPasajeros[position]);
+
+
             final View finalConvertView = convertView;
             final int finalColorInicial = colorInicial;
+            String BackgrColor= "#FFFFFF";
+            if(listaCheckBoxPasajeros[position]) {
+                BackgrColor= "#D6EAF8";
+            }
+            convertView.setBackgroundColor(Color.parseColor(BackgrColor));
+
             pasajeroCheckEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

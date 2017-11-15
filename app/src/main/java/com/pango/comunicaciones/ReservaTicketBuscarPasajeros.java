@@ -11,9 +11,11 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -62,7 +64,9 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
     EditText editTextDNI, editTextNombre, editTextEmpresa;
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
-
+    boolean listenerFlag;
+    boolean upFlag;
+    boolean downFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +134,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
             }
         });
 
-        listaBuscarPasajeros.setOnScrollListener(new EndlessScrollListener() {
+  /*      listaBuscarPasajeros.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount){
 
@@ -144,6 +148,51 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                     if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contPasajeros,Toast.LENGTH_SHORT).show();
                     showTotal=false;
                     return false;
+                }
+            }
+        });*/
+
+        listaBuscarPasajeros.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    listenerFlag = false;
+                    Log.d("--:","---------------------------");
+                }
+                if (downFlag && scrollState == SCROLL_STATE_IDLE) {
+                    downFlag = false;
+                    if(listaPasajeros.size()!=contPasajeros) {
+                        //Toast.makeText(getApplicationContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
+                        new BuscarPasajeros().execute(String.valueOf(page2));
+                        //  return true; // ONLY if more data is actually being loaded; false otherwise.
+                    }else{
+
+                        if(showTotal)Toast.makeText(getApplicationContext(),"Total de Registros:"+contPasajeros,Toast.LENGTH_SHORT).show();
+                        showTotal=false;
+                        //return false;
+                    }
+
+                }
+                if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    listenerFlag = true;
+                    Log.d("started","comenzo");
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+
+                Log.d("+1:",""+view.canScrollVertically(1));
+                Log.d("-1:",""+view.canScrollVertically(-1));
+                // Log.d("x:",""+view.getScrollX());
+                if (listenerFlag && !view.canScrollVertically(1)){
+                    downFlag = true;
+                    upFlag = false;
+                }
+                if (listenerFlag && !view.canScrollVertically(-1)){
+                    upFlag = true;
+                    downFlag = false;
                 }
             }
         });
@@ -386,6 +435,11 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
 
             CheckBox pasajeroCheckSeleccionar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
             pasajeroCheckSeleccionar.setChecked(listaCheckBoxPasajeros[position]);
+
+            String BackgrColor= "#FFFFFF";
+            if(listaCheckBoxPasajeros[position])  BackgrColor= "#D6EAF8";
+            convertView.setBackgroundColor(Color.parseColor(BackgrColor));
+
             final View finalConvertView = convertView;
             pasajeroCheckSeleccionar.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -394,6 +448,7 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                     String BackgrColor= "#FFFFFF";
                     if(listaCheckBoxPasajeros[position])  BackgrColor= "#D6EAF8";
                     finalConvertView.setBackgroundColor(Color.parseColor(BackgrColor));
+
                     boolean flag=false;
                     for(int i=0;i<listaCheckBoxPasajeros.length;i++){
                         if(listaCheckBoxPasajeros[i]){
