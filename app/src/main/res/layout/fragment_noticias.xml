@@ -110,10 +110,8 @@
                 android:background="@android:color/transparent"
                 android:dividerHeight="5dp"
 
-
                 android:elevation="10dp"
                 android:focusable="true"
-
 
                 tools:layout_editor_absoluteY="0dp"
                 tools:layout_editor_absoluteX="0dp" />

@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity
         }else {
         //super.onBackPressed();
             if (exit) {
+                GlobalVariables.fragmentStack.clear();
                 super.onBackPressed(); // finish activity
             } else {
                 Toast.makeText(this, "Press Back again to Exit.",
@@ -477,7 +478,6 @@ public class MainActivity extends AppCompatActivity
         ChangeFragment(NavigationFragment.RedesSociales);
     }
 
-
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -569,6 +569,5 @@ public class MainActivity extends AppCompatActivity
         //Toast.makeText(this, url_servidor, Toast.LENGTH_SHORT).show();
         return url_servidor;
     }
-
 
 }

@@ -80,9 +80,6 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
 
-
-
-
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase + "entrada/getpaginated/" + a + "/" + b + "/TP03/"+GlobalVariables.id_phone);
                     get.setHeader("Content-type", "application/json");
                     GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
