@@ -77,7 +77,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
 
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+"persona/Get_Usuario");
+                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+"persona/Get_Usuario"+GlobalVariables.id_phone);
                     get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
                     String respstring = EntityUtils.toString(response.getEntity());

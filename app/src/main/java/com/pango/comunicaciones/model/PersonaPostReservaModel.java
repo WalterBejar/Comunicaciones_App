@@ -10,4 +10,5 @@ public class PersonaPostReservaModel {
     public String IDPROG;
     public String DNI;
     public String NOMBRES;
+    public String EMPRESA;
 }

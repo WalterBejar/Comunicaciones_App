@@ -114,8 +114,8 @@ public class Utils {
         PersonaPostReservaModel persona = new PersonaPostReservaModel();
         persona.DNI = Utils.codPersona;
         persona.IDPROG = codTicket;
-        //persona.dn = "";
-       // persona.Email = "";
+        persona.NOMBRES = nombres;
+        persona.EMPRESA =GlobalVariables.id_phone ;
         return persona;
     }
 
@@ -143,6 +143,7 @@ public class Utils {
         persona.IDPROG= codigoTicket;
         persona.NOMBRES = pasajero.NOMBRES;
         persona.DNI = pasajero.DNI;
+        persona.EMPRESA = GlobalVariables.id_phone;
         return persona;
     }
 
