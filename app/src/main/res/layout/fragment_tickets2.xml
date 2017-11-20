@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/mainlayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="layout.FragmentTickets"
+    android:background="@drawable/bus_edit"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorNaranja"
+        android:id="@+id/toplayout"
+        android:orientation="vertical"
+        >
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>

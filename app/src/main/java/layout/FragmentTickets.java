@@ -86,9 +86,6 @@ public class FragmentTickets extends Fragment {
             final View rootView =inflater.inflate(R.layout.fragment_tickets, container, false);
 
 
-
-       // AppBarLayout appBarLayout=(AppBarLayout) getActivity().findViewById(R.id.barlayout);
-        //appBarLayout.setVisibility(View.GONE);
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
 
@@ -110,6 +107,7 @@ public class FragmentTickets extends Fragment {
                 tx_pass.setText("");
             }
         });
+
 
         btn_ingresar= (Button) rootView.findViewById(R.id.btningresar);
         btn_ingresar.setOnClickListener(new View.OnClickListener(){

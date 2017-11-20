@@ -1,6 +1,7 @@
 package layout;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,7 +110,10 @@ int a;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     boolean loadingTop=false;
-
+    //ProgressBar progressBarMain;
+    ConstraintLayout constraintLayout;
+    boolean flag_enter=true;
+    //ProgressDialog progressDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -116,12 +122,12 @@ int a;
         toolbar.setVisibility(View.VISIBLE);
         final View rootView = inflater.inflate(R.layout.fragment_noticias, container, false);
         recList = (ListView) rootView.findViewById(R.id.l_frag_not);
-
-
+        //progressDialog=(ProgressDialog) rootView.findViewById(R.id.pbar_not);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout);
         textView2 =(TextView)rootView.findViewById(R.id.textView);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
-
+       // progressBarMain=(ProgressBar) getActivity().findViewById(R.id.pbar_main);
+        constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
 
         // LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         //llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -217,11 +223,6 @@ int a;
             }
         });
 
-
-
-
-
-
         recList.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int mLastFirstVisibleItem;
 
@@ -271,10 +272,25 @@ int a;
                     downFlag = false;
 
                    // Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
-                    if(GlobalVariables.noticias2.size()!=GlobalVariables.contNoticia) {
-
+                    if(GlobalVariables.noticias2.size()!=GlobalVariables.contNoticia&&flag_enter) {
+                        //progressBarMain.setVisibility(View.VISIBLE);
+                        flag_enter=false;
+                        constraintLayout.setVisibility(View.VISIBLE);
                         final noticiacontroller obj = new noticiacontroller(rootView, "url", "get", FragmentNoticias.this);
                         obj.execute(String.valueOf(GlobalVariables.contpublicNot), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+
+                        final Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (obj.getStatus() == AsyncTask.Status.FINISHED) {
+                                    constraintLayout.setVisibility(View.GONE);
+                                    flag_enter=true;
+                                } else {
+                                    h.postDelayed(this, 50);
+                                }
+                            }
+                        }, 250);
                     }
 
                 }

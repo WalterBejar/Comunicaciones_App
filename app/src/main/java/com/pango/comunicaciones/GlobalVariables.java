@@ -32,25 +32,25 @@ public class GlobalVariables {
     public static String url_token="membership/authenticate?username=antapaccay&password=Tintaya123.&domain=anyaccess";
 
 
-    public static String CodPersona;
-    public static String Nombres;
+    public static String CodPersona="";
+    public static String Nombres="";
 
     //VAR GLOBAL TICKET
     public static List<TicketModel> ListTickets = new ArrayList<>();
-    public static int contTickets;
+    public static int contTickets=0;
     public static int num_tickets=3;
 
     //var global de noticias
     public static List<Noticias> noticias2 = new ArrayList<>();
-    public static int contador;
+    public static int contador=0;
 
 
-    public static int contNoticia;
-    public static int contComunicado;
-    public static int contFotos;
-    public static int contVideos;
+    public static int contNoticia=0;
+    public static int contComunicado=0;
+    public static int contFotos=0;
+    public static int contVideos=0;
 
-    public static int cont_item;
+    public static int cont_item=0;
     public static Noticias not2pos;
     public static boolean doclic=false;
     public static List<NotDet> listdetnot = new ArrayList<>();
@@ -59,19 +59,19 @@ public class GlobalVariables {
     //var global comunicados
     public static List<Comunicado> comlist = new ArrayList<Comunicado>();
     public static Comunicado com_pos;
-    public static int pos_item_com;
+    public static int pos_item_com=0;
     public static List<ComDet> listdetcom = new ArrayList<>();
 
     //var global imagenes
-    public static int pos_item_img_det;
+    public static int pos_item_img_det=0;
     public static Imagen img_get;
     public static List<Imagen> imagen2 = new ArrayList<>();
     public static List<Img_Gal> listdetimg = new ArrayList<>();
-    public static String cod_public;
+    public static String cod_public="";
 
     //var global videos
     public static List<Video> vidlist = new ArrayList<>();
-    public static int pos_item_vid;
+    public static int pos_item_vid=0;
     public static Video vid_det;
 
     public static List<Vid_Gal> listdetvid = new ArrayList<>();
@@ -91,19 +91,19 @@ public class GlobalVariables {
 
 
     public static List<Notificacion> notific_data = new ArrayList<Notificacion>();
-    public static String cod_public_com;
+    //public static String cod_public_com="";
 
     public static int cont_alert=1;
 
 
-    public static int con_status;
+    public static int con_status=0;
     public static String dominio="anyaccess";
-    public static int anchoMovil;
+    public static int anchoMovil=0;
 
     public static int num_vid=3;
 
-    public static int contNotificA;
-    public static int contNotific;
+    public static int contNotificA=0;
+    public static int contNotific=0;
 
     public static int contpublic=1;
 
@@ -149,11 +149,11 @@ public class GlobalVariables {
 
     //public static  boolean sw_hd_video;
 
-    public static String cal_sd_hd;
+    public static String cal_sd_hd="";
 
     public static boolean flag_orienta=true;
 
-    public static int cont_pub_new;
+    public static int cont_pub_new=0;
 
     public static boolean flag_up_toast=false;
 
@@ -162,9 +162,10 @@ public class GlobalVariables {
 
 
     public static Stack<Fragment> fragmentStack= new Stack<Fragment>();
-    public static String id_phone;
+    public static String id_phone="Android@";
 
 
+    public static int con_status_video=0;
 
 
 }

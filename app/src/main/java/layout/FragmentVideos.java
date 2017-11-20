@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -110,6 +111,8 @@ public class FragmentVideos extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     boolean loadingTop=false;
+    ConstraintLayout constraintLayout;
+    boolean flag_enter=true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,6 +131,8 @@ public class FragmentVideos extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout4);
         textView2 =(TextView)rootView.findViewById(R.id.textView4);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+        constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
+
         /*List<Vid_Gal> dataf = new ArrayList<>();
         dataf.add(new Vid_Gal("0","Videos/2616.mp4", Utils.ChangeUrl("media/GetminFile/2616/550px;Maratón 10k 2017.jpg")));
 
@@ -253,10 +258,27 @@ public class FragmentVideos extends Fragment {
                 if (downFlag && scrollState == SCROLL_STATE_IDLE) {
                     downFlag = false;
                    // Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
-                    if(GlobalVariables.vidlist.size()!=GlobalVariables.contVideos) {
+                    if(GlobalVariables.vidlist.size()!=GlobalVariables.contVideos&&flag_enter) {
+                        constraintLayout.setVisibility(View.VISIBLE);
+                        flag_enter=false;
 
                         final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
                         obj.execute(String.valueOf(GlobalVariables.contpublicVid), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+
+                        final Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (obj.getStatus() == AsyncTask.Status.FINISHED) {
+                                    constraintLayout.setVisibility(View.GONE);
+                                    flag_enter=true;
+
+                                } else {
+                                    h.postDelayed(this, 50);
+                                }
+                            }
+                        }, 250);
+
                     }
 
                 }

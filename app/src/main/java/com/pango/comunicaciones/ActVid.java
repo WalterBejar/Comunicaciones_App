@@ -1,7 +1,9 @@
 package com.pango.comunicaciones;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.pango.comunicaciones.adapter.Adap_Vid;
+import com.pango.comunicaciones.controller.ValidUrlController;
 import com.pango.comunicaciones.controller.ViddetController;
 import com.pango.comunicaciones.model.Vid_Gal;
 
@@ -96,14 +99,39 @@ public class ActVid extends AppCompatActivity implements AdapterView.OnItemClick
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Vid_Gal item= (Vid_Gal) parent.getItemAtPosition(position);
-        Intent intent = new Intent(this, ActVidDet.class);
-        intent.putExtra("post",position);
-        intent.putExtra("isList",false);
-        //intent.putExtra("val",0);
-        //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
-        startActivity(intent);
+    public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
+
+
+        final ValidUrlController obj1 = new ValidUrlController("url","get");
+        obj1.execute(GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4)+ GlobalVariables.listdetvid.get(position).getUrl_vid());
+
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
+                    //constraintLayout.setVisibility(View.GONE);
+                    //flag_enter=true;
+                    Vid_Gal item= (Vid_Gal) parent.getItemAtPosition(position);
+                    Intent intent = new Intent(ActVid.this, ActVidDet.class);
+                    intent.putExtra("post",position);
+                    intent.putExtra("isList",false);
+                    //intent.putExtra("val",0);
+                    //intent.putExtra(ActVidDet.EXTRA_PARAM_ID, item.getId());
+                    startActivity(intent);
+
+                } else {
+                    h.postDelayed(this, 50);
+                }
+            }
+        }, 50);
+
+
+
+
+
+
+
     }
 
 

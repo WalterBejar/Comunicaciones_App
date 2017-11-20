@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ import com.pango.comunicaciones.ActComDetalle;
 import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.ComAdapter;
 import com.pango.comunicaciones.controller.ComController;
 import com.pango.comunicaciones.controller.ImgController;
@@ -103,6 +105,8 @@ public class FragmentComunicados extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     boolean loadingTop=false;
+    ConstraintLayout constraintLayout;
+    boolean flag_enter=true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,7 +123,7 @@ public class FragmentComunicados extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout2);
         textView2 =(TextView)rootView.findViewById(R.id.textView2);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
-
+        constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
 
 
         if(GlobalVariables.comlist.size()==0) {
@@ -235,10 +239,29 @@ public class FragmentComunicados extends Fragment {
                     downFlag = false;
                   //  Toast.makeText(rootView.getContext(),"ACEPTO DOWNFLAG",Toast.LENGTH_SHORT).show();
 
-                    if(GlobalVariables.comlist.size()!=GlobalVariables.contComunicado) {
+                    if(GlobalVariables.comlist.size()!=GlobalVariables.contComunicado&&flag_enter) {
+                        constraintLayout.setVisibility(View.VISIBLE);
+                        flag_enter=false;
 
                         final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
                         obj.execute(String.valueOf(GlobalVariables.contpublicCom), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+
+                        final Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (obj.getStatus() == AsyncTask.Status.FINISHED) {
+                                    constraintLayout.setVisibility(View.GONE);
+                                    flag_enter=true;
+
+                                } else {
+                                    h.postDelayed(this, 50);
+                                }
+                            }
+                        }, 250);
+
+
+
                     }
 
                 }

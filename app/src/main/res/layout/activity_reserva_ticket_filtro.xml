@@ -220,7 +220,6 @@
         android:textAlignment="viewStart"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/listaTickets"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="@+id/constraintLayout"
         app:layout_constraintRight_toLeftOf="@+id/textView7"
@@ -239,7 +238,6 @@
         android:text="FECHA\nHORA"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/listaTickets"
         app:layout_constraintRight_toLeftOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
@@ -265,7 +263,6 @@
         android:layout_marginBottom="5dp"
         android:layout_marginEnd="8dp"
         android:tint="@android:color/holo_red_light"
-        app:layout_constraintBottom_toTopOf="@+id/listaTickets"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_local_offer_black_24dp"

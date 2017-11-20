@@ -6,21 +6,24 @@
     android:id="@+id/mainlayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ReservaTicketFiltro"
+    tools:context="layout.FragmentTickets"
     android:background="@drawable/bus_edit"
     >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
         android:layout_alignParentTop="true"
+        android:background="@color/colorNaranja"
+        android:orientation="vertical"
         android:id="@+id/toplayout">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/img_prueba_bus" />
+            android:src="@drawable/img_prueba_bus2" />
+
     </LinearLayout>
 
 
@@ -53,15 +56,19 @@
 
 
             <ImageView
-                android:layout_width="358dp"
-                android:layout_height="70dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/anta_login"
+                android:src="@drawable/anta_login2"
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                tools:layout_editor_absoluteX="0dp" />
+                app:layout_constraintVertical_bias="0.0"
+
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent" />
 
 
             <android.support.design.widget.TextInputLayout

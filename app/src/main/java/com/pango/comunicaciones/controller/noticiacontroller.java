@@ -6,10 +6,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.GlobalVariables;
+import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.NoticiaAdapter;
@@ -53,9 +55,15 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     int value_loadingTop;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
-
+    MainActivity mainActivity;
     //int celda = 3;
+    ProgressBar progressBar;
 
+    /*public noticiacontroller(ProgressDialog progress, MainActivity act) {
+        this.progress = progress;
+        this.act = act;
+    }
+    */
     public noticiacontroller(View v,String url,String opcion, FragmentNoticias Frag){
         this.v=v;
         this.url=url;
@@ -64,6 +72,7 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
         recList=(ListView) v.findViewById(R.id.l_frag_not);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout);
         textView2 =(TextView)v.findViewById(R.id.textView);
+        progressBar=(ProgressBar) v.findViewById(R.id.pbar_not);
         //recList.setOnScrollListener(this);
 
     }
@@ -162,9 +171,18 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
             GlobalVariables.flag_up_toast=false;
             //progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
             //}
-        }else{
+        }else if(GlobalVariables.noticias2.size()<GlobalVariables.num_vid){
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            progressBar.setVisibility(View.VISIBLE);
+
+            //progressDialog.setVisibility(View.GONE);
+            //progressDialog = ProgressDialog.show(v.getContext(),"","Cargando ...");
+           /* progressDialog = new ProgressDialog(v.getContext());
+            //pDialog.setMessage("Buffering...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+*/
         }
     }
     @Override
@@ -209,8 +227,8 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                 }*/
                // GlobalVariables.noticias2.size();
                 GlobalVariables.contpublicNot += 1;
-                progressDialog.dismiss();
-
+               // progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
             /*}else{
                     progressDialog.dismiss();
 
@@ -220,12 +238,15 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
 
                 //  GlobalVariables.noticias2.get(0);
             }else if(GlobalVariables.con_status!=200){
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
                 int y=GlobalVariables.con_status;
 
                 Toast.makeText(v.getContext(),"Error en el servidor"+"("+y+")",Toast.LENGTH_SHORT).show();
             }else {
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
 
                 Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
             }

@@ -51,6 +51,7 @@ public class contadorController extends AsyncTask<String,Void,Void> {
         //recList.setOnScrollListener(this);
 
     }
+
     @Override
     protected Void doInBackground(String... params) {
         //red= GlobalVariables.isOnlineNet();

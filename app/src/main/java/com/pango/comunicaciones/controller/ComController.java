@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class ComController extends AsyncTask<String,Void,Void> {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     Boolean loadingTop;
+    ProgressBar progressBar;
 
     public ComController(View v,String url,String opcion, FragmentComunicados Frag){
         this.v=v;
@@ -61,6 +63,8 @@ public class ComController extends AsyncTask<String,Void,Void> {
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout2);
         textView2 =(TextView)v.findViewById(R.id.textView2);
         //recList.setOnScrollListener(this);
+        progressBar=(ProgressBar) v.findViewById(R.id.pbar_com);
+
     }
     @Override
     protected Void doInBackground(String... params) {
@@ -155,9 +159,11 @@ public class ComController extends AsyncTask<String,Void,Void> {
                 Toast.makeText(v.getContext(),"Actualizando, por favor espere...",Toast.LENGTH_SHORT).show();
                 GlobalVariables.flag_up_toast=false;
         //}
-        }else{
+        }else if(GlobalVariables.comlist.size()<GlobalVariables.num_vid){
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            progressBar.setVisibility(View.VISIBLE);
+
+            //progressDialog = ProgressDialog.show(v.getContext(), "", "Cargando publicaciones...");
         }
     }
     @Override
@@ -186,13 +192,18 @@ public class ComController extends AsyncTask<String,Void,Void> {
                 }
 
                 GlobalVariables.contpublicCom+=1;
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
 
             }else  if(GlobalVariables.con_status!=200){
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
                 Toast.makeText(v.getContext(),"Error en el servidor",Toast.LENGTH_SHORT).show();
             }else {
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
 
                 Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
             }

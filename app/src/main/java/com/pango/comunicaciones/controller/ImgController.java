@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
     int value_loadingTop;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
+    ProgressBar progressBar;
 
     public ImgController(View v, String url, String opcion, FragmentImagenes Frag) {
         this.v = v;
@@ -61,6 +63,8 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout3);
         textView2 =(TextView)v.findViewById(R.id.textView3);
         //recList.setOnScrollListener(this);
+        progressBar=(ProgressBar) v.findViewById(R.id.pbar_img);
+
     }
 
     @Override
@@ -175,9 +179,11 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
             GlobalVariables.flag_up_toast=false;
                 //progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
            // }
-        }else{
+        }else if(GlobalVariables.imagen2.size()<GlobalVariables.num_vid){
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            progressBar.setVisibility(View.VISIBLE);
+
+            //progressDialog = ProgressDialog.show(v.getContext(), "", "Cargando publicaciones...");
         }
     }
 
@@ -209,8 +215,9 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
 
 
                 GlobalVariables.contpublicImg+=1;
-                    progressDialog.dismiss();
+                    //progressDialog.dismiss();
 
+                progressBar.setVisibility(View.GONE);
 
 
                /* }}else{
@@ -222,12 +229,15 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                 //GlobalVariables.imagen2 = imagenList;
                 //  GlobalVariables.noticias2.get(0);
             }else if(GlobalVariables.con_status!=200) {
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
                 int y=GlobalVariables.con_status;
                 Toast.makeText(v.getContext(),"Error en el servidor"+"("+y+")",Toast.LENGTH_SHORT).show();
 
             }else {
-                progressDialog.dismiss();
+               // progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
 
                 Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
             }

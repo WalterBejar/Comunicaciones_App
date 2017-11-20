@@ -11,6 +11,12 @@ import com.pango.comunicaciones.model.PasajeroModel;
 import com.pango.comunicaciones.model.PersonaPostReservaModel;
 import com.pango.comunicaciones.model.TicketModel;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -197,5 +203,25 @@ public class Utils {
             GlobalVariables.fragmentStack.push(fragment);
         }
     }
+
+
+
+    public static int verificarUrl(String url){
+        //HttpResponse response;
+        int con_status=0;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet get = new HttpGet(url);
+        try {
+            con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return con_status;
+    }
+
+
+
 
 }

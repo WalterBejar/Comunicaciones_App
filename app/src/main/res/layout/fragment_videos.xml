@@ -78,6 +78,19 @@
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="8dp">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/pbar_vid"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
@@ -102,20 +115,26 @@
         tools:text="Actualizando Registros Espere...."
         />
 
-    <ListView
-        android:id="@+id/recycler_vid"
-        android:layout_width="365dp"
-        android:layout_height="522dp"
-        android:dividerHeight="5dp"
-        android:background="@android:color/transparent"
-        android:focusable="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
+        <ListView
+            android:id="@+id/recycler_vid"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="8dp"
 
-/>
+            android:layout_marginTop="-1dp"
+            android:background="@android:color/transparent"
+            android:dividerHeight="5dp"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     </android.support.constraint.ConstraintLayout>
-
+        </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.constraint.ConstraintLayout>
 

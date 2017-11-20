@@ -1,12 +1,16 @@
 package com.pango.comunicaciones;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -21,7 +25,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.pango.comunicaciones.controller.ValidUrlController;
 
 import java.io.IOException;
 
@@ -39,7 +46,7 @@ public class ActVidDet extends AppCompatActivity implements SurfaceHolder.Callba
     private SurfaceHolder surfaceHolder;
     private MediaController mediaController;
     private Handler handler = new Handler();
-    protected PowerManager.WakeLock wakelock;
+    public PowerManager.WakeLock wakelock;
     //private static final String video= "https://app.antapaccay.com.pe/Proportal/SCOM_Service/Videos/2616_SD.mp4";
     public ProgressDialog pDialog;
     private SeekBar seekbar;
@@ -74,47 +81,91 @@ public class ActVidDet extends AppCompatActivity implements SurfaceHolder.Callba
             video = GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4) + GlobalVariables.listdetvid.get(position).getUrl_vid().replace(".",GlobalVariables.cal_sd_hd);
         }
 
+       /* final ValidUrlController obj1 = new ValidUrlController(ActVidDet.this,"url","get");
+        obj1.execute(video);
+*/
 
-
-
-
-        surfaceView= (VideoView) findViewById(R.id.surfaceView);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
-        surfaceView.setOnTouchListener(new View.OnTouchListener() {
+        /*final Handler h = new Handler();
+        h.postDelayed(new Runnable() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(mediaController != null){
-                    mediaController.show();
+            public void run() {
+                if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
+
+
+
+                } else {
+                    h.postDelayed(this, 50);
                 }
-                return false;
             }
-        });
+        }, 250);*/
 
-        top= (ConstraintLayout) findViewById(R.id.padingtop);
-        button= (ConstraintLayout) findViewById(R.id.padingbutton);
-
-        pDialog = new ProgressDialog(ActVidDet.this);
-        pDialog.setMessage("Buffering...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(true);
-        pDialog.show();
-
-        final PowerManager pm=(PowerManager)getSystemService(getBaseContext().POWER_SERVICE);
-        this.wakelock=pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "etiqueta");
-        surfaceView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(mediaController != null){
-                    mediaController.show();
-                }
-                return false;
+if(GlobalVariables.con_status_video==200) {
+    surfaceView = (VideoView) findViewById(R.id.surfaceView);
+    surfaceHolder = surfaceView.getHolder();
+    surfaceHolder.addCallback(this);
+    surfaceView.setOnTouchListener(new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (mediaController != null) {
+                mediaController.show();
             }
-        });
+            return false;
+        }
+    });
 
+
+    top = (ConstraintLayout) findViewById(R.id.padingtop);
+    button = (ConstraintLayout) findViewById(R.id.padingbutton);
+
+    pDialog = new ProgressDialog(ActVidDet.this);
+    pDialog.setMessage("Buffering...");
+    pDialog.setIndeterminate(false);
+    pDialog.setCancelable(true);
+    pDialog.show();
+
+    final PowerManager pm = (PowerManager) getSystemService(getBaseContext().POWER_SERVICE);
+    this.wakelock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "etiqueta");
+    surfaceView.setOnTouchListener(new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (mediaController != null) {
+                mediaController.show();
+            }
+            return false;
+        }
+    });
+
+
+}else{
+    AlertDialog alertDialog = new AlertDialog.Builder(ActVidDet.this).create();
+    alertDialog.setCancelable(false);
+    alertDialog.setTitle("Error en la Reproducción");
+    alertDialog.setMessage("El video no se encuentra disponible");
+    alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Aceptar", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            finish();
+            //startActivity(getIntent());
+        }
+    });
+
+                /*alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cerrar Aplicación", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        //startActivity(getIntent());
+                    }
+                });*/
+
+    alertDialog.show();
+}
 
 
     }
+
+    //////////////////////////////////////////////77
+
+
+
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig)
@@ -235,7 +286,13 @@ public class ActVidDet extends AppCompatActivity implements SurfaceHolder.Callba
         return dominio_user;
     }
 
-
+    public void releaseMediaPlayer(){
+        if(mediaPlayer!= null)
+        {
+            mediaPlayer.release();
+            mediaPlayer=null;
+        }
+    }
 
     @Override
     public void start() {
