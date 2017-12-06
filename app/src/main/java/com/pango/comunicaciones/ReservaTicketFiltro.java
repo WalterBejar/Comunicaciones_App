@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -80,14 +81,26 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     boolean upFlag;
     boolean downFlag;
 
+    ImageView user_buses;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_filtro);
-        setTitle("Reserva de Buses");
+        //setTitle("Reserva de Buses");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus1);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus1);
+        //setSupportActionBar(toolbar);
+        user_buses = (ImageView) findViewById(R.id.usuario_buses);
+        user_buses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReservaTicketFiltro.this, Datos_Usuario.class);
+                startActivity(intent);
+
+
+            }
+        });
+        //////////////////////////////////////
         destinoEscogido="-";
         origenEscogido="-";
         botonBuscarTickets = (Button) findViewById(R.id.botonBuscarTickets);
@@ -320,10 +333,15 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             super.onPostExecute(str);
             switch (str) {
                 case "401":
-                    Intent myIntent = new Intent(ReservaTicketFiltro.this, MainActivity.class);
+                   /* Intent myIntent = new Intent(ReservaTicketFiltro.this, MainActivity.class);
                     myIntent.putExtra("respuesta", true); //Optional parameters
                     ReservaTicketFiltro.this.startActivity(myIntent);
+                    finish();*/
+
+                    startActivity(new Intent(ReservaTicketFiltro.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
+
                     break;
                 case "307":
                     Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();
@@ -552,4 +570,8 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             return convertView;
         }
     }
+
+
+
+
 }

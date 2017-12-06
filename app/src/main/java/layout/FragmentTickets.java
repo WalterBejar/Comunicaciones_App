@@ -1,9 +1,12 @@
 package layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
@@ -11,11 +14,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Recuperar_password;
+import com.pango.comunicaciones.ReservaTicketFiltro;
 import com.pango.comunicaciones.controller.AuthController;
 
 /**
@@ -76,8 +84,8 @@ public class FragmentTickets extends Fragment {
     EditText tx_pass;
     ImageButton btn_borrarUser;
     ImageButton btn_borrarPass;
-
-
+    CheckBox check_rec;
+    TextView tx_rec_pass;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,9 +96,11 @@ public class FragmentTickets extends Fragment {
 
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
+        check_rec=(CheckBox) rootView.findViewById(R.id.checkBox);
 
         tx_user=(EditText) rootView.findViewById(R.id.usuario);
         tx_pass=(EditText) rootView.findViewById(R.id.password);
+        tx_rec_pass=(TextView) rootView.findViewById(R.id.tx_rec_pass);
 
         btn_borrarUser = (ImageButton) rootView.findViewById(R.id.btn_deleteUser);
         btn_borrarPass = (ImageButton) rootView.findViewById(R.id.btn_deletePass);
@@ -108,27 +118,91 @@ public class FragmentTickets extends Fragment {
             }
         });
 
+        //obtener_status();
+      if(obtener_status()){
+            check_rec.setChecked(true);
+            String usuario_saved=obtener_usuario();
+            String pass_saved=obtener_pass();
+            tx_user.setText(usuario_saved);
+            tx_pass.setText(pass_saved);
+
+        }
+
 
         btn_ingresar= (Button) rootView.findViewById(R.id.btningresar);
         btn_ingresar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                String a=tx_user.getText().toString();
-                String b=tx_pass.getText().toString();
+                final String a=tx_user.getText().toString();
+                final String b=tx_pass.getText().toString();
+                tx_pass.setText("");
+                if(!check_rec.isChecked()){
+                    tx_user.setText("");
+                }
                 String c=Recuperar_data();//MODIFICA ESTO
                         //Recuperar_data();
                 if(c.equals("")){
             Toast.makeText(v.getContext(),"El valor de login de dominio no existe, ve a configuraciones para añadirlo",Toast.LENGTH_SHORT).show();
 
-            }else {
+            }else  if(a.isEmpty()||b.isEmpty()){
+                    Toast.makeText(v.getContext(),"Los campos de usuario y contraseña no pueden estar vacios",Toast.LENGTH_SHORT).show();
 
+                }else if(b.length()<5||b.length()>20){
+
+                    Toast.makeText(v.getContext(),"La contraseña debe tener entre 5 a 20 caracteres",Toast.LENGTH_SHORT).show();
+
+                }else {
 
                 // Toast.makeText(v.getContext(),"logueo",Toast.LENGTH_SHORT).show();
-
                     //descomentar esto
+
+
+
                 final AuthController obj = new AuthController(rootView, "url", "get", FragmentTickets.this);
                 obj.execute(a, b, c);
+
+
+                    final Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (obj.getStatus() == AsyncTask.Status.FINISHED) {
+
+                                if(GlobalVariables.con_status==200){
+                                    if(check_rec.isChecked()){
+                                        //guardar estado del check, user pass
+                                        Save_status(true);
+                                        Save_Datalogin(a,b);
+
+                                    }else
+                                    {
+
+                                        Save_status(false);
+                                        Save_Datalogin("","");
+
+                                        //guarde el estado false ""en todos los campos
+                                    }
+                                }else{
+                                    tx_user.setText("");
+                                    tx_pass.setText("");
+                                    check_rec.setChecked(false);
+                                }
+
+                            } else {
+                                h.postDelayed(this, 50);
+                            }
+
+
+                        }
+                    }, 50);
+
+
+
+
+
+
+
 
 
             }
@@ -137,6 +211,25 @@ public class FragmentTickets extends Fragment {
           //      startActivity(intent);
 
             }});
+
+
+
+       // check_rec.isChecked();
+
+            //check_rec.setChecked(true);
+
+
+        tx_rec_pass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(rootView.getContext(), Recuperar_password.class);
+                rootView.getContext().startActivity(intent);
+
+            }
+        });
+
+
 
 
 
@@ -156,6 +249,46 @@ public class FragmentTickets extends Fragment {
         return dominio_user;
     }
 
+
+
+    public void Save_status(boolean ischecked){
+        SharedPreferences check_status = this.getActivity().getSharedPreferences("checked", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor_estado = check_status.edit();
+        editor_estado.putBoolean("check", ischecked);
+        editor_estado.commit();
+    }
+
+
+    public void Save_Datalogin(String user,String password){
+
+            SharedPreferences user_login = this.getActivity().getSharedPreferences("usuario", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor_user = user_login.edit();
+            editor_user.putString("user", user);
+            editor_user.putString("password",password);
+            editor_user.commit();
+    }
+
+
+    public boolean obtener_status(){
+        SharedPreferences check_status = this.getActivity().getSharedPreferences("checked", Context.MODE_PRIVATE);
+        Boolean status = check_status.getBoolean("check",false);
+
+        return status;
+    }
+
+    public String obtener_usuario(){
+        SharedPreferences user_login = this.getActivity().getSharedPreferences("usuario", Context.MODE_PRIVATE);
+        String usuario = user_login.getString("user","");
+
+        return usuario;
+    }
+
+    public String obtener_pass(){
+        SharedPreferences user_login = this.getActivity().getSharedPreferences("usuario", Context.MODE_PRIVATE);
+        String password = user_login.getString("password","");
+
+        return password;
+    }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
     // TODO: Rename method, update argument and hook method into UI event

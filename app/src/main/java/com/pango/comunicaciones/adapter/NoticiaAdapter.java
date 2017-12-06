@@ -2,6 +2,7 @@ package com.pango.comunicaciones.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.pango.comunicaciones.ActImgNot;
 import com.pango.comunicaciones.GlobalVariables;
+import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.model.Noticias;
@@ -67,14 +69,24 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
         icono.setImageResource(R.drawable.ic_noticia3);
         //nNom_publicador.setText(tempNombre);
         //nFecha.setText(tempFecha);
+        Typeface face=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaThn.ttf");
 
         try {
+            nFecha.setTypeface(face);
             nFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+
+        Typeface face1=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaMed.ttf");
+        nTitulo.setTypeface(face1);
         nTitulo.setText(tempTitulo);
+
+
+
+
+        nDescripcion.setTypeface(face);
         nDescripcion.setText(tempDescripcion);
 
 

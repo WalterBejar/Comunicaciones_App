@@ -222,9 +222,13 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
 
             switch (str) {
                 case "401":
-                    Intent myIntent = new Intent(ReservaTicketListaPasajeros.this, MainActivity.class);
+                    /*Intent myIntent = new Intent(ReservaTicketListaPasajeros.this, MainActivity.class);
                     myIntent.putExtra("respuesta", true); //Optional parameters
                     ReservaTicketListaPasajeros.this.startActivity(myIntent);
+                    finish();*/
+
+                    startActivity(new Intent(ReservaTicketListaPasajeros.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
                     break;
                 case "307":
@@ -380,6 +384,11 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
 
             TextView pasajeroNombre = (TextView) convertView.findViewById(R.id.lblPasajeroNombre);
             pasajeroNombre.setText(nombreCompleto);
+            String BackgrColor= "#FFFFFF";
+            if(listaCheckBoxPasajeros[position]) {
+                BackgrColor= "#D6EAF8";
+            }
+            convertView.setBackgroundColor(Color.parseColor(BackgrColor));
 
             TextView pasajeroEmpresa = (TextView) convertView.findViewById(R.id.lblPasajeroEmpresa);
             int colorInicial=0;
@@ -412,11 +421,6 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
 
             final View finalConvertView = convertView;
             final int finalColorInicial = colorInicial;
-            String BackgrColor= "#FFFFFF";
-            if(listaCheckBoxPasajeros[position]) {
-                BackgrColor= "#D6EAF8";
-            }
-            convertView.setBackgroundColor(Color.parseColor(BackgrColor));
 
             pasajeroCheckEliminar.setOnClickListener(new View.OnClickListener() {
                 @Override

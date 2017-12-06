@@ -44,6 +44,8 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
     String CodPersona;
     String Nombres;
+
+    String usuario,email;
     ArrayList<Integer> Roles= new ArrayList<Integer>();
 
    // ArrayList<String> dataUser=new ArrayList<String>();
@@ -70,24 +72,26 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
             generarToken(a,b,c);
 
-            if(opcion=="get"){
+            if(opcion=="get"&&GlobalVariables.token_auth.length()>40){
                 try {
 
                     if(GlobalVariables.con_status==200){
 
-
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+"persona/Get_Usuario"+GlobalVariables.id_phone);
+                    HttpGet get = new HttpGet(GlobalVariables.Urlbase+"persona/Get_Usuario/"+GlobalVariables.id_phone);
                     get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     response = httpClient.execute(get);
                     String respstring = EntityUtils.toString(response.getEntity());
 
                     JSONObject respJSON = new JSONObject(respstring);
-                        GlobalVariables.con_status=httpClient.execute(get).getStatusLine().getStatusCode();
+                        GlobalVariables.con_status=response.getStatusLine().getStatusCode();
                         if(GlobalVariables.con_status ==200)
                         {
                             CodPersona=respJSON.getString("DNI");
                             Nombres=respJSON.getString("Nombres");
+
+                            usuario=respJSON.getString("CodUsuario");
+                            email=respJSON.getString("Email");
 
                             JSONArray Data2 = respJSON.getJSONArray("Roles");
                             for (int j = 0; j < Data2.length(); j++) {
@@ -99,6 +103,9 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
                     }else{
                         st=-1;
+                        //response=Utils.token;
+
+
                     }
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
@@ -132,7 +139,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
     @Override
     protected  void onPostExecute(Void result){
         try {
-            if (opcion == "get") {
+            if (opcion == "get"&&GlobalVariables.token_auth.length()>40) {
 
                 if(st<0){
                     if(GlobalVariables.con_status==0)
@@ -142,7 +149,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
                 }
                 else if(st== 0){
-                    Toast.makeText(v.getContext(),GlobalVariables.con_status+" Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(),"("+GlobalVariables.con_status+")"+" Ocurrio un error interno en el servidor",Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                 }
                 else{
@@ -150,6 +157,8 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
                     Utils.codPersona=CodPersona;
                     Utils.nombres=Nombres;
+                    Utils.usuario=usuario;
+                    Utils.email=email;
 
                     Utils.esAdmin=false;
                     for (int k=0;k<Roles.size();k++){
@@ -166,6 +175,10 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
                 }
 
+            }
+            else {
+                progressDialog.dismiss();
+                Toast.makeText(v.getContext(),GlobalVariables.token_auth,Toast.LENGTH_SHORT).show();
             }
         }catch (Exception ex){
             Log.w("Error",ex);
@@ -185,7 +198,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
             get.setHeader("Content-type", "application/json");
             response = httpClient.execute(get);
             String respstring2 = EntityUtils.toString(response.getEntity());
-            GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+            GlobalVariables.con_status = response.getStatusLine().getStatusCode();
             if(respstring2.equals(""))
                 {
                     GlobalVariables.token_auth=null;

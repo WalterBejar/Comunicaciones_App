@@ -88,9 +88,10 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg+"/"+GlobalVariables.id_phone);//url de cada publicacion
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     get.setHeader("Content-type", "application/json");
-                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    response = httpClient.execute(get);
+
+                    GlobalVariables.con_status = response.getStatusLine().getStatusCode();
                     if(GlobalVariables.con_status==200) {
-                        response = httpClient.execute(get);
 
                         String respstring = EntityUtils.toString(response.getEntity());
                         JSONObject respJSON = new JSONObject(respstring);
@@ -200,6 +201,9 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                 WebSettings settings=content.getSettings();
                 settings.setJavaScriptEnabled(true);
 
+               // content.getSettings().setBuiltInZoomControls(true);
+                //content.getSettings().setDisplayZoomControls(false);
+
                 //content.getSettings().setBuiltInZoomControls(true);
 
                 /*if(des_data.size()==0||count_files==0){
@@ -231,6 +235,19 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
     }
 
 
+
+
+    private class MyWebViewClient extends WebViewClient {
+        public boolean shouldOverrideUrlLoading(WebView view, String url){
+            view.loadUrl(url);
+            return true;
+
+        }
+    }
+
+
+
+/*
     private class MyWebViewClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url){
 
@@ -248,7 +265,7 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
 
         }
     }
-
+*/
 
 
 }

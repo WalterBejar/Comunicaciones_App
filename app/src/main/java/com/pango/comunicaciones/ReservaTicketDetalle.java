@@ -63,6 +63,7 @@ public class ReservaTicketDetalle extends AppCompatActivity {
         progressDialog.setTitle("Conectándose al servidor");
         progressDialog.setMessage("Por favor, espere...");
         progressDialog.setCancelable(false);
+
         builder = new AlertDialog.Builder(this);
         builder.setTitle("¿Desea continuar?");
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
@@ -201,10 +202,17 @@ public class ReservaTicketDetalle extends AppCompatActivity {
 
             switch (str) {
                 case "401":
-                    Intent myIntent = new Intent(ReservaTicketDetalle.this, MainActivity.class);
+                    /*Intent myIntent = new Intent(ReservaTicketDetalle.this, MainActivity.class);
                     myIntent.putExtra("respuesta", true); //Optional parameters
                     ReservaTicketDetalle.this.startActivity(myIntent);
+                    finish();*/
+
+                    startActivity(new Intent(ReservaTicketDetalle.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
+
+
+
                     break;
                 case "307":
                     Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();

@@ -28,7 +28,7 @@ public class ActComDes extends AppCompatActivity {
         setContentView(R.layout.act_com_des);
 
         com_listdes=(ListView) findViewById(R.id.com_list_des);
-        setTitle("Adjuntos");
+        //setTitle("Adjuntos");
 
         DesComAdap ca = new DesComAdap(getApplicationContext(), GlobalVariables.listdetcom);
         com_listdes.setAdapter(ca);
@@ -80,7 +80,7 @@ public class ActComDes extends AppCompatActivity {
         if (toolbar == null) return;
 
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
 

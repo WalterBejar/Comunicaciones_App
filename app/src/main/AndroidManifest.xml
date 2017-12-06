@@ -13,9 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logofinal"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".SplashScreenActivity"
             android:label="@string/app_name"
@@ -27,106 +25,135 @@
             </intent-filter>
         </activity>
 
+        <!-- firebase service -->
 
+        <service android:name=".firebase.MiFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".firebase.MiFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
-        <!-- firebase service-->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_logofinal" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorBlanco" />
+        <!-- /////////////////////////////////////////////////////////////////////////////// -->
 
-              <service android:name=".firebase.MiFirebaseMessagingService">
-                  <intent-filter>
-                      <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                  </intent-filter>
-              </service>
-              <service android:name=".firebase.MiFirebaseInstanceIdService">
-                  <intent-filter>
-                      <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-                  </intent-filter>
-              </service>
-
-              <meta-data
-                  android:name="com.google.firebase.messaging.default_notification_icon"
-                  android:resource="@mipmap/ic_logofinal"
-                  />
-              <meta-data
-                  android:name="com.google.firebase.messaging.default_notification_color"
-                  android:resource="@color/colorBlanco"
-                  />
-        <!--     ///////////////////////////////////////////////////////////////////////////////    -->
-
-
-
-
-
-        <activity android:name=".ReservaTicketFiltro"
+        <activity
+            android:name=".ReservaTicketFiltro"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".ReservaTicketDetalle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReservaTicketDetalle"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity android:name=".ReservaTicketListaPasajeros"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReservaTicketListaPasajeros"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <!--<activity android:name=".ReservaTicketBuscarPasajeros"></activity>-->
-        <!-- <activity android:name=".ReservaTicketDetalle"></activity>-->
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- <activity android:name=".ReservaTicketBuscarPasajeros"></activity> -->
+        <!-- <activity android:name=".ReservaTicketDetalle"></activity> -->
 
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ReservaTicketBuscarPasajeros"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActImagDet"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ActImag"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name=".ActVid"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+
+            />
         <activity
             android:name=".ActVidDet"
-
             android:configChanges="orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".ActImgNot"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            />
+        <activity
+            android:name=".ActImgNot"
+            android:theme="@style/AppTheme.NoActionBar"
+
             />
         <activity
             android:name=".ActNotDes"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+
+            />
         <activity
             android:name=".ActNotDetalle"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+
+
         <activity
             android:name=".ActComDetalle"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
+            >
+            <intent-filter>
+                <action android:name="ACT_COM_DET" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+
+
         <activity
             android:name=".ActComDes"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".ActSwipeImg"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar"
 
-            ></activity>
+
+
+            />
+        <activity
+            android:name=".ActSwipeImg"
+            android:theme="@style/AppTheme.NoActionBar"
+
+
+            />
+        <activity
+            android:name=".CambiarPassword"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            />
+        <activity
+            android:name=".Datos_Usuario"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+
+            />
+        <activity
+            android:name=".Recuperar_password"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
-</manifest>
-
-<!--  landscape -->
+</manifest> <!-- landscape -->

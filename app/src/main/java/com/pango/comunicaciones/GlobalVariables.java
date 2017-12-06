@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
+import android.util.Patterns;
 
 import com.pango.comunicaciones.model.ComDet;
 import com.pango.comunicaciones.model.Comunicado;
@@ -19,6 +20,7 @@ import com.pango.comunicaciones.model.Video;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 /**
  * Created by Andre on 25/09/2017.
@@ -167,5 +169,15 @@ public class GlobalVariables {
 
     public static int con_status_video=0;
 
+    public static boolean flag_changed=false;
+
+
+    public static boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
+    }
+
+
+    public static boolean is_notification=true;
 
 }

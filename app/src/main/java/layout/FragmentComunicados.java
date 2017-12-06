@@ -149,6 +149,8 @@ public class FragmentComunicados extends Fragment {
 
 
                 //se conecta a un activity//
+
+                GlobalVariables.is_notification=false;
                 Intent intent = new Intent(getActivity(), ActComDetalle.class);
 
                 intent.putExtra("titulo",titulo);

@@ -2,6 +2,7 @@ package com.pango.comunicaciones.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -89,14 +90,18 @@ public class VidAdapter extends ArrayAdapter<Video> {
 //        icono.setImageResource(R.drawable.ic_video_final);
         //vNom_publicador.setText(tempNombre);
         //vFecha.setText(tempFecha);
+        Typeface face=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaThn.ttf");
 
         try {
+            vFecha.setTypeface(face);
             vFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
 
         }
 
+        Typeface face1=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaMed.ttf");
+        vTitulo.setTypeface(face1);
         vTitulo.setText(tempTitulo);
         // vcant_vid.setText(tempcant_vid+"");
 

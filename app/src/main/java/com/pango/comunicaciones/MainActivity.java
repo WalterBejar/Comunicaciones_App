@@ -2,6 +2,7 @@ package com.pango.comunicaciones;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     Toolbar toolbar;
 
+
+
+
     @Override
     public void onFragmentInteraction(Uri uri) {
     }
@@ -94,7 +98,12 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //toolbar.setNavigationIcon(R.mipmap.ic_logotitulo);
-        toolbar.setLogo(R.drawable.imagen1234);
+        getSupportActionBar().setTitle("");
+
+        toolbar.setLogo(R.drawable.imagen12345);
+
+
+
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
         GlobalVariables.id_phone= "Android@"+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
         //fragmentManager = getSupportFragmentManager();
@@ -132,13 +141,22 @@ public class MainActivity extends AppCompatActivity
         disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        ChangeFragment(NavigationFragment.Inicio);
+        uncheckItemsMenu();
+        bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
+        bottomNavigationView.setVisibility(View.GONE);
+
+        getSupportActionBar().setTitle("");
+
         // ponemos el contenido inicial
-        Bundle extras = getIntent().getExtras();
+    /*    Bundle extras = getIntent().getExtras();
         if(extras.getBoolean("respuesta")){
             ChangeFragment(NavigationFragment.Tickets);
             bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
             bottomNavigationView.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(),"Tu sesión ha expirado ...",Toast.LENGTH_SHORT).show();
+
+
         }
         else {
             ChangeFragment(NavigationFragment.Inicio);
@@ -147,8 +165,8 @@ public class MainActivity extends AppCompatActivity
             bottomNavigationView.setVisibility(View.GONE);
 
             getSupportActionBar().setTitle("");
-        }
-
+        }*/
+/*************************ver arriba***************************/
         if(GlobalVariables.flag_notificacion==true){
             //Intent
             Intent intent = new Intent(this, ActComDetalle.class);
@@ -170,12 +188,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        MenuItem homeItem=bottomNavigationView.getMenu().getItem(0);
+       /* MenuItem homeItem=bottomNavigationView.getMenu().getItem(0);
         MenuItem noticiaItem = bottomNavigationView.getMenu().getItem(1);
         MenuItem comItem = bottomNavigationView.getMenu().getItem(2);
         MenuItem imagenItem = bottomNavigationView.getMenu().getItem(3);
         MenuItem videoItem = bottomNavigationView.getMenu().getItem(4);
-
+*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 

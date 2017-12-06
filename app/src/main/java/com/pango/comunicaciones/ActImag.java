@@ -118,6 +118,7 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_flecha_retroceder);
+        getSupportActionBar().setTitle("");
 
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
     }

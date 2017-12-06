@@ -17,8 +17,11 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.GlobalVariables;
+import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.SplashScreenActivity;
+
+import java.util.Stack;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -163,8 +166,18 @@ public class FragmentConfiguracion extends Fragment {
                 getActivity().finish();
                 GlobalVariables.cont_alert=1;////////////////////////////
 
+                    GlobalVariables.fragmentStack=new Stack<Fragment>();
                 Intent intent = new Intent(getActivity(), SplashScreenActivity.class);
                 startActivity(intent);
+                 //   getActivity().finish();
+
+
+                 /*   startActivity(new Intent(getActivity(), SplashScreenActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                    getActivity().finish();
+*/
+
+
                 }else{
                     Toast.makeText(getActivity(), "la url es incorrecta", Toast.LENGTH_SHORT).show();
 
@@ -269,8 +282,6 @@ public class FragmentConfiguracion extends Fragment {
         editor3.commit();
 
     }
-
-
 
 
 

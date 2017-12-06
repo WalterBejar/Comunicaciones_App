@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.controller.DataController;
@@ -27,7 +29,7 @@ import java.util.TimerTask;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private static final long SPLASH_SCREEN_DELAY = 800;
-
+    TextView text_logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,15 @@ public class SplashScreenActivity extends AppCompatActivity {
         ConnectivityManager cmanager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo info= cmanager.getActiveNetworkInfo();
       // Boolean red= GlobalVariables.isOnlineNet();
+        text_logo=(TextView) findViewById(R.id.text_logo);
+
+
+
+        Typeface face1=Typeface.createFromAsset(getAssets(),"fonts/HelveticaIt.ttf");
+        text_logo.setTypeface(face1);
+        text_logo.setText("Antapaccay móvil");
+
+
 
         if(info!=null&&info.isConnected()){
             if (info.getType() == ConnectivityManager.TYPE_WIFI||info.getType()==ConnectivityManager.TYPE_MOBILE) {
@@ -62,7 +73,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             // Start the next activity
                             Intent mainIntent = new Intent().setClass(
                                     SplashScreenActivity.this, MainActivity.class);
-                            mainIntent.putExtra("respuesta", false); //Optional parameters
+                           // mainIntent.putExtra("respuesta", false); //Optional parameters
                             startActivity(mainIntent);
                             finish();
                         //}
@@ -82,6 +93,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             }
         }else {
+
             //Toast.makeText(SplashScreenActivity.this, "Not connected",Toast.LENGTH_LONG).show();
 
 

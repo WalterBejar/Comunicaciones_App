@@ -38,6 +38,9 @@ public class MiFirebaseMessagingService extends FirebaseMessagingService {
             Log.d("notificacion", remoteMessage.getData().toString());
             Log.d("notificacion", remoteMessage.getData().get("codigo"));
 
+            //getOfferDetails(id_offer);
+
+
             Log.d(TAG, "NOTIFICACION RECIBIDA");
 
             Log.d(TAG, "Título: " + titulo);

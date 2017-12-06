@@ -27,7 +27,7 @@ public class ActImagDet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_imag_det);
-        setTitle("Fotos");
+        //setTitle("Fotos");
 
         Bundle datos = this.getIntent().getExtras();
         positionIn=datos.getInt("post");

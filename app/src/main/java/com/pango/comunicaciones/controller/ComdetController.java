@@ -83,19 +83,22 @@ Button btn_adjuntos;
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg+"/"+GlobalVariables.id_phone);//url de cada publicacion
                     //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
 
-                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    response = httpClient.execute(get);
+
+                    GlobalVariables.con_status = response.getStatusLine().getStatusCode();
 
 
                     if(GlobalVariables.con_status==200) {
-
-                    response = httpClient.execute(get);
 
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     //notdetArray.add(R.drawable.ic_menu_noticias);
                    // comdetArray.add(respJSON.getString("Autor"));
-                        if(fecha.equals("")&&titulo.equals("")){
+                    /*    if(fecha.equals("")&&titulo.equals("")){
+
                             comdetArray.add(respJSON.getString("Fecha"));
+                            //comdetArray.add(fecha);
+
                             comdetArray.add(respJSON.getString("Autor"));
                         }else {
 
@@ -103,7 +106,10 @@ Button btn_adjuntos;
                             comdetArray.add(fecha);
                             comdetArray.add(titulo);
                         }
+*/
 
+                        comdetArray.add(fecha);
+                        comdetArray.add(titulo);
                     comdetArray.add(respJSON.getString("Descripcion"));
 
 
@@ -186,7 +192,21 @@ Button btn_adjuntos;
                 //tx2.setText(comdetArray.get(1));
 
                 try {
-                    tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(0))));
+
+                  /*  if(GlobalVariables.is_notification) {
+                        tx2.setText(comdetArray.get(0));
+                    }else{*/
+
+                        //tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(0))));
+                    if (!GlobalVariables.is_notification){
+                        tx2.setText(formatoRender.format(formatoInicial.parse(comdetArray.get(0))));
+                    }else{
+                        tx2.setText(comdetArray.get(0));
+                    }
+                   // }
+
+
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -206,6 +226,9 @@ Button btn_adjuntos;
                 WebSettings settings=content.getSettings();
                 settings.setJavaScriptEnabled(true);
 
+                content.getSettings().setBuiltInZoomControls(true);
+                content.getSettings().setDisplayZoomControls(false);
+
 
                 if(des_data.size()==0||count_files==0){
                     btn_adjuntos.setVisibility(View.GONE);
@@ -214,13 +237,16 @@ Button btn_adjuntos;
                     btn_adjuntos.setVisibility(View.VISIBLE);
                 }
 
+/*                content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(actComDetalle,"Error en el servidor",Toast.LENGTH_SHORT).show();
 
+                    }
+                });
+*/
                 progressDialog.dismiss();
-                /*Not2Adapter ca = new Not2Adapter(v.getContext(),noticiaList);
-                recList.setAdapter(ca);
-                progressDialog.dismiss();
-                GlobalVariables.noticias2=noticiaList;*/
-                //  GlobalVariables.noticias2.get(0);
+
 
             }else {
                 progressDialog.dismiss();
@@ -228,7 +254,12 @@ Button btn_adjuntos;
             }
         }catch (Exception ex){
             Log.w("Error",ex);
+            GlobalVariables.is_notification=true;
+
         }
+        GlobalVariables.is_notification=true;
+
+
     }
 
 

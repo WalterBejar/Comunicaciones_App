@@ -2,6 +2,7 @@ package com.pango.comunicaciones.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,12 +81,20 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
         //iNom_publicador.setText(tempNombre);
        //iFecha.setText(tempFecha);
+        Typeface face=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaThn.ttf");
+
         try {
+            iFecha.setTypeface(face);
             iFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
+        Typeface face1=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaMed.ttf");
+        iTitulo.setTypeface(face1);
         iTitulo.setText(tempTitulo);
+
         icant_img.setText("+"+tempcant);
 
 
@@ -259,7 +268,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
 
-                String adfhh=GlobalVariables.Urlbase +img2.get(2).replaceAll("\\s","%20");
+               // String adfhh=GlobalVariables.Urlbase +img2.get(2).replaceAll("\\s","%20");
                 //Intent intent=new Intent(v.getContext(), ActImgNot.class);
                 Intent intent=new Intent(v.getContext(), ActSwipeImg.class);
                 intent.putExtra("post",2);

@@ -22,44 +22,55 @@
         />
 
 
+
+        <LinearLayout
+            android:id="@+id/linear_lay"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:id="@+id/btn_retroceder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_flecha_retroceder"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="18dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/imagen12345"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp" />
+
+        </LinearLayout>
+
+
+
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/com_cardet"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        tools:context=".MainActivity"
-        tools:layout_editor_absoluteY="100dp"
-        tools:layout_editor_absoluteX="8dp">
-
-    </ScrollView>
-
-
-    <Button
+        <Button
         android:id="@+id/btn_adjuntos"
         android:layout_width="388dp"
         android:layout_height="wrap_content"
         android:background="@color/colorBtnPlomo"
         android:text="Ver Adjuntos"
-        android:visibility="invisible"
-
+        android:visibility="gone"
         tools:layout_editor_absoluteX="-2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="-1dp" />
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="464dp"
+            android:layout_height="match_parent"
             android:layout_margin="0dp"
             android:background="@color/cardview_light_background"
             tools:layout_editor_absoluteX="0dp"
@@ -73,7 +84,7 @@
                 android:layout_alignLeft="@+id/comdet_titulo"
                 android:layout_alignStart="@+id/comdet_titulo"
                 android:layout_below="@+id/comdet_titulo"
-                android:text="fecha"
+                tools:text="fecha"
                 android:textColor="@color/cardview_shadow_start_color" />
 
             <TextView
@@ -96,16 +107,15 @@
             <WebView
                 android:id="@+id/com_visor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignLeft="@+id/comdet_titulo"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/comdet_fecha"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="3sp" />
-
 
 
 

@@ -2,6 +2,7 @@ package com.pango.comunicaciones.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +69,21 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         //icono.setImageResource(R.drawable.ic_evento);
         //cNom_publicador.setText(tempNombre);
         //cFecha.setText(tempFecha);
+        Typeface face=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaThn.ttf");
 
         try {
+            cFecha.setTypeface(face);
             cFecha.setText(formatoRender.format(formatoInicial.parse(tempFecha)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        Typeface face1=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaMed.ttf");
+        cTitulo.setTypeface(face1);
         cTitulo.setText(tempTitulo);
+
+
+        cDescripcion.setTypeface(face);
         cDescripcion.setText(tempDescripcion);
 
         int ds=data.get(position).getUrlmin().length();

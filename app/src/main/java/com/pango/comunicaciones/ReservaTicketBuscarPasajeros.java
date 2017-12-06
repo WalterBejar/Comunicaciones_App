@@ -325,10 +325,17 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
             super.onPostExecute(str);
             switch (str) {
                 case "401":
-                    Intent myIntent = new Intent(ReservaTicketBuscarPasajeros.this, MainActivity.class);
+                    /*Intent myIntent = new Intent(ReservaTicketBuscarPasajeros.this, MainActivity.class);
                     myIntent.putExtra("respuesta", true); //Optional parameters
                     ReservaTicketBuscarPasajeros.this.startActivity(myIntent);
+                    finish();*/
+
+                    startActivity(new Intent(ReservaTicketBuscarPasajeros.this, MainActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
+
+
+
                     break;
                 case "307":
                     Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();

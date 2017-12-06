@@ -35,12 +35,12 @@
             android:layout_below="@+id/rel_vid"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="14sp"
-            android:textStyle="normal|bold"
+            android:lineSpacingExtra="8sp"
             android:text="hbhuyyuyuvytfytvgjhbj"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp"
 
-            />
+            android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/txfechavid"
@@ -49,9 +49,9 @@
             android:layout_alignLeft="@+id/titulo_video"
             android:layout_alignStart="@+id/titulo_video"
             android:layout_below="@+id/titulo_video"
-            android:textSize="12sp"
             android:text="obilubilublib"
-            />
+            android:textColor="@color/background_footer"
+            android:textSize="14sp" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -39,6 +39,10 @@ public class Utils {
     public static String nombres = "Quille Sucasaca, Alexander";
     public static String codPersona = "0000079580";
 
+    public static String usuario="";
+    public static String email="";
+
+
     static String getUrlForReservaTicketsLogin(String username, String password) {
         return baseUrl + "/membership/authenticate?username=" + username + "&password=" + password + "&domain=" + Utils.loginDominio;
     }

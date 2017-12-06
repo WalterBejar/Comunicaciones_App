@@ -40,30 +40,30 @@
             />
 
 
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/cardview_dark_background"
             android:id="@+id/titulo_noticia"
-            tools:text="Titulo"
-            android:textSize="14sp"
-            android:textStyle="normal|bold"
-            android:layout_below="@+id/frameimg"
-            android:layout_toRightOf="@+id/icon_inicio"
-            android:layout_toEndOf="@+id/icon_inicio" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/titulo_noticia"
+            android:layout_below="@+id/frameimg"
+            android:layout_toEndOf="@+id/icon_inicio"
+            android:layout_toRightOf="@+id/icon_inicio"
+            android:lineSpacingExtra="8sp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp"
+            android:textStyle="normal|bold"
+            tools:text="Titulo" />
+
+        <TextView
+            android:id="@+id/txfecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/titulo_noticia"
             android:layout_alignStart="@+id/titulo_noticia"
-            android:id="@+id/txfecha"
-            android:textSize="12sp"
-            tools:text="Fecha"
+            android:layout_below="@+id/titulo_noticia"
+            android:textColor="@color/background_footer"
+            android:textSize="14sp"
 
-            />
+            tools:text="Fecha" />
 
 
 
@@ -85,21 +85,22 @@
 </FrameLayout>
 
         <TextView
+            android:id="@+id/txdesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txdesc"
-            android:layout_below="@+id/txfecha"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:lineSpacingExtra="2sp"
-            tools:text="descripcion"
-            android:layout_marginTop="5dp"
             android:layout_alignLeft="@+id/frameimg"
             android:layout_alignStart="@+id/frameimg"
+            android:layout_below="@+id/txfecha"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="6sp"
+            android:maxLines="5"
+            android:textAlignment="viewStart"
 
-            android:textSize="14sp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="15sp"
             android:textStyle="normal"
-             />
+            tools:text="descripcion" />
 
     </RelativeLayout>
 

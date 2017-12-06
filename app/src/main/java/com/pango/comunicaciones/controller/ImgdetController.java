@@ -93,10 +93,11 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"entrada/Getentrada/"+codreg+"/"+GlobalVariables.id_phone);//url de cada publicacion
                   //  get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
-                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    response = httpClient.execute(get);
+
+                    GlobalVariables.con_status = response.getStatusLine().getStatusCode();
                     if(GlobalVariables.con_status==200) {
 
-                        response = httpClient.execute(get);
 
                         String respstring = EntityUtils.toString(response.getEntity());
                         JSONObject respJSON = new JSONObject(respstring);

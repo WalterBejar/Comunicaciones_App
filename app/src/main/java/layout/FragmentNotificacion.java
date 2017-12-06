@@ -109,6 +109,7 @@ public class FragmentNotificacion extends Fragment {
                 String titulo=GlobalVariables.notific_data.get(position).getTitulo();
                 String fecha=GlobalVariables.notific_data.get(position).getFecha();
 
+                GlobalVariables.is_notification=false;
                 Intent intent = new Intent(getActivity(), ActComDetalle.class);
                 intent.putExtra("titulo",titulo);
                 intent.putExtra("fecha",fecha);

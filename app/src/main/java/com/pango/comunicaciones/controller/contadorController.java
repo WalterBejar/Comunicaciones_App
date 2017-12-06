@@ -65,10 +65,11 @@ public class contadorController extends AsyncTask<String,Void,Void> {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+GlobalVariables.Urlbase2+1+"/"+0+tipo_public);
                     get.setHeader("Content-type", "application/json");
-                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    response = httpClient.execute(get);
+
+                    GlobalVariables.con_status = response.getStatusLine().getStatusCode();
                     if(GlobalVariables.con_status==200) {
 
-                        response = httpClient.execute(get);
                         String respstring = EntityUtils.toString(response.getEntity());
 
                         JSONObject respJSON = new JSONObject(respstring);

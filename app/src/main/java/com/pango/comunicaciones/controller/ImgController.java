@@ -86,12 +86,13 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
 
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase + "entrada/getpaginated/" + a + "/" + b + "/TP03/"+GlobalVariables.id_phone);
                     get.setHeader("Content-type", "application/json");
-                    GlobalVariables.con_status = httpClient.execute(get).getStatusLine().getStatusCode();
+                    response = httpClient.execute(get);
+
+                    GlobalVariables.con_status = response.getStatusLine().getStatusCode();
                     //GlobalVariables.con_status =404;
                     if(GlobalVariables.con_status==200){
 
                     // get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
-                    response = httpClient.execute(get);
                     String respstring = EntityUtils.toString(response.getEntity());
                     JSONObject respJSON = new JSONObject(respstring);
                     JSONArray image = respJSON.getJSONArray("Data");

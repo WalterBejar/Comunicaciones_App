@@ -12,8 +12,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="margen_lat">20dp</string>
 
-    <item name="visible" type="id"/>
-    <item name="masked" type="id"/>
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
 
 </resources>
 
