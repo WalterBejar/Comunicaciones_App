@@ -118,7 +118,7 @@ public class GlobalVariables {
 
 
 
-    public static boolean isScrolling;
+    //public static boolean isScrolling;
 
 
    /* public static Boolean isOnlineNet() {
@@ -136,11 +136,11 @@ public class GlobalVariables {
     }*/
 
 
-    public static boolean isOnline(Context context) {
+   /* public static boolean isOnline(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
-    }
+    }*/
 
 
     public static boolean flagcom=true;

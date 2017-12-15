@@ -125,8 +125,9 @@ public class FragmentTickets extends Fragment {
             String pass_saved=obtener_pass();
             tx_user.setText(usuario_saved);
             tx_pass.setText(pass_saved);
-
         }
+
+
 
 
         btn_ingresar= (Button) rootView.findViewById(R.id.btningresar);
@@ -156,8 +157,6 @@ public class FragmentTickets extends Fragment {
 
                 // Toast.makeText(v.getContext(),"logueo",Toast.LENGTH_SHORT).show();
                     //descomentar esto
-
-
 
                 final AuthController obj = new AuthController(rootView, "url", "get", FragmentTickets.this);
                 obj.execute(a, b, c);
@@ -196,14 +195,6 @@ public class FragmentTickets extends Fragment {
 
                         }
                     }, 50);
-
-
-
-
-
-
-
-
 
             }
             //probar
@@ -248,6 +239,8 @@ public class FragmentTickets extends Fragment {
         //Toast.makeText(this.getActivity(),dominio_user, Toast.LENGTH_SHORT).show();
         return dominio_user;
     }
+
+
 
 
 

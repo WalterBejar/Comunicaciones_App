@@ -40,8 +40,8 @@ import layout.FragmentComunicados;
 public class ComController extends AsyncTask<String,Void,Void> {
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     FragmentComunicados Frag;
     ProgressDialog progressDialog;
     Comunicado comunicado;
@@ -123,12 +123,13 @@ public class ComController extends AsyncTask<String,Void,Void> {
 
                             String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
-                            comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+                            //comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
                             GlobalVariables.comlist.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
 
                             //}
                         }
                     }
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
                     cargaData=false;

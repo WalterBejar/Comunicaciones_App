@@ -40,13 +40,13 @@ import java.util.List;
 public class ListImgNotController extends AsyncTask<String,Void,Void> {
 
     //View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     ActImgNot actImgNot;
     TouchImageView imagenExtendida;
     ViewPager viewPager;
     ViewPagerAdapter adapter;
-    String posIn;
+    String posIn="";
 
 
     ProgressDialog progressDialog;
@@ -125,8 +125,10 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
                     }
 
                     // des_data
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
         }

@@ -32,28 +32,20 @@ import layout.FragmentTickets;
 
 public class AuthController extends AsyncTask<String,Void,Void> {
     View v;
-    int st;
-    String url;
-    String opcion;
+    int st=0;
+    String url="";
+    String opcion="";
     //cambiar a fragmenttickets
     FragmentTickets Frag;
-    String Resultado="";
-    String CodRegistro;
     ProgressDialog progressDialog;
-    Noticias noticia2;
 
-    String CodPersona;
-    String Nombres;
+    String CodPersona="";
+    String Nombres="";
 
-    String usuario,email;
+    String usuario="";
+    String email="";
     ArrayList<Integer> Roles= new ArrayList<Integer>();
 
-   // ArrayList<String> dataUser=new ArrayList<String>();
-   // List<User_Auth> user_auth=new ArrayList<User_Auth>();
-    //ListView recList;
-  //  int a;
-   // int celda = 3;
-//cambiar a fragmenttickets
     public AuthController(View v, String url, String opcion, FragmentTickets Frag){
         this.v=v;
         this.url=url;
@@ -75,16 +67,20 @@ public class AuthController extends AsyncTask<String,Void,Void> {
             if(opcion=="get"&&GlobalVariables.token_auth.length()>40){
                 try {
 
+
                     if(GlobalVariables.con_status==200){
 
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+"persona/Get_Usuario/"+GlobalVariables.id_phone);
                     get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
+
                     response = httpClient.execute(get);
+
                     String respstring = EntityUtils.toString(response.getEntity());
 
                     JSONObject respJSON = new JSONObject(respstring);
                         GlobalVariables.con_status=response.getStatusLine().getStatusCode();
+
                         if(GlobalVariables.con_status ==200)
                         {
                             CodPersona=respJSON.getString("DNI");
@@ -107,8 +103,10 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
 
                     }
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
 
@@ -132,7 +130,7 @@ public class AuthController extends AsyncTask<String,Void,Void> {
     protected void onPreExecute() {
         if(opcion=="get") {
             //super.onPreExecute();
-            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Iniciando sesion");
+            progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Iniciando sesión");
         }
 
     }

@@ -42,8 +42,8 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
     int count_files=0;
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     ActNotDetalle actNotDet;
     ProgressDialog progressDialog;
     ArrayList<String> notdetArray=new ArrayList<String>();
@@ -127,8 +127,10 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                         }
                     }
                    // des_data
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
         }

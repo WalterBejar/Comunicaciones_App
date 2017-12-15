@@ -1,5 +1,7 @@
 package com.pango.comunicaciones.controller;
 
+import android.util.Log;
+
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.Utils;
 
@@ -40,9 +42,8 @@ public class getToken {
 
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (Throwable e) {
+            Log.d("InputStream", e.getLocalizedMessage());        }
 
     }}
 

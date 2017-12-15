@@ -37,9 +37,8 @@ import layout.FragmentTickets;
 public class ResPassController extends AsyncTask<String,Void,Void> {
 
     View v;
-    int st;
-    String email;
-    String opcion;
+    String email="";
+    String opcion="";
     Recuperar_password recuperar_password;
     String Resultado="";
     boolean cargaData=true;

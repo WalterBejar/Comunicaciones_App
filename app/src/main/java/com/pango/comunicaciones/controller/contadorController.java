@@ -80,11 +80,14 @@ public class contadorController extends AsyncTask<String,Void,Void> {
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
                     cargaData=false;
+
                 }
             }
             //}
         }
         catch (Throwable e) {
+
+
             Log.d("InputStream", e.getLocalizedMessage());
         }
         return null;

@@ -41,18 +41,16 @@ import layout.FragmentNoticias;
 public class noticiacontroller extends AsyncTask<String,Void,Void> {
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     FragmentNoticias Frag;
     ProgressDialog progressDialog;
-    Noticias noticia2;
     List<Noticias> noticiaList=new ArrayList<Noticias>();
     ListView recList;
-    int a;
-    boolean red;
+    int a=0;
     boolean cargaData=true;
     Boolean loadingTop;
-    int value_loadingTop;
+
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     MainActivity mainActivity;
@@ -79,7 +77,6 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
     @Override
     protected Void doInBackground(String... params) {
         //red= GlobalVariables.isOnlineNet();
-        red=false;
             try {
             HttpResponse response;
             String a=params[0];
@@ -138,15 +135,17 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
 
                             String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
-                            noticiaList.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+                            //noticiaList.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
                             GlobalVariables.noticias2.add(new Noticias(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
 
                             //}
                         }
                     }
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
                     cargaData=false;
+
                 }
             }
             //}

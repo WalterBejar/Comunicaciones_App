@@ -26,8 +26,8 @@ import org.json.JSONObject;
 public class ValidUrlController extends AsyncTask<String,Void,Void> {
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     //FragmentNoticias Frag;
     ProgressDialog progressDialog;
     //Noticias noticia2;
@@ -36,7 +36,7 @@ public class ValidUrlController extends AsyncTask<String,Void,Void> {
     int a;
     boolean cargaData=true;
     //int celda = 3;
-    String Url_Video;
+    String Url_Video="";
     ActVidDet actVidDet;
 
     public ValidUrlController(String url,String opcion){

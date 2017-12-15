@@ -42,8 +42,8 @@ public class ComdetController extends AsyncTask<String,Void,Void> {
     int count_files;
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     ActComDetalle actComDetalle;
     ProgressDialog progressDialog;
     ArrayList<String> comdetArray=new ArrayList<String>();
@@ -142,6 +142,7 @@ Button btn_adjuntos;
 
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
         }

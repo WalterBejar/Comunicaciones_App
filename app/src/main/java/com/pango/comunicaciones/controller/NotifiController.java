@@ -31,11 +31,10 @@ import layout.FragmentNotificacion;
 public class NotifiController extends AsyncTask<String,Void,Void> {
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     FragmentNotificacion Frag;
     ProgressDialog progressDialog;
-    Notificacion notificacion;
     List<Notificacion> notificList=new ArrayList<Notificacion>();
     ListView list_alertas;
 
@@ -84,8 +83,10 @@ public class NotifiController extends AsyncTask<String,Void,Void> {
                         notificList.add(new Notificacion(CodRegistro, icon,Titulo,Fecha));
 
                         }
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
         }
@@ -108,6 +109,8 @@ public class NotifiController extends AsyncTask<String,Void,Void> {
         if(opcion=="get") {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(v.getContext(), "Loading", "Cargando publicaciones...");
+            progressDialog.setCancelable(true);
+
         }
     }
     @Override

@@ -183,10 +183,10 @@ public class VidAdapter extends ArrayAdapter<Video> {
                             }
 
                         } else {
-                            h.postDelayed(this, 50);
+                            h.postDelayed(this, 10);
                         }
                     }
-                }, 50);
+                }, 10);
 
 
 

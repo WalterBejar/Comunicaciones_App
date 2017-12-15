@@ -38,8 +38,8 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
 
 
     //View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     ActSwipeImg actSwipeImg;
     TouchImageView imagenExtendida;
     ViewPager viewPager;
@@ -58,8 +58,8 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
     private Adap_Img adaptador;
     //TextView tx4;
     //WebView content;
-    String posIn;
-    String posPub;
+    String posIn="";
+    String posPub="";
     // int a;
     // int celda = 3;
 
@@ -127,8 +127,10 @@ public class ListImgdetController extends AsyncTask<String,Void,Void> {
                     }
 
                     // des_data
+
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
         }

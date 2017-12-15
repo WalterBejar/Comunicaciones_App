@@ -37,19 +37,15 @@ import layout.FragmentImagenes;
 
 public class ImgController extends AsyncTask<String,Void,Void> /*implements   AbsListView.OnScrollListener*/ {
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     FragmentImagenes Frag;
     ProgressDialog progressDialog;
-    Imagen imagen;
     List<Imagen> imagenList = new ArrayList<Imagen>();
     ListView recListImag;
-    int a;
-    int celda = 3;
-    boolean red;
+    int a=0;
     boolean cargaData=true;
     Boolean loadingTop;
-    int value_loadingTop;
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     ProgressBar progressBar;
@@ -140,19 +136,18 @@ public class ImgController extends AsyncTask<String,Void,Void> /*implements   Ab
                                 dataf.add(Urlmin);*/
                             }
                             // dataf.get(0);
-                            imagenList.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
+                            //imagenList.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
                         GlobalVariables.imagen2.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
                        // }
                     }
 
                     }
 
-
-
                 } catch (Exception ex) {
                     Log.w("Error get\n", ex);
                     cargaData=false;
                     //Toast.makeText(,"Error en el servidor",Toast.LENGTH_SHORT).show();
+
                 }
             }//}
         } catch (Throwable e) {

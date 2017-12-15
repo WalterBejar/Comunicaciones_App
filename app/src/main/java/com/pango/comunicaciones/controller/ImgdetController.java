@@ -38,8 +38,8 @@ import java.util.Locale;
 public class ImgdetController extends AsyncTask<String,Void,Void>  {
 
     //View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     ActImag actImag;
 
     ProgressDialog progressDialog;
@@ -135,6 +135,7 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
                     // des_data
                 }catch (Exception ex){
                     Log.w("Error get\n",ex);
+
                 }
             }
         }
@@ -161,6 +162,8 @@ public class ImgdetController extends AsyncTask<String,Void,Void>  {
     }
     @Override
     protected  void onPostExecute(Void result){
+        //actImag.success();
+
         try {
             if (opcion == "get"&&GlobalVariables.con_status==200) {
                 DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");

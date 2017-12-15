@@ -78,7 +78,6 @@ public class FragmentConfiguracion extends Fragment {
     EditText url_base, dom;
     Button b_save;
     Context context;
-    Boolean sw_hd_video;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,7 +87,7 @@ public class FragmentConfiguracion extends Fragment {
         toolbar.setVisibility(View.VISIBLE);
 
         sw_sonido = (Switch) rootView.findViewById(R.id.switch_sonido);
-        Boolean switchState = sw_sonido.isChecked();
+        //Boolean switchState = sw_sonido.isChecked();
 
         sw_video = (Switch) rootView.findViewById(R.id.switch_video);
         sw_video.setChecked(obtener_estado());

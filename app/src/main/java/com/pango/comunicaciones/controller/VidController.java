@@ -41,14 +41,13 @@ import layout.FragmentVideos;
 public class VidController extends AsyncTask<String,Void,Void> {
 
     View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     FragmentVideos Frag;
     ProgressDialog progressDialog;
-    Video video;
     List<Video> videoList = new ArrayList<Video>();
     ListView recListVid;
-    int a;
+    int a=0;
     boolean cargaData=true;
 
     Boolean loadingTop;
@@ -137,14 +136,16 @@ public class VidController extends AsyncTask<String,Void,Void> {
 
                             }
                             //dataf.get(0);
-                            videoList.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf, CantidadV));
+                           // videoList.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf, CantidadV));
                             GlobalVariables.vidlist.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf, CantidadV));
                             // }
                         }
                     }
+
                 } catch (Exception ex) {
                     Log.w("Error get\n", ex);
                     cargaData=false;
+
                 }
             }
         } catch (Throwable e) {

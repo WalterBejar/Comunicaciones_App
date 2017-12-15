@@ -26,6 +26,10 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
     private Adap_Img adaptador;
     String titulo;
     String fecha;
+   /* public void success(){
+
+    }
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

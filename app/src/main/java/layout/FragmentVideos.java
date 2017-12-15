@@ -93,17 +93,7 @@ public class FragmentVideos extends Fragment {
 /////////////////////////////////////////////////////////////////////
     ListView recListVid;
     Context context;
-    int a;
-
-    Button btnVer;
-    int pag=1;
-    int celda=20;
-    int aum=3;
-    private int pageCount = 0;
-    private boolean isThereMore;
-    List<Imagen> limg;
-    Imagen imagen_t;
-    int in=3;
+   // int a;
     View rootView;
     boolean upFlag;
     boolean downFlag;
@@ -132,6 +122,7 @@ public class FragmentVideos extends Fragment {
         textView2 =(TextView)rootView.findViewById(R.id.textView4);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
         constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
+        constraintLayout.setVisibility(View.GONE);
 
         /*List<Vid_Gal> dataf = new ArrayList<>();
         dataf.add(new Vid_Gal("0","Videos/2616.mp4", Utils.ChangeUrl("media/GetminFile/2616/550px;Maratón 10k 2017.jpg")));
@@ -227,31 +218,6 @@ public class FragmentVideos extends Fragment {
                     upFlag = false;
                   //  Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setEnabled( true );
-
-
-                    /*
-                    final contadorController obj1 = new contadorController(rootView,"url","get");
-                    obj1.execute(String.valueOf(GlobalVariables.contVideos),"/TP04");
-                    final Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
-
-                                if(GlobalVariables.contVideos!=GlobalVariables.cont_pub_new){
-                                    GlobalVariables.vidlist.clear();
-                                    GlobalVariables.contpublicVid=2;
-                                    GlobalVariables.flagUpSc=true;
-                                    GlobalVariables.flag_up_toast=true;
-                                    final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
-                                    obj.execute(String.valueOf(1),String.valueOf(6));
-                                }
-                            } else {
-                                h.postDelayed(this, 50);
-                            }
-                        }
-                    }, 250);
-*/
 
 
                 }

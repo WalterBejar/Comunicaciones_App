@@ -1,4 +1,5 @@
 package com.pango.comunicaciones;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity
         FragmentConfiguracion.OnFragmentInteractionListener,
         FragmentContactenos.OnFragmentInteractionListener,
         FragmentRedesSociales.OnFragmentInteractionListener
-
 {
     //  private int mSelectedItem;
     //  private static final String SELECTED_ITEM = "arg_selected_item";
@@ -99,7 +100,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         //toolbar.setNavigationIcon(R.mipmap.ic_logotitulo);
         getSupportActionBar().setTitle("");
-
         toolbar.setLogo(R.drawable.imagen12345);
 
 
@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -188,31 +190,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-       /* MenuItem homeItem=bottomNavigationView.getMenu().getItem(0);
-        MenuItem noticiaItem = bottomNavigationView.getMenu().getItem(1);
-        MenuItem comItem = bottomNavigationView.getMenu().getItem(2);
-        MenuItem imagenItem = bottomNavigationView.getMenu().getItem(3);
-        MenuItem videoItem = bottomNavigationView.getMenu().getItem(4);
-*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    try {
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        /*} else  if (mSelectedItem == videoItem.getItemId()||mSelectedItem == imagenItem.getItemId()) {
 
-                bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-
-                //para variar la seleccion de items
-                MenuItem menuItem = bottomNavigationView.getMenu().getItem(0);
-                menuItem.setChecked(false);
-
-
-                mSelectedItem=homeItem.getItemId();
-
-                //setSelectedItemId (homeItem.getItemId());
-                onNavigationItemSelected(homeItem);
-*/
         }else if (GlobalVariables.fragmentStack.size() == 2) {
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -248,41 +232,15 @@ public class MainActivity extends AppCompatActivity
                 }, 3 * 1000);
 
             }
+
         }
 
 
-            /*{
-          //  super.onBackPressed();
-            if (exit) {
-                super.onBackPressed(); // finish activity
-            } else {
-                Toast.makeText(this, "Press Back again to Exit.",
-                        Toast.LENGTH_SHORT).show();
-                exit = true;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        exit = false;
-                    }
-                }, 3 * 1000);
-
-            }
-
-        }*/
+    }catch (Throwable e){
+        Log.d("error_frag", e.getLocalizedMessage());
+    }
 
 
-        /*
-                if (fragmentStack.size() == 2) {
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            fragmentStack.lastElement().onPause();
-            ft.remove(fragmentStack.pop());
-            fragmentStack.lastElement().onResume();
-            ft.show(fragmentStack.lastElement());
-            ft.commit();
-        } else {
-            super.onBackPressed();
-        }
-         */
 
 
 
@@ -407,7 +365,7 @@ public class MainActivity extends AppCompatActivity
 
     public void ClickMenuNoticias() {
         uncheckItemsMenu();
-        setTitle("Noticias");
+        //setTitle("Noticias");
         bottomNavigationView.getMenu().findItem(R.id.navigation_noticias).setChecked(true);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -418,7 +376,7 @@ public class MainActivity extends AppCompatActivity
     public void ClickMenuComunicados() {
 
         uncheckItemsMenu();
-        setTitle("Eventos");
+        //setTitle("Eventos");
 
         //bottomNavigationView.getMenu().findItem(R.id.navigation_publicaciones).setChecked(true);
        //  bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
@@ -430,7 +388,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void ClickMenuImagenes() {
         uncheckItemsMenu();
-        setTitle("Fotos");
+        //setTitle("Fotos");
 
         bottomNavigationView.getMenu().findItem(R.id.navigation_imagenes).setChecked(true);
         bottomNavigationView.setVisibility(View.VISIBLE);
@@ -441,7 +399,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void ClickMenuVideos() {
         uncheckItemsMenu();
-        setTitle("Videos");
+        //setTitle("Videos");
         bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -451,7 +409,7 @@ public class MainActivity extends AppCompatActivity
     //opciones menu lateral
     private void ClickMenuTickets() {
         uncheckItemsMenu();
-        setTitle("Reserva de Buses");
+        //setTitle("Reserva de Buses");
         bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -463,7 +421,7 @@ public class MainActivity extends AppCompatActivity
 
     private void ClickMenuNotificacion() {
         uncheckItemsMenu();
-        setTitle("Notificaciones");
+        //setTitle("Notificaciones");
         bottomNavigationView.setVisibility(View.VISIBLE);
         navigationView.getMenu().findItem(R.id.nav_notificaciones).setChecked(true);
         ChangeFragment(NavigationFragment.Notificacion);
@@ -472,7 +430,7 @@ public class MainActivity extends AppCompatActivity
 
     private void ClickMenuConfiguracion() {
         uncheckItemsMenu();
-        setTitle("Configuración");
+        //setTitle("Configuración");
         bottomNavigationView.setVisibility(View.VISIBLE);
         navigationView.getMenu().findItem(R.id.nav_configuracion).setChecked(true);
         ChangeFragment(NavigationFragment.Configuracion);
@@ -480,7 +438,7 @@ public class MainActivity extends AppCompatActivity
 
     private void ClickMenuContactenos() {
         uncheckItemsMenu();
-        setTitle("Contáctenos");
+        //setTitle("Contáctenos");
         bottomNavigationView.setVisibility(View.VISIBLE);
 
         navigationView.getMenu().findItem(R.id.nav_Contactenos).setChecked(true);
@@ -489,13 +447,14 @@ public class MainActivity extends AppCompatActivity
 
     private void ClickMenuRedesSociales() {
         uncheckItemsMenu();
-        setTitle("Redes Sociales");
+        //setTitle("Redes Sociales");
         bottomNavigationView.setVisibility(View.VISIBLE);
 
         navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
         ChangeFragment(NavigationFragment.RedesSociales);
     }
 
+    @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {

@@ -75,7 +75,7 @@ public class FragmentInicio2 extends Fragment {
     private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     CardView card1,card2,card3,card4,card5,card6;
-    MainActivity mainActivity;
+   // MainActivity mainActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,7 +109,7 @@ public class FragmentInicio2 extends Fragment {
         card1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Noticias");
+                //getActivity().setTitle("Noticias");
 
 
                 // Crea el nuevo fragmento y la transacción.
@@ -122,12 +122,6 @@ public class FragmentInicio2 extends Fragment {
                 //transaction.addToBackStack(null);
                 // Commit a la transacción
                 transaction.commit();
-
-
-
-
-
-
                 Utils.apilarFrag(nuevoFragmento);
                 navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(true);
                 bottomNavigationView.setVisibility(View.VISIBLE);
@@ -141,7 +135,7 @@ public class FragmentInicio2 extends Fragment {
         card2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Eventos");
+                //getActivity().setTitle("Eventos");
 
 
                 // Crea el nuevo fragmento y la transacción.
@@ -167,7 +161,7 @@ public class FragmentInicio2 extends Fragment {
         card3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Fotos");
+                //getActivity().setTitle("Fotos");
 
 
                 // Crea el nuevo fragmento y la transacción.
@@ -217,7 +211,7 @@ public class FragmentInicio2 extends Fragment {
         card5.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Videos");
+                //getActivity().setTitle("Videos");
 
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentVideos();
@@ -238,7 +232,7 @@ public class FragmentInicio2 extends Fragment {
         card6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getActivity().setTitle("Redes Sociales");
+                //getActivity().setTitle("Redes Sociales");
 
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentRedesSociales();
@@ -268,14 +262,14 @@ public class FragmentInicio2 extends Fragment {
         return view;
     }
 
-
+/*
     public  void disableItem(){
         navigationView.getMenu().findItem(R.id.nav_noticias).setChecked(false);
         navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(false);
         navigationView.getMenu().findItem(R.id.nav_videos).setChecked(false);
         navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(false);
     }
-
+*/
 
 
 

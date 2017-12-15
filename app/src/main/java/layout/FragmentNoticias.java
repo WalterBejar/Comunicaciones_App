@@ -142,54 +142,18 @@ int a;
         }
 
         recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("Click", "click en el elemento " + position + " de mi ListView");
-                GlobalVariables.not2pos= noticias2.get(position);//captura los datos en la posiscion que se hace clic y almacena en not2pos
-
-                GlobalVariables.doclic=true;
-
-                String titulo=noticias2.get(position).getTitulo();
-                String fecha=noticias2.get(position).getFecha();
-                //int icono=noticias2.get(position).getIcon();
-
-                //se conecta a un activity//
-                Intent intent = new Intent(getActivity(), ActNotDetalle.class);
-
-                intent.putExtra("titulo",titulo);
-                intent.putExtra("fecha",fecha);
-
-                startActivity(intent);
-            }
-        });
-
-
-
-        recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i("Click", "click en el elemento " + position + " de mi ListView");
                 GlobalVariables.not2pos= noticias2.get(position);//captura los datos en la posiscion que se hace clic y almacena en not2pos
-
                 GlobalVariables.doclic=true;
-
                 String titulo=noticias2.get(position).getTitulo();
                 String fecha=noticias2.get(position).getFecha();
-                //int icono=noticias2.get(position).getIcon();
-
-
-                // GlobalVariables.pos_item_img=position;
-                //se conecta a un activity//
                 Intent intent = new Intent(getActivity(), ActNotDetalle.class);
-
                 intent.putExtra("titulo",titulo);
                 intent.putExtra("fecha",fecha);
-
                 startActivity(intent);
-
-
-
             }
         });
 
@@ -236,36 +200,6 @@ int a;
                     upFlag = false;
                    // Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setEnabled( true );
-
-
-
-
-
-/*
-
-                    final contadorController obj1 = new contadorController(rootView,"url","get");
-                    obj1.execute(String.valueOf(GlobalVariables.contNoticia),"/TP01");
-                    final Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
-
-                                if(GlobalVariables.contNoticia!=GlobalVariables.cont_pub_new){
-                                    GlobalVariables.noticias2.clear();
-                                    GlobalVariables.contpublicNot=2;
-                                    GlobalVariables.flagUpSc=true;
-                                    GlobalVariables.flag_up_toast=true;
-                                    final noticiacontroller obj = new noticiacontroller(rootView,"url","get", FragmentNoticias.this);
-                                    obj.execute(String.valueOf(1),String.valueOf(6));
-                                }
-                            } else {
-                                h.postDelayed(this, 50);
-                            }
-                        }
-                    }, 250);
-
-*/
 
                 }
                 if (downFlag && scrollState == SCROLL_STATE_IDLE) {

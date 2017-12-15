@@ -44,13 +44,11 @@ import layout.FragmentTickets;
 public class PassController extends AsyncTask<String,Void,Void> {
 
     View v;
-    int st;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     //cambiar a fragmenttickets
     FragmentTickets Frag;
-    String Resultado="";
-    String CodRegistro;
+
     ProgressDialog progressDialog;
     CambiarPassword cambiarPassword;
     String respstring;

@@ -87,15 +87,10 @@ public class FragmentComunicados extends Fragment {
         }
     }
 /////////////////////////////////////////////////////////////
-    int a;
-    int pag=1;
-    int celda=20;
+    //int a=0;
     private int pageCount = 0;
     Context context;
 
-    private boolean isThereMore;
-    List<Comunicado> lcom;
-    Comunicado comunicado;
     ListView recListCom;
     int in=3;
     boolean upFlag;
@@ -107,6 +102,14 @@ public class FragmentComunicados extends Fragment {
     boolean loadingTop=false;
     ConstraintLayout constraintLayout;
     boolean flag_enter=true;
+
+
+/*
+    public  void success(){
+
+    }
+*/
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,6 +127,7 @@ public class FragmentComunicados extends Fragment {
         textView2 =(TextView)rootView.findViewById(R.id.textView2);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
         constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
+        constraintLayout.setVisibility(View.GONE);
 
 
         if(GlobalVariables.comlist.size()==0) {
@@ -208,34 +212,6 @@ public class FragmentComunicados extends Fragment {
                     upFlag = false;
                    // Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setEnabled( true );
-
-
-                  /*  final contadorController obj1 = new contadorController(rootView,"url","get");
-                    obj1.execute(String.valueOf(GlobalVariables.contComunicado),"/TP02");
-                    final Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (obj1.getStatus() == AsyncTask.Status.FINISHED) {
-
-                                if(GlobalVariables.contNoticia!=GlobalVariables.cont_pub_new){
-                                    GlobalVariables.comlist.clear();
-                                    GlobalVariables.contpublicCom=1;
-                                    GlobalVariables.flagcom=true;
-                                    GlobalVariables.flagUpSc=true;
-
-                                    GlobalVariables.flag_up_toast=true;
-                                    final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
-                                    obj.execute(String.valueOf(1),String.valueOf(6));
-                                }
-                            } else {
-                                h.postDelayed(this, 50);
-                            }
-                        }
-                    }, 250);*/
-
-
-
                 }
                 if (downFlag && scrollState == SCROLL_STATE_IDLE) {
                     downFlag = false;

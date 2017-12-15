@@ -40,8 +40,8 @@ import java.util.Locale;
 public class ViddetController extends AsyncTask<String,Void,Void> {
 
    // View v;
-    String url;
-    String opcion;
+    String url="";
+    String opcion="";
     ActVid actVid;
 
     ProgressDialog progressDialog;
