@@ -64,6 +64,10 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     String destinoEscogido;
     String fechaEscogida;
 
+    String origenEscogido2="-";
+    String destinoEscogido2="-";
+    String fechaEscogida2="-";
+
     ListView listaTickets;
     TextView textLoading;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -82,12 +86,22 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     boolean downFlag;
 
     ImageView user_buses;
+    ImageView user_contact;
+    TextView textView3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reserva_ticket_filtro);
         //setTitle("Reserva de Buses");
-
+        textView3=(TextView) findViewById(R.id.textView3);
+        textView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                botonEscogerFecha.setText("TODAS LAS FECHAS");
+                fechaEscogida="-";
+            }
+        });
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarbus1);
         //setSupportActionBar(toolbar);
         user_buses = (ImageView) findViewById(R.id.usuario_buses);
@@ -100,6 +114,18 @@ public class ReservaTicketFiltro extends AppCompatActivity {
 
             }
         });
+
+        user_contact = (ImageView) findViewById(R.id.usuario_contacto);
+        user_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReservaTicketFiltro.this, Contactar.class);
+                startActivity(intent);
+
+
+            }
+        });
+
         //////////////////////////////////////
         destinoEscogido="-";
         origenEscogido="-";
@@ -112,7 +138,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         progressDialog.setTitle("Conectándose al servidor");
         progressDialog.setMessage("Por favor, espere...");
         progressDialog.setCancelable(false);
-        cantidadTickets = 6;
+        cantidadTickets = 8;
         contTickets=0;
 
         buscar= true;
@@ -138,6 +164,9 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 escogioFecha = true;
                 dt = new SimpleDateFormat("yyyyMMdd");
                 fechaEscogida = dt.format(actual);
+
+
+
                 if (escogioOrigen && escogioDestino && escogioFecha)
                     botonBuscarTickets.setEnabled(true);
             }
@@ -153,22 +182,47 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         listaTickets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DateFormat formatoInicial = new SimpleDateFormat("yyyyMMdd'T'HH:mm:ss");
+                //Calendar c = Calendar.getInstance();
+                //Date a=c.getTime();
+
+                //
+
+                long timenow=new Date().getTime()+24*60*60*1000,timebus=0;
+
+
+                try {
+
+                    Date temp= formatoInicial.parse(tickets.get(position).FECHA+"T18:00:00");
+                    timebus=temp.getTime();
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
                 if (Utils.esAdmin){
                     Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketListaPasajeros.class);
                     toReservaTicketDetalle.putExtra("CodigoTicket", tickets.get(position).IDPROG);
                     startActivity(toReservaTicketDetalle);
                 }
-                else {
+                else if(timenow<=timebus){
+
                     Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketDetalle.class);
                     toReservaTicketDetalle.putExtra("CodigoTicket", tickets.get(position).IDPROG);
                     startActivity(toReservaTicketDetalle);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Reserva de bus no disponible",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
                 loadingTop=true;
@@ -234,7 +288,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
     public void setTerminal(){
 
         terminalesNombres= new ArrayList<>();
-        String[] terminal={"- SELECCIONE ORIGEN -", "AEROPUERTO AREQUIPA",                "AREQUIPA",                "AREQUIPA NORTE",                "CUSCO",                "TINTAYA"};
+        String[] terminal={"TODOS LOS ORÍGENES", "AEROPUERTO AREQUIPA",                "AREQUIPA",                "AREQUIPA NORTE",                "CUSCO",                "TINTAYA"};
         for(int i =0; i< terminal.length;i++)
             terminalesNombres.add(terminal[i]);
 
@@ -245,7 +299,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
 
 
         ArrayList<String> TerminalDestino = new ArrayList<String>();
-        TerminalDestino.add("- SELECCIONE DESTINO -");
+        TerminalDestino.add("TODOS LOS DESTINOS");
         for(int i =1; i< terminal.length;i++)
             TerminalDestino.add(terminal[i]);
 
@@ -287,6 +341,16 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         buscar=true;
         page2=1;
         showTotal=true;
+        if (!escogioDestino || destinoEscogido.contains("SELECCIONE"))
+            destinoEscogido = "-";
+        if (!escogioOrigen || origenEscogido.contains("SELECCIONE"))
+            origenEscogido = "-";
+        if (!escogioFecha)
+            fechaEscogida = "-";//Utils.getFechaHoy();
+        destinoEscogido2=destinoEscogido;
+        origenEscogido2=origenEscogido;
+        fechaEscogida2=fechaEscogida;
+
         new BuscarTickets().execute();
         swipeRefreshLayout.setEnabled( true );
     }
@@ -320,12 +384,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             super.onPreExecute();
             if(buscar) progressDialog.show();
             else if(!loadingTop)Toast.makeText(getApplicationContext(),"Cargando mas datos... Espere",Toast.LENGTH_SHORT).show();
-            if (!escogioDestino || destinoEscogido.contains("SELECCIONE"))
-                destinoEscogido = "-";
-            if (!escogioOrigen || origenEscogido.contains("SELECCIONE"))
-                origenEscogido = "-";
-            if (!escogioFecha)
-                fechaEscogida = "-";//Utils.getFechaHoy();
+
         }
 
         @Override
@@ -387,7 +446,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                 }
 
 
-                URL url = new URL(Utils.getUrlForBuscarTickets(origenEscogido, destinoEscogido, fechaEscogida,page, elementPager));
+                URL url = new URL(Utils.getUrlForBuscarTickets(origenEscogido2, destinoEscogido2, fechaEscogida2,page, elementPager));
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestProperty("Authorization", "Bearer " + Utils.token);
                 con.setRequestMethod("GET");

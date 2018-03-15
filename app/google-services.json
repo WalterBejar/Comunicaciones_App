@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "418234628761",
-    "firebase_url": "https://scom-d5be6.firebaseio.com",
-    "project_id": "scom-d5be6",
-    "storage_bucket": "scom-d5be6.appspot.com"
+    "project_number": "909468734508",
+    "firebase_url": "https://scom-13e6c.firebaseio.com",
+    "project_id": "scom-13e6c",
+    "storage_bucket": "scom-13e6c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:418234628761:android:a3f0de83b87efa7c",
+        "mobilesdk_app_id": "1:909468734508:android:670afdd7f1d2650c",
         "android_client_info": {
-          "package_name": "com.pango.comunicaciones"
+          "package_name": "com.pango.scom"
         }
       },
       "oauth_client": [
         {
-          "client_id": "418234628761-s2b02cqk98bhi21efh5g6uh6400183bh.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.pango.comunicaciones",
-            "certificate_hash": "5b7991db5a22979ef09ef8cb5f20b67b376ee322"
-          }
-        },
-        {
-          "client_id": "418234628761-mmaosegmio19s8oblh3tah85tskfvhu6.apps.googleusercontent.com",
+          "client_id": "909468734508-g0rre0ohb8oh78qidba3dh4kadjv8k2t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCfjOCVmJuaJWF7XZ9vpZDQhOGDPc9WhSQ"
+          "current_key": "AIzaSyBHuDv4vQ8Dbe-pQcLUe4dDgSKDOpHrLjU"
         }
       ],
       "services": {
@@ -37,20 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "418234628761-mmaosegmio19s8oblh3tah85tskfvhu6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "418234628761-daeo8vbgn416l1ct45or6npojdiienu4.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.pangolabs.scom"
-              }
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

@@ -66,7 +66,7 @@ public class FragmentRedesSociales extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-CardView card1, card2, card3;
+CardView card1, card2, card3, card4;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,15 +76,16 @@ CardView card1, card2, card3;
         toolbar.setVisibility(View.VISIBLE);
         final String facebookId = "fb://page/1392365134368940";
 
-
         final String urlPage = "https://www.facebook.com/Antapaccay/";
         final String urlPageln = "https://www.linkedin.com/company/3658000";
-        final String urlPagelin = "https://www.youtube.com/user/TintayaAntapaccay";
+        final String youtube = "https://www.youtube.com/user/TintayaAntapaccay";
+        final String instagram = "https://www.instagram.com/antapaccay/";
 
 
         card1 =(CardView) rowview.findViewById(R.id.cardredes1);
         card2 =(CardView) rowview.findViewById(R.id.cardredes2);
         card3 =(CardView) rowview.findViewById(R.id.cardredes3);
+        card4 =(CardView) rowview.findViewById(R.id.cardredes4);
 
 
 
@@ -124,17 +125,29 @@ CardView card1, card2, card3;
             @Override
             public void onClick(View v) {
                 try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagelin )));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtube )));
                 } catch (Exception e) {
                     Log.e(TAG, "Aplicación no instalada.");
                     //Abre url de pagina.
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPagelin)));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(youtube)));
                 }
 
             }
         });
 
+        card4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(instagram )));
+                } catch (Exception e) {
+                    Log.e(TAG, "Aplicación no instalada.");
+                    //Abre url de pagina.
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(instagram)));
+                }
 
+            }
+        });
 
         return rowview;
     }

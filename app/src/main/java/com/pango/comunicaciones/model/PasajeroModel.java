@@ -17,4 +17,5 @@ public class PasajeroModel
     public int RESPUESTA ;
     public String EMAIL ;
     public String USER_EMAIL ;
+    public String CARGO;
 }

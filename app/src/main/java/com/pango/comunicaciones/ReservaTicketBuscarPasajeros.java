@@ -440,6 +440,13 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
             TextView pasajeroDNI = (TextView) convertView.findViewById(R.id.lblPasajeroDNI);
             pasajeroDNI.setText(listaPasajeros.get(position).DNI);
 
+            TextView lblCargo=(TextView) convertView.findViewById(R.id.lblCargo);
+            if(listaPasajeros.get(position).CARGO.equals("")||listaPasajeros.get(position).CARGO==null){
+                lblCargo.setVisibility(View.GONE);
+            }else {
+                lblCargo.setText(listaPasajeros.get(position).CARGO);
+            }
+
             CheckBox pasajeroCheckSeleccionar = (CheckBox) convertView.findViewById(R.id.checkBoxListaPasajeros);
             pasajeroCheckSeleccionar.setChecked(listaCheckBoxPasajeros[position]);
 

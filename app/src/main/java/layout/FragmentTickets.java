@@ -137,7 +137,7 @@ public class FragmentTickets extends Fragment {
 
                 final String a=tx_user.getText().toString();
                 final String b=tx_pass.getText().toString();
-                tx_pass.setText("");
+                //tx_pass.setText("");
                 if(!check_rec.isChecked()){
                     tx_user.setText("");
                 }

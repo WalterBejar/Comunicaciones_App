@@ -9,9 +9,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_logofinal"
+        android:icon="@mipmap/logo_final"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_logofinal"
+        android:roundIcon="@mipmap/logo_final"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -20,6 +20,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -64,6 +65,9 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <!-- android:windowSoftInputMode="stateHidden" -->
+
         <activity
             android:name=".ReservaTicketBuscarPasajeros"
             android:launchMode="singleTask"
@@ -72,87 +76,70 @@
         <activity
             android:name=".ActImagDet"
             android:theme="@style/AppTheme.NoActionBar"
+
             />
         <activity
             android:name=".ActImag"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActVid"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActVidDet"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActImgNot"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActNotDes"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActNotDetalle"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActComDetalle"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"
-            >
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="ACT_COM_DET" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
-
-
         <activity
             android:name=".ActComDes"
-            android:theme="@style/AppTheme.NoActionBar"
-
-
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActSwipeImg"
-            android:theme="@style/AppTheme.NoActionBar"
-
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CambiarPassword"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Datos_Usuario"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Recuperar_password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Contactar"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Galeria_noticias"
+            android:screenOrientation="portrait"
+
+            >
+
+        </activity>
     </application>
 
 </manifest> <!-- landscape -->

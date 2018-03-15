@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:id="@+id/mainlayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,7 +20,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:scaleType="fitXY"
             android:src="@drawable/img_prueba_bus2" />
 
@@ -34,11 +34,12 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/bottomlayout"
         android:orientation="vertical"
+        android:layout_below="@+id/toplayout"
         android:weightSum="1">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="368dp"
+            android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -46,7 +47,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="0.95"
+            android:layout_weight="0.65"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -71,13 +72,11 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout2"
-                android:layout_width="340dp"
-                android:layout_height="63dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-
-
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
@@ -147,8 +146,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/textInputLayout"
-                android:layout_width="342dp"
-                android:layout_height="63dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -179,7 +178,7 @@
 
                     <EditText
                         android:id="@+id/password"
-                        android:layout_width="228dp"
+                        android:layout_width="0dp"
                         android:layout_height="41dp"
                         android:layout_marginBottom="8dp"
                         android:layout_marginLeft="8dp"
@@ -223,7 +222,6 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="200dp"
                 android:layout_height="45dp"
-                android:layout_marginBottom="36dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
@@ -233,7 +231,6 @@
                 android:textColor="@color/cardview_light_background"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout10" />
@@ -255,36 +252,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
                     android:gravity="center_vertical"
                     android:text="¿Olvidaste tu contraseña?"
                     android:textSize="12sp"
                     android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintHorizontal_bias="0.61"
+                    app:layout_constraintStart_toEndOf="@+id/checkBox"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <CheckBox
                     android:id="@+id/checkBox"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     android:text="Recuérdame"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
             </android.support.constraint.ConstraintLayout>
 
         </android.support.constraint.ConstraintLayout>
 
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+            android:layout_weight="0.30"
+
+            android:text="Si eres funcionario ingrese su usuario y password de su computadora. Si eres empleado coloca tu DNI como usuario y password"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            android:textStyle="italic" />
+
+
+
+        <TextView
+            android:id="@+id/tx_desempresa"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
             android:text="Compañia Minera Antapaccay S.A. 2017"
             android:layout_weight="0.05"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            />
 
 
     </LinearLayout>

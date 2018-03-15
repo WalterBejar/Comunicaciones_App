@@ -212,33 +212,10 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
                     recList.setSelection(GlobalVariables.noticias2.size());
                 }
 
-              /*  if(loadingTop)
-                {
-                    loadingTop=false;
-                    swipeRefreshLayout.setRefreshing(false);
-                    textView2.setVisibility(View.GONE);
-                    swipeRefreshLayout.setEnabled( false );
-                }
-*/
-
-              /*  if(GlobalVariables.noticias2.size()==6) {
-                    GlobalVariables.contpublicNot=3;
-                }else {
-                    GlobalVariables.contpublicNot += 1;
-
-                }*/
-               // GlobalVariables.noticias2.size();
                 GlobalVariables.contpublicNot += 1;
                // progressDialog.dismiss();
                 progressBar.setVisibility(View.GONE);
-            /*}else{
-                    progressDialog.dismiss();
 
-                    Toast.makeText(v.getContext(),"Se perdio la conexión a  internet",Toast.LENGTH_SHORT).show();
-                }*/
-                // GlobalVariables.noticias2=GlobalVariables.noticias2.add(noticiaList) ;
-
-                //  GlobalVariables.noticias2.get(0);
             }else if(GlobalVariables.con_status!=200){
                 //progressDialog.dismiss();
                 progressBar.setVisibility(View.GONE);

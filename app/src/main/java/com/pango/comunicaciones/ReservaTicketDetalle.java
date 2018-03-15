@@ -42,6 +42,9 @@ public class ReservaTicketDetalle extends AppCompatActivity {
 
     String[] busDetalleListaNombre = {"Nro Programa","Nombre Bus","Origen", "Destino", "Fecha", "Hora","Disponibles","Ocupados","Total Asientos", "Reservas Hecha", "Tipo Bus","Patente", "Marca", "Modelo", "Tipo Vehiculo"};
 
+
+
+
     DetalleAdapter detalleAdapter;
     ProgressDialog progressDialog;
 

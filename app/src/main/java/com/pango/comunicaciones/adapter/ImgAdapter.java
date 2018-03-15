@@ -81,6 +81,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
 
         //iNom_publicador.setText(tempNombre);
        //iFecha.setText(tempFecha);
+
         Typeface face=Typeface.createFromAsset(context.getAssets(),"fonts/HelveticaThn.ttf");
 
         try {

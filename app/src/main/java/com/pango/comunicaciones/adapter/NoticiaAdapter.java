@@ -32,6 +32,7 @@ import java.util.Locale;
 public class NoticiaAdapter extends ArrayAdapter<Noticias> {
     private Context context;
     private List<Noticias> data = new ArrayList<Noticias>();
+
     DateFormat formatoInicial = new SimpleDateFormat("yyyy-MM-dd'T'00:00:00");
     DateFormat formatoRender = new SimpleDateFormat("EEEE d 'de' MMMM 'de' yyyy");
 

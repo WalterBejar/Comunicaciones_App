@@ -51,7 +51,7 @@ android:background="@color/colorplomosplash2"
         >
 
         <RelativeLayout
-            android:layout_width="0dip"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.20"></RelativeLayout>
 
@@ -87,6 +87,7 @@ android:background="@color/colorplomosplash2"
                     android:text="Antapaccay móvil"
 
                     android:textAlignment="center"
+                    android:gravity="center_horizontal"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@color/colorBlanco"
                     android:textSize="30sp" />
@@ -96,7 +97,7 @@ android:background="@color/colorplomosplash2"
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.20">
         </RelativeLayout>

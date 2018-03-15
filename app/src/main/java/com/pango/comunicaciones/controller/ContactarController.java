@@ -5,19 +5,15 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pango.comunicaciones.CambiarPassword;
+import com.pango.comunicaciones.Contactar;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
-import com.pango.comunicaciones.Recuperar_password;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -28,40 +24,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import layout.FragmentTickets;
-
 /**
- * Created by Andre on 27/11/2017.
+ * Created by Andre on 03/01/2018.
  */
 
-public class ResPassController extends AsyncTask<String,Void,Void> {
-
+public class ContactarController extends AsyncTask<String,Void,Void> {
     View v;
-    String email="";
+    String asunto="";
+    String mensaje="";
     String opcion="";
-    Recuperar_password recuperar_password;
+    Contactar contactar;
     String Resultado="";
     boolean cargaData=true;
-
-    //cambiar a fragmenttickets
-    //FragmentTickets Frag;
-    //String Resultado="";
-    //String CodRegistro;
     ProgressDialog progressDialog;
-    //CambiarPassword cambiarPassword;
-    //String respstring;
-    //boolean cargaData=true;
-    //TextView tx_mensaje;
-
-    //ArrayList<Integer> Roles= new ArrayList<Integer>();
-
-    public ResPassController(String email, String opcion, Recuperar_password recuperar_password) {
-        this.email = email;
+    int status;
+    public ContactarController(String asunto,String mensaje, String opcion, Contactar contactar) {
+        this.asunto = asunto;
+        this.mensaje = mensaje;
         this.opcion = opcion;
-        this.recuperar_password = recuperar_password;
+        this.contactar = contactar;
         //recList=(ListView) v.findViewById(R.id.frag_not);
         //recList.setOnScrollListener(this);
     }
+
 
 
     @Override
@@ -74,24 +59,20 @@ public class ResPassController extends AsyncTask<String,Void,Void> {
                 String result = "";
 
                 try {
-//https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/membership/Recoverypass
+            //https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/membership/Recoverypass
                     HttpClient httpclient = new DefaultHttpClient();
-                    HttpPost httpPost = new HttpPost (GlobalVariables.Urlbase+"membership/Recoverypass");
-
+                    HttpPost httpPost = new HttpPost (GlobalVariables.Urlbase+"persona/SendFeedback");
                     String json = "";
                     JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("url",email);
+                    jsonObject.accumulate("urlmin",asunto);
+                    jsonObject.accumulate("url",mensaje);
                     json += jsonObject.toString();
-
-
-///////////////////////////////////////////////////////////////////////////77
                     StringEntity se = new StringEntity(json);
                     httpPost.setEntity(se);
-                    httpPost.setHeader("Accept", "application/json");
-
+                    httpPost.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
                     httpPost.setHeader("Content-type", "application/json");
                     HttpResponse httpResponse = httpclient.execute(httpPost);
-
+                    status=httpResponse.getStatusLine().getStatusCode();
                     inputStream = httpResponse.getEntity().getContent();
                     if(inputStream != null)
                         result = convertInputStreamToString(inputStream);
@@ -99,13 +80,6 @@ public class ResPassController extends AsyncTask<String,Void,Void> {
                         result = "Did not work!";
                     String responsepost= GlobalVariables.reemplazarUnicode(result);
                     Resultado=responsepost;
-
-
-               /*     {
-                        "url":"alexander.quille@glencore.com.pe"
-                    }
-*/
-
 
                 } catch (Exception ex) {
                     Log.w("Error get\n", ex);
@@ -137,7 +111,7 @@ public class ResPassController extends AsyncTask<String,Void,Void> {
     protected void onPreExecute() {
         if (opcion == "post") {
             //super.onPreExecute();
-            progressDialog = ProgressDialog.show(recuperar_password, "", "Enviando peticion");
+            progressDialog = ProgressDialog.show(contactar, "", "Enviando peticion");
         }
 
     }
@@ -146,60 +120,51 @@ public class ResPassController extends AsyncTask<String,Void,Void> {
     protected void onPostExecute(Void result) {
         try {
             if (opcion == "post" && cargaData) {
-
                 progressDialog.dismiss();
+
+
                 String es=Resultado.substring(1,2);
-                 //Toast.makeText(recuperar_password,Resultado,Toast.LENGTH_SHORT).show();
+                int resul=Integer.parseInt(es);
+                if (status!=200||resul==-1||resul==0) {
 
-                if (es.equals("E")) {
+                    //Toast.makeText(contactar,Resultado,Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(recuperar_password,Resultado,Toast.LENGTH_SHORT).show();
-
-                   /* Toast toast1= Toast.makeText(recuperar_password,Resultado,Toast.LENGTH_SHORT);
-                    toast1.setGravity(Gravity.CENTER, 0, 0);
-                    toast1.show();*/
-
-                } else {
-
-                    AlertDialog alertDialog = new AlertDialog.Builder(recuperar_password).create();
+                    final AlertDialog alertDialog = new AlertDialog.Builder(contactar).create();
                     alertDialog.setCancelable(false);
-                    alertDialog.setTitle("Recuperar contraseña");
-                    alertDialog.setIcon(R.drawable.confirmicon);
-                    alertDialog.setMessage(Resultado);
+                    alertDialog.setTitle("Error");
+                    alertDialog.setIcon(R.drawable.erroricon);
+                    alertDialog.setMessage("Ocurrio un problema durante el envio, inténtelo de nuevo");
                     alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Aceptar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            //GlobalVariables.flag_changed = true;
-                            //cambiarPassword.finish();
-                            //cambiarPassword.startActivity(getIntent());
-
-                            recuperar_password.finish();
-                           /* Save_status(false);
-                            Intent intent = new Intent(cambiarPassword, MainActivity.class);
-                            intent.putExtra("respuesta", true);
-                            cambiarPassword.startActivity(intent);*/
-                            //cambiarPassword.startActivity(new Intent(cambiarPassword, SplashScreenActivity.class));
-
+                            alertDialog.dismiss();
                         }
                     });
 
                     alertDialog.show();
 
+                } else {
 
-
+                    AlertDialog alertDialog = new AlertDialog.Builder(contactar).create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.setTitle("Mensaje enviado");
+                    alertDialog.setIcon(R.drawable.confirmicon);
+                    alertDialog.setMessage("Su mensaje ha sido enviado");
+                    alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Aceptar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            contactar.finish();
+                        }
+                    });
+                    alertDialog.show();
                 }
-
-
-
 
             } else {
                 progressDialog.dismiss();
-                Toast.makeText(recuperar_password, "Error cuando se conectaba con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(contactar, "Error cuando se conectaba con el servidor", Toast.LENGTH_SHORT).show();
 
             }
         } catch (Exception ex) {
             Log.w("Error", ex);
         }
-
-
     }
+
 }

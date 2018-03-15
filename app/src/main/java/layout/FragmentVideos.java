@@ -181,12 +181,12 @@ public class FragmentVideos extends Fragment {
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
                 textView2.setVisibility(View.VISIBLE);
-                (new Handler()).postDelayed(new Runnable() {
+                /*(new Handler()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
 
-                        swipeRefreshLayout.setRefreshing(true);
+                        swipeRefreshLayout.setRefreshing(true);*/
                         loadingTop=true;
                         textView2.setVisibility(View.VISIBLE);
 
@@ -198,9 +198,9 @@ public class FragmentVideos extends Fragment {
                         obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop));
                         //new BuscarTickets().execute("1",String.valueOf(tickets.size()));
                         //buscar=true;
-
+/*
                     }
-                },3000);
+                },3000);*/
             }
         });
 

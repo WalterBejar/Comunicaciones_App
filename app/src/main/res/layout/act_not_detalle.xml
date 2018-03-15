@@ -25,7 +25,7 @@
     android:id="@+id/card_ndet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="0dp"
+    android:layout_marginTop="4dp"
     android:layout_alignParentTop="true"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
@@ -112,9 +112,24 @@
                 android:id="@+id/Visor"
                 />
 
+            <Button
+                android:id="@+id/btn_fotos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ver fotos"
+                android:visibility="gone"
+                android:layout_below="@+id/Visor"
+                />
+
+
         </RelativeLayout>
 
+
+
+
     </FrameLayout>
+
+
 
 </ScrollView>
 </LinearLayout>

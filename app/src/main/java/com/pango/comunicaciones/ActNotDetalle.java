@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.pango.comunicaciones.controller.NotdetController;
@@ -14,6 +15,7 @@ public class ActNotDetalle extends AppCompatActivity {
     ImageButton adj;
     String titulo;
     String fecha;
+    Button btn_fotos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,21 @@ public class ActNotDetalle extends AppCompatActivity {
 
         NotdetController obj = new NotdetController("url","get", ActNotDetalle.this);
         obj.execute(GlobalVariables.not2pos.getCod_reg(),titulo,fecha);
+
+
+        btn_fotos=(Button) findViewById(R.id.btn_fotos);
+
+        btn_fotos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ActNotDetalle.this, Galeria_noticias.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+
 
 /*
         if(GlobalVariables.not2pos==null){
@@ -61,10 +78,13 @@ public class ActNotDetalle extends AppCompatActivity {
         });*/
 
 
+
+
+
+
+
+
     }
-
-
-
     private void setupToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarnot);
 

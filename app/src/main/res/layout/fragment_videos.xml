@@ -17,46 +17,57 @@
 
         >
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1"
             >
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_video_final2"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
 
-                tools:layout_editor_absoluteY="0dp"
-                app:layout_constraintRight_toLeftOf="@+id/textView21"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                android:id="@+id/imageView11" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="0"
+                >
+
+            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/ic_video_final2"
+                android:id="@+id/imageView11"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="4dp"
+
+                />
 
             <TextView
                 android:id="@+id/textView21"
-                android:layout_width="136dp"
-                android:layout_height="46dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-
-                android:layout_marginRight="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:padding="5dp"
                 android:text="Videos"
                 android:textColor="@color/colorNotificacion"
-                android:textSize="30sp"
-                app:layout_constraintHorizontal_bias="0.681"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:layout_editor_absoluteY="2dp"
-                android:layout_marginStart="8dp" />
+                android:textSize="30sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
 
+            </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
     </FrameLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -73,7 +84,7 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipelayout4"
-        android:layout_width="368dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="8dp">
@@ -103,11 +114,12 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:text="Actualizando Registros Espere...."
         android:textAlignment="center"
+        android:gravity="center_horizontal"
         android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -117,13 +129,10 @@
 
         <ListView
             android:id="@+id/recycler_vid"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="8dp"
 
-            android:layout_marginTop="-1dp"
             android:background="@android:color/transparent"
             android:dividerHeight="5dp"
             android:focusable="true"

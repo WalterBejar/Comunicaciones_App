@@ -1,67 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActImag"
+    tools:context="com.pango.comunicaciones.Galeria_noticias"
     android:orientation="vertical"
-android:background="@color/colorBlanco"
     >
 
-
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar2"
+        android:id="@+id/toolbarnotgal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/colorBlanco"
         android:minHeight="?attr/actionBarSize"
-
-
-        />
+ />
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/cardview_light_background"
-        android:layout_marginTop="4dp"
 
-        >
+        android:layout_marginTop="2dp"
+        android:background="@color/cardview_light_background"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarnotgal"
+        tools:layout_editor_absoluteX="16dp">
 
 
         <TextView
-            android:id="@+id/imag_titulo2"
+            android:id="@+id/notgal_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/grid_imag"
-            android:layout_alignTop="@+id/icon_image"
+            android:layout_alignEnd="@+id/grid_notgal"
+            android:layout_alignTop="@+id/icon_notgal"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
-            android:layout_toRightOf="@+id/icon_image"
+            android:layout_toRightOf="@+id/icon_notgal"
             android:textColor="@color/cardview_dark_background"
             android:textSize="14sp"
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/txfecha2"
-            android:layout_width="wrap_content"
+            android:id="@+id/ngfecha2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/imag_titulo2"
-            android:layout_alignStart="@+id/imag_titulo2"
-            android:layout_below="@+id/imag_titulo2"
+            android:layout_alignLeft="@+id/notgal_titulo"
+            android:layout_alignStart="@+id/notgal_titulo"
+            android:layout_below="@+id/notgal_titulo"
             android:textColor="@color/background_footer"
 
             />
+        <ImageView
+            android:id="@+id/icon_notgal"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignLeft="@+id/grid_notgal"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/grid_notgal"
+            android:layout_marginTop="15dp"
+            android:tint="@color/colorTitulo"
 
+            />
 
         <GridView
-            android:id="@+id/grid_imag"
+            android:id="@+id/grid_notgal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/txfecha2"
+            android:layout_below="@+id/ngfecha2"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
@@ -72,18 +80,11 @@ android:background="@color/colorBlanco"
             android:padding="@dimen/espacio_grilla"
             android:verticalSpacing="@dimen/espacio_grilla" />
 
-        <ImageView
-            android:id="@+id/icon_image"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignLeft="@+id/grid_imag"
-            android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/grid_imag"
-            android:layout_marginTop="15dp"
-            android:tint = "@color/colorTitulo"
 
-            />
 
 
     </RelativeLayout>
+
+
+
 </LinearLayout>

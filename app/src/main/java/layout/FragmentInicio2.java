@@ -111,7 +111,6 @@ public class FragmentInicio2 extends Fragment {
             public void onClick(View v) {
                 //getActivity().setTitle("Noticias");
 
-
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentNoticias();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

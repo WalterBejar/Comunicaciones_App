@@ -47,8 +47,6 @@ public class ActComDes extends AppCompatActivity {
                 //String url_serv="http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal   bug.png";
                 String cadMod=Utils.ChangeUrl(url_serv);
 
-
-
                         //;
 
                 Uri uri=Uri.parse(cadMod);

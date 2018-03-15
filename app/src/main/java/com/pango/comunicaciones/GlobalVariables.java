@@ -180,4 +180,6 @@ public class GlobalVariables {
 
     public static boolean is_notification=true;
 
+    public static List<String> data_fotos;// = new ArrayList<String>();
+
 }

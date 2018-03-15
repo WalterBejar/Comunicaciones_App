@@ -18,26 +18,41 @@ android:background="@drawable/edit_img"
         android:layout_marginBottom="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-
         android:layout_marginTop="2dp"
-
         app:cardBackgroundColor="@color/colormedio"
         card_view:cardCornerRadius="10dp"
-
         card_view:cardElevation="0dp"
         card_view:contentPadding="5dp"
-
         card_view:layout_constraintBottom_toTopOf="@+id/card3"
         card_view:layout_constraintLeft_toLeftOf="parent"
         card_view:layout_constraintRight_toLeftOf="@+id/card2"
-        card_view:layout_constraintTop_toTopOf="parent">
+        card_view:layout_constraintTop_toTopOf="parent"
+        >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent">
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:background="@android:color/transparent"
+            android:weightSum="1"
+            >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                >
             <ImageView
                 android:id="@+id/icon1"
                 android:layout_width="match_parent"
@@ -46,7 +61,6 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="28dp"
                 android:backgroundTint="@color/colorNotificacion"
                 android:src="@drawable/ic_notice_prueba2" />
 
@@ -58,13 +72,23 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/icon1"
                 android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
                 android:text="NOTICIAS"
                 android:textAlignment="center"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="16dp"
 
                 android:textStyle="bold" />
-        </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+            </LinearLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 
@@ -87,25 +111,38 @@ android:background="@drawable/edit_img"
         card_view:layout_constraintRight_toRightOf="parent"
         card_view:layout_constraintTop_toBottomOf="@+id/card2">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-
+            android:orientation="vertical"
+            android:weightSum="1"
             >
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                >
             <ImageView
                 android:id="@+id/icon6"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="39dp"
                 android:backgroundTint="@color/colorNotificacion"
                 android:src="@drawable/ic_bus_prueba2"
-
                 />
 
             <TextView
@@ -118,13 +155,21 @@ android:background="@drawable/edit_img"
                 android:layout_marginTop="10dp"
                 android:text="RESERVAS"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="16dp"
                 android:textStyle="bold"
-
                 />
+            </LinearLayout>
 
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+            </LinearLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -144,12 +189,27 @@ android:background="@drawable/edit_img"
         card_view:layout_constraintRight_toRightOf="parent"
         card_view:layout_constraintTop_toBottomOf="@+id/card4">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-
+            android:orientation="vertical"
+            android:weightSum="1"
             >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                >
 
             <ImageView
                 android:id="@+id/icon5"
@@ -159,7 +219,6 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
 
-                android:layout_marginTop="25dp"
                 android:backgroundTint="@color/colorNotificacion"
                 android:src="@drawable/ic_redes_final2" />
 
@@ -173,12 +232,18 @@ android:background="@drawable/edit_img"
                 android:layout_marginTop="10dp"
                 android:text="REDES SOCIALES"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="16dp"
                 android:textStyle="bold" />
-
-
-        </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -202,18 +267,32 @@ android:background="@drawable/edit_img"
         card_view:layout_constraintRight_toLeftOf="@+id/card6"
         card_view:layout_constraintTop_toBottomOf="@+id/card3">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-
+            android:orientation="vertical"
+            android:weightSum="1"
             >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                >
             <ImageView
                 android:id="@+id/icon3"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
-                android:layout_marginTop="28dp"
                 android:backgroundTint="@color/colorNotificacion"
                 android:src="@drawable/ic_video_final2"
 
@@ -229,11 +308,20 @@ android:background="@drawable/edit_img"
                 android:layout_marginTop="10dp"
                 android:text="VIDEOTECA"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="16dp"
                 android:textStyle="bold" />
+            </LinearLayout>
 
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -252,20 +340,37 @@ android:background="@drawable/edit_img"
         card_view:layout_constraintBottom_toTopOf="@+id/card4"
         card_view:layout_constraintLeft_toRightOf="@+id/card1"
         card_view:layout_constraintRight_toRightOf="parent"
-        card_view:layout_constraintTop_toTopOf="parent">
+        card_view:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
 
-        <RelativeLayout
+        >
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-
+            android:orientation="vertical"
+            android:weightSum="1"
             >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                >
             <ImageView
                 android:id="@+id/icon4"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
-                android:layout_marginTop="28dp"
                 android:backgroundTint="@color/colorNotificacion"
                 android:src="@drawable/ic_evento_final2"
 
@@ -281,14 +386,22 @@ android:background="@drawable/edit_img"
                 android:layout_marginTop="10dp"
                 android:text="EVENTOS"
                 android:textAlignment="center"
+                android:gravity="center_horizontal"
+
                 android:textColor="@color/colorNotificacion"
                 android:textSize="16dp"
                 android:textStyle="bold"
 
                 />
+            </LinearLayout>
 
-
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+            </LinearLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
@@ -311,23 +424,35 @@ android:background="@drawable/edit_img"
         card_view:layout_constraintRight_toLeftOf="@+id/card4"
         card_view:layout_constraintTop_toBottomOf="@+id/card1">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-
+            android:orientation="vertical"
+            android:weightSum="1"
             >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0"
+                >
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="39dp"
                 android:backgroundTint="@color/colorNotificacion"
                 android:src="@drawable/ic_galeria_prueba2"
-
                 />
-
             <TextView
                 android:id="@+id/tx_menu2"
                 android:layout_width="match_parent"
@@ -335,14 +460,20 @@ android:background="@drawable/edit_img"
                 android:layout_below="@+id/icon2"
                 android:layout_marginTop="10dp"
                 android:text="GALERIA"
-
+                android:gravity="center_horizontal"
                 android:textAlignment="center"
                 android:textColor="@color/colorNotificacion"
                 android:textSize="16dp"
                 android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                >
 
-
-        </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>

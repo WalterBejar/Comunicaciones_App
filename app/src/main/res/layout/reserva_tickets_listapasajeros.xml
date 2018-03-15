@@ -22,27 +22,35 @@
         android:id="@+id/lblPasajeroEmpresa"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="lblPasajeroEmpresa"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/lblPasajeroNombre"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/lblPasajeroDNI"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="lblPasajeroEmpresa"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/checkBoxListaPasajeros"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/lblPasajeroNombre" />
 
     <TextView
         android:id="@+id/lblPasajeroDNI"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="lblPasajeroDNI"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="6dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="lblPasajeroDNI"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/checkBoxListaPasajeros"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/lblPasajeroEmpresa" />
+
+    <TextView
+        android:id="@+id/lblCargo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+
+        android:layout_marginStart="8dp"
+        android:text=""
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxListaPasajeros"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblPasajeroDNI" />
 
     <CheckBox
         android:id="@+id/checkBoxListaPasajeros"

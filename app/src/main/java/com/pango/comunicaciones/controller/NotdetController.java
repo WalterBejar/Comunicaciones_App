@@ -9,6 +9,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
     ProgressDialog progressDialog;
     ArrayList<String> notdetArray=new ArrayList<String>();
     List<NotDet> des_data=new ArrayList<NotDet>();
+    String enlace="";
     //List<NotDet> asig_des=new ArrayList<NotDet>();
 
     // ListView recList;
@@ -58,7 +60,7 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
      TextView tx4;
     WebView content;
     ImageButton adj;
-
+    Button btn_fotos;
    // int a;
    // int celda = 3;
 
@@ -96,11 +98,15 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                         String respstring = EntityUtils.toString(response.getEntity());
                         JSONObject respJSON = new JSONObject(respstring);
                         //notdetArray.add(R.drawable.ic_menu_noticias);
+
                         //notdetArray.add(respJSON.getString("Autor"));
+
                         notdetArray.add(fecha_not);
                         notdetArray.add(titulo_not);
                         //notdetArray.add(respJSON.getString("Subtitulo"));
                         notdetArray.add(respJSON.getString("Descripcion"));
+
+                        enlace=respJSON.getString("Enlace");
 
                         JSONObject Files = respJSON.getJSONObject("Files");
                         JSONArray Data2 = Files.getJSONArray("Data");
@@ -173,10 +179,7 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                 tx3 = (TextView)  actNotDet.findViewById(R.id.not_titulo);
                 content=(WebView) actNotDet.findViewById(R.id.Visor);
                 //adj=(ImageButton) actNotDet.findViewById(R.id.ib_adj);
-
-
-
-
+                btn_fotos=(Button) actNotDet.findViewById(R.id.btn_fotos);
 
                 imag0.setImageResource(R.drawable.ic_noticia_final2);
                String df= notdetArray.get(0);
@@ -202,6 +205,24 @@ public class NotdetController extends AsyncTask<String,Void,Void> {
                 content.loadDataWithBaseURL("",notdetArray.get(2) , "text/html", "UTF-8", "");
                 WebSettings settings=content.getSettings();
                 settings.setJavaScriptEnabled(true);
+
+
+                if(enlace.equals("null")){
+                    btn_fotos.setVisibility(View.GONE);
+                   // progressDialog.dismiss();
+                }else{
+                    String[] parts = enlace.split("\\|");
+                    GlobalVariables.data_fotos=new ArrayList<String>();
+                    GlobalVariables.data_fotos.add(parts[1]);
+                    GlobalVariables.data_fotos.add(formatoRender.format(formatoInicial.parse(notdetArray.get(0))));
+                    GlobalVariables.data_fotos.add(parts[0]);
+                    //progressDialog.dismiss();
+                    btn_fotos.setVisibility(View.VISIBLE);
+
+
+                }
+
+
 
                // content.getSettings().setBuiltInZoomControls(true);
                 //content.getSettings().setDisplayZoomControls(false);
