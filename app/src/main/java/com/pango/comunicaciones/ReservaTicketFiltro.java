@@ -183,27 +183,14 @@ public class ReservaTicketFiltro extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DateFormat formatoInicial = new SimpleDateFormat("yyyyMMdd'T'HH:mm:ss");
-                //Calendar c = Calendar.getInstance();
-                //Date a=c.getTime();
-
-                //
-
                 long timenow=new Date().getTime()+24*60*60*1000,timebus=0;
-
-
                 try {
 
                     Date temp= formatoInicial.parse(tickets.get(position).FECHA+"T18:00:00");
                     timebus=temp.getTime();
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-
-
-
-
                 if (Utils.esAdmin){
                     Intent toReservaTicketDetalle = new Intent(getApplicationContext(), ReservaTicketListaPasajeros.class);
                     toReservaTicketDetalle.putExtra("CodigoTicket", tickets.get(position).IDPROG);
