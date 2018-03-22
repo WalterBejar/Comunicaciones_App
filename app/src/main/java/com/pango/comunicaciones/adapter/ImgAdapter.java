@@ -231,6 +231,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 intent.putExtra("post",0);
                 intent.putExtra("position_p",position);
                 intent.putExtra("url_img",img2);
+                intent.putExtra("isInitial",true);
 
 
                // intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(0).replaceAll("\\s","%20"));
@@ -254,6 +255,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 intent.putExtra("post",1);
                 intent.putExtra("position_p",position);
                 intent.putExtra("url_img",img2);
+                intent.putExtra("isInitial",true);
 
                 //intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(1).replaceAll("\\s","%20"));
                 v.getContext().startActivity(intent);
@@ -275,6 +277,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 intent.putExtra("post",2);
                 intent.putExtra("position_p",position);
                 intent.putExtra("url_img",img2);
+                intent.putExtra("isInitial",true);
 
                 //intent.putExtra("url_img",adfhh);
 
@@ -296,6 +299,7 @@ public class ImgAdapter extends ArrayAdapter<Imagen> {
                 intent.putExtra("position_p",position);
 
                 intent.putExtra("url_img",img2);
+                intent.putExtra("isInitial",true);
 
                 //intent.putExtra("url_img",GlobalVariables.Urlbase +img2.get(3).replaceAll("\\s","%20"));
 

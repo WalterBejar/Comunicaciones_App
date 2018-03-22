@@ -75,9 +75,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActImagDet"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ActImag"
             android:screenOrientation="portrait"
@@ -133,13 +131,14 @@
         <activity
             android:name=".Contactar"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Galeria_noticias"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Galeria_noticias"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ActActualizar"
             android:screenOrientation="portrait"
-
-            >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
     </application>
 
 </manifest> <!-- landscape -->

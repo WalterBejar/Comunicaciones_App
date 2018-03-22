@@ -53,11 +53,11 @@ public class ValidUrlController extends AsyncTask<String,Void,Void> {
             HttpResponse response;
             Url_Video=params[0];
 
-
+//GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4)+
             if(opcion=="get"){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
-                    HttpGet get = new HttpGet(GlobalVariables.Urlbase.substring(0, GlobalVariables.Urlbase.length() - 4)+Url_Video);
+                    HttpGet get = new HttpGet(Url_Video);
                     get.setHeader("Content-type", "application/json");
                     GlobalVariables.con_status_video = httpClient.execute(get).getStatusLine().getStatusCode();
 

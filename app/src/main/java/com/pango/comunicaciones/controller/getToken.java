@@ -45,6 +45,7 @@ public class getToken {
         } catch (Throwable e) {
             Log.d("InputStream", e.getLocalizedMessage());        }
 
-    }}
+    }
+}
 
 

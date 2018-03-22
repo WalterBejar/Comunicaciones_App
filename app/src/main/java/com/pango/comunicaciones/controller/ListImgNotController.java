@@ -1,12 +1,18 @@
 package com.pango.comunicaciones.controller;
 
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pango.comunicaciones.ActImgNot;
 import com.pango.comunicaciones.ActSwipeImg;
@@ -59,6 +65,9 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
     //String posPub;
     // int a;
     // int celda = 3;
+    int pos_img;
+    Button btn_des;
+    boolean isinitial=true;
 
     public ListImgNotController(String url, String opcion, ActImgNot actImgNot){
         this.url=url;
@@ -161,10 +170,75 @@ public class ListImgNotController extends AsyncTask<String,Void,Void> {
                 GlobalVariables.listdetimg=view_image_not;//datos correlativo,url,urlmin
 
 
+           /*
+
                 viewPager = (ViewPager)actImgNot.findViewById(R.id.viewPager3);
                 adapter = new ViewPagerAdapter(actImgNot,GlobalVariables.listdetimg,Integer.parseInt(posIn));
                 viewPager.setAdapter(adapter);
                 viewPager.setCurrentItem(Integer.parseInt(posIn),true);
+
+                btn_des=(Button) actImgNot.findViewById(R.id.btn_des);
+                btn_des.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        DownloadManager downloadManager;
+                        String url_image="";
+
+                        if(isinitial){
+                            url_image= GlobalVariables.Urlbase.substring(0,GlobalVariables.Urlbase.length()-4)+ GlobalVariables.listdetimg.get(Integer.parseInt(posIn)).getUrl_img();
+
+                        }else{
+                            url_image= GlobalVariables.Urlbase.substring(0,GlobalVariables.Urlbase.length()-4)+ GlobalVariables.listdetimg.get(pos_img).getUrl_img();
+
+                        }
+                        downloadManager=(DownloadManager) actImgNot.getSystemService(Context.DOWNLOAD_SERVICE);
+                        //Uri uri=Uri.parse("http://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf9GsdJZOxuApw8q86bV211L8tPhh1RB3zj6qIJbfVV9HwIBwlfg");
+                        //String url_serv= ad;
+                        //String url_serv="http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal   bug.png";
+                        //String cadMod= Utils.ChangeUrl(url_serv);
+                        //;
+                        Uri uri=Uri.parse(url_image);
+                        // Uri uri=Uri.parse("http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal%20bug.png");
+                        DownloadManager.Request request= new DownloadManager.Request(uri);
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        Long reference = downloadManager.enqueue(request);
+                        Toast.makeText(actImgNot, "Descargando...", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+
+
+
+
+
+                viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                    @Override
+                    public void onPageSelected(int arg0) {
+                        // TODO Auto-generated method stub
+                        //System.out.println("Current position=="+num);
+                        //textView.setText((arg0+1)+" of "+ GlobalVariables.listdetimg.size());
+                        //Toast.makeText(actSwipeImg, "Descargando...control"+arg0, Toast.LENGTH_SHORT).show();
+                        pos_img=arg0;
+                        isinitial=false;
+                    }
+
+                    @Override
+                    public void onPageScrolled(int arg0, float arg1, int arg2) {
+                        // TODO Auto-generated method stub
+                        //System.out.println("onPageScrolled");
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int num) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+*/
                 progressDialog.dismiss();
 
             }

@@ -94,6 +94,7 @@ public class ActImag extends AppCompatActivity implements AdapterView.OnItemClic
         Intent intent = new Intent(this, ActImagDet.class);
         intent.putExtra(ActImagDet.EXTRA_PARAM_ID, a);
         intent.putExtra("post",position);
+        intent.putExtra("isInitial",true);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

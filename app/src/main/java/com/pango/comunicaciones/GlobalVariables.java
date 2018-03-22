@@ -29,10 +29,12 @@ import java.util.regex.Pattern;
 public class GlobalVariables {
 
     public static String token_auth=null;//tendra el token con la autenticacion
-    public static String Urlbase= "https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/";
+    public static String Urlbase= "https://app.antapaccay.com.pe/SCOM_Service/api/";
     public static String Urlbase2 = "entrada/getpaginated/";
     public static String url_token="membership/authenticate?username=antapaccay&password=Tintaya123.&domain=anyaccess";
 
+    public static String versionApk="5.0";
+    public static String versionFromServer="";
 
     public static String CodPersona="";
     public static String Nombres="";
@@ -182,4 +184,5 @@ public class GlobalVariables {
 
     public static List<String> data_fotos;// = new ArrayList<String>();
 
+    public static int positionImg=0;
 }

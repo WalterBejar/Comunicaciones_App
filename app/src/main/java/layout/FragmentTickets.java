@@ -140,6 +140,7 @@ public class FragmentTickets extends Fragment {
                 //tx_pass.setText("");
                 if(!check_rec.isChecked()){
                     tx_user.setText("");
+                    tx_pass.setText("");
                 }
                 String c=Recuperar_data();//MODIFICA ESTO
                         //Recuperar_data();

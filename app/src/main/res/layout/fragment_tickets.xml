@@ -279,11 +279,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:layout_weight="0.30"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
-            android:text="Si eres funcionario ingrese su usuario y password de su computadora. Si eres empleado coloca tu DNI como usuario y password"
+            android:text="Ingrese su cuenta de usuario y password de tu computadora, o su DNI en usuario y password"
             android:textAlignment="center"
             android:textSize="12sp"
             android:textStyle="italic"

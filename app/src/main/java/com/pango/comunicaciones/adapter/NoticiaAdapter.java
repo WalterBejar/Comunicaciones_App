@@ -111,6 +111,8 @@ public class NoticiaAdapter extends ArrayAdapter<Noticias> {
                     .into(nImagNot);
         }
 
+
+
         nImagNot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
