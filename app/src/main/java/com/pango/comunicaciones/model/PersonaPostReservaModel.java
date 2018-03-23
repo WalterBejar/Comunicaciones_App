@@ -11,4 +11,5 @@ public class PersonaPostReservaModel {
     public String DNI;
     public String NOMBRES;
     public String EMPRESA;
+    public String CARGO;
 }

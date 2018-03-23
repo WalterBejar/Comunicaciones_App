@@ -334,8 +334,6 @@ public class ReservaTicketBuscarPasajeros extends AppCompatActivity {
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
 
-
-
                     break;
                 case "307":
                     Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();

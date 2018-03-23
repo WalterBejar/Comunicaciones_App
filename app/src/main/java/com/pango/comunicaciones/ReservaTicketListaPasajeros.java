@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -394,18 +399,25 @@ public class ReservaTicketListaPasajeros extends AppCompatActivity {
             int colorInicial=0;
             if(listaPasajeros.get(position).DNI.equals("DNI Reservado"))delete=false;
             if(listaPasajeros.get(position).DSCR != null){
-                pasajeroEmpresa.setText(listaPasajeros.get(position).DSCR);
-
+                String tempString=listaPasajeros.get(position).DSCR;
+                Spannable spanString = new SpannableString(tempString);
+                spanString.setSpan(new StyleSpan(Typeface.BOLD), 0, spanString.length(), 0);
                 if(listaPasajeros.get(position).RESPUESTA>0){
                     colorInicial=listaPasajeros.get(position).RESPUESTA;
+                    spanString.setSpan(new ForegroundColorSpan(Color.GREEN), 0, spanString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     if(colorInicial==1)convertView.setBackgroundColor(Color.parseColor("#A9DFBF"));
                     else  convertView.setBackgroundColor(Color.parseColor("#F9E79F"));
                 }
                 else{
+                   // spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+                   // spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
+                    spanString.setSpan(new ForegroundColorSpan(Color.RED), 0, spanString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
                     convertView.setBackgroundColor(Color.parseColor("#FADBD8"));
                     delete=false;
                     colorInicial=-1;
                 }
+                pasajeroEmpresa.setText(spanString);
             }
             else pasajeroEmpresa.setText(listaPasajeros.get(position).EMPRESA);
 

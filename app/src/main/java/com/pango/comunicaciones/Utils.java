@@ -148,6 +148,7 @@ public class Utils {
         persona.NOMBRES = pasajero.NOMBRES;
         persona.DNI = pasajero.DNI;
         persona.EMPRESA = GlobalVariables.id_phone;
+        persona.CARGO = pasajero.CARGO;
         return persona;
     }
 
