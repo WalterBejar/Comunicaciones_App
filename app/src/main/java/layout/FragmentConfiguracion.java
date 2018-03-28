@@ -188,7 +188,7 @@ public class FragmentConfiguracion extends Fragment {
 
         //sharedpreference para url del servidor
         SharedPreferences url_save = this.getActivity().getSharedPreferences("datos", Context.MODE_PRIVATE);
-        url_base.setText(url_save.getString("url", "https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/"));
+        url_base.setText(url_save.getString("url", GlobalVariables.Urlbase));
 
         //sharedpreference para url del dominio
         SharedPreferences dominio = this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);

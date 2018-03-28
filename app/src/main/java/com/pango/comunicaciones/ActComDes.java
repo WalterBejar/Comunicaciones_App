@@ -63,33 +63,6 @@ public class ActComDes extends AppCompatActivity {
                     Toast.makeText(ActComDes.this, "Download manager is not available", Toast.LENGTH_LONG).show();
                 }
 
-
-
-
-
-/*
-
-                //int pos=position;
-                downloadManager=(DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-
-                //Uri uri=Uri.parse("http://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf9GsdJZOxuApw8q86bV211L8tPhh1RB3zj6qIJbfVV9HwIBwlfg");
-
-                        //;
-
-                Uri uri=Uri.parse(cadMod);
-                // Uri uri=Uri.parse("http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal%20bug.png");
-
-
-                DownloadManager.Request request= new DownloadManager.Request(uri);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                Long reference = downloadManager.enqueue(request);
-                Toast.makeText(getApplicationContext(), "Descargando...", Toast.LENGTH_SHORT).show();
-
-*/
-
-
-
-//%20
                 //   Toast.makeText(context,"Boton detalles: "+position,Toast.LENGTH_LONG);
 
             }
