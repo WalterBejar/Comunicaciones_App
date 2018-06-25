@@ -15,9 +15,12 @@ import com.pango.comunicaciones.model.Noticias;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -159,9 +162,13 @@ public class AuthController extends AsyncTask<String,Void,Void> {
                     Utils.email=email;
 
                     Utils.esAdmin=false;
+                    Utils.esAdminWeb=false;
                     for (int k=0;k<Roles.size();k++){
                         if(Roles.get(k)==1){
                             Utils.esAdmin=true;
+                        }
+                        else if(Roles.get(k)==4){
+                            Utils.esAdminWeb=true;
                         }
                     }
 
@@ -191,21 +198,37 @@ public class AuthController extends AsyncTask<String,Void,Void> {
 
         try {
             HttpResponse response;
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet get = new HttpGet(GlobalVariables.Urlbase+"membership/authenticate?"+"username="+a+"&password="+b+"&domain="+c);
-            get.setHeader("Content-type", "application/json");
-            response = httpClient.execute(get);
-            String respstring2 = EntityUtils.toString(response.getEntity());
-            GlobalVariables.con_status = response.getStatusLine().getStatusCode();
-            if(respstring2.equals(""))
-                {
-                    GlobalVariables.token_auth=null;
-                   // GlobalVariables.con_status =0;
-                }else {
-                    GlobalVariables.token_auth = respstring2.substring(1, respstring2.length() - 1);
-                    Utils.token=respstring2.substring(1, respstring2.length() - 1);
+            HttpClient httpclient = new DefaultHttpClient();
+            InputStream inputStream = null;
+            String result = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("username",a);
+                jsonObject.accumulate("password",b);
+                jsonObject.accumulate("domain",c);
 
-                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            HttpPost httpPost = new HttpPost (GlobalVariables.Urlbase+"membership/authenticate");
+
+            StringEntity se = new StringEntity(jsonObject.toString(),"UTF-8");
+            httpPost.setEntity(se);
+            httpPost.setHeader("Authorization", "Bearer " + GlobalVariables.token_auth);
+            httpPost.setHeader("Content-type", "application/json");
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+
+            GlobalVariables.con_status=httpResponse.getStatusLine().getStatusCode();
+
+            inputStream = httpResponse.getEntity().getContent();
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else  result = "Did not work!";
+
+            String responsepost= GlobalVariables.reemplazarUnicode(result);
+            GlobalVariables.token_auth = responsepost.substring(1, responsepost.length() - 1);
+            Utils.token=responsepost.substring(1, responsepost.length() - 1);
 
 
         } catch (IOException e) {

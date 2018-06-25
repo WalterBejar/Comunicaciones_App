@@ -54,23 +54,17 @@ public class ActNotDes extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                       downloadManager=(DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-
-
                         //Uri uri=Uri.parse("http://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf9GsdJZOxuApw8q86bV211L8tPhh1RB3zj6qIJbfVV9HwIBwlfg");
                        String url_serv=GlobalVariables.Urlbase+GlobalVariables.listdetnot.get(position).getUrl_file();
-                //String url_serv="http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal   bug.png";
+                        //String url_serv="http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal   bug.png";
                        Uri uri=Uri.parse(url_serv.replaceAll("\\s","%20"));
                        // Uri uri=Uri.parse("http://192.168.1.214/SCOM_Service/api/multimedia/GetImagen/182/portal%20bug.png");
-
 
                         DownloadManager.Request request= new DownloadManager.Request(uri);
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                         Long reference = downloadManager.enqueue(request);
 
                 Toast.makeText(getApplicationContext(), "Descargando...", Toast.LENGTH_SHORT).show();
-
-
-
             }
         });
 

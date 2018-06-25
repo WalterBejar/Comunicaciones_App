@@ -177,7 +177,6 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("fecha","");
 
             startActivity(intent);
-
         }
 
     }

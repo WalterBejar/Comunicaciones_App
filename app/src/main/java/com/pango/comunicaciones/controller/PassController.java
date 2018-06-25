@@ -25,9 +25,12 @@ import com.pango.comunicaciones.Utils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -65,46 +68,64 @@ public class PassController extends AsyncTask<String,Void,Void> {
         //recList.setOnScrollListener(this);
     }
 
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+    }
+
     @Override
     protected Void doInBackground(String... params) {
         try {
-            HttpResponse response;
             String a=params[0];
             String b=params[1];
             String c=params[2];
 
             //generarToken(a,b,c);
 
-            if(opcion=="get"){
-                try {
+            HttpResponse response;
+            HttpClient httpclient = new DefaultHttpClient();
+            InputStream inputStream = null;
+            String result = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.accumulate("username",a);
+                jsonObject.accumulate("password",b);
+                jsonObject.accumulate("domain",c);
 
-                       // https://app.antapaccay.com.pe/ProPortal/SCOM_Serivice/menbership/Changuepass/Usuario/Passwors/NewPasword
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-                    //https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/membership/Changuepass?usuario=ccapatinta&password=123456&newpassword=ccapatinta
-//https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/membership/Changuepass?usuario=ccapatinta&password=12345&newpassword=ccapatinta
-                        HttpClient httpClient = new DefaultHttpClient();
-                        HttpGet get = new HttpGet(GlobalVariables.Urlbase+"membership/Changuepass?usuario="+a+"&password="+b+"&newpassword="+c);
-                        //get.setHeader("Authorization", "Bearer "+ GlobalVariables.token_auth);
-                        get.setHeader("Content-type", "application/json");
-                        response = httpClient.execute(get);
-                        GlobalVariables.con_status = response.getStatusLine().getStatusCode();//getStatusLine().getStatusCode();
+            HttpPost httpPost = new HttpPost (GlobalVariables.Urlbase+"membership/Changuepass");
 
-                    if(GlobalVariables.con_status==200) {
-                         respstring = EntityUtils.toString(response.getEntity());
-                    }
+            StringEntity se = new StringEntity(jsonObject.toString(),"UTF-8");
+            httpPost.setEntity(se);
+            httpPost.setHeader("Authorization", "Bearer " + GlobalVariables.token_auth);
+            httpPost.setHeader("Content-type", "application/json");
+            HttpResponse httpResponse = httpclient.execute(httpPost);
 
-                    //else{respstring="";}
+            GlobalVariables.con_status=httpResponse.getStatusLine().getStatusCode();
 
-                }catch (Exception ex){
-                    Log.w("Error get\n",ex);
-                    cargaData=false;
-
-                }
+            inputStream = httpResponse.getEntity().getContent();
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else  result = "Did not work!";
+            if(GlobalVariables.con_status==200)
+            {
+                String responsepost= GlobalVariables.reemplazarUnicode(result);
+                respstring= responsepost.substring(1,responsepost.length()-1);
             }
 
         }
         catch (Throwable e) {
             Log.d("InputStream", e.getLocalizedMessage());
+            cargaData=false;
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -232,9 +233,10 @@ public class FragmentInicio2 extends Fragment {
             @Override
             public void onClick(View v) {
                 //getActivity().setTitle("Redes Sociales");
-
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://app.antapaccay.com.pe/concursomundial/"));
+                startActivity(browserIntent);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentRedesSociales();
+               /* Fragment nuevoFragmento = new FragmentRedesSociales();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.add(R.id.content, nuevoFragmento);
                 //transaction.addToBackStack(null);
@@ -248,7 +250,7 @@ public class FragmentInicio2 extends Fragment {
                 bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
 
                 bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
+                navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);*/
             }
         });
 

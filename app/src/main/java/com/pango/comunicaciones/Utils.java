@@ -36,6 +36,7 @@ public class Utils {
     public static String token = "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2IiwidHlwIjoiSldUIn0.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYW50YXBhY2NheSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMDAwMDA3OTU4MCIsImV4cCI6MTUwNjYzNjUzMCwiaXNzIjoiaHR0cDovL2lzc3Vlci5jb20iLCJhdWQiOiJodHRwOi8vbXlzaXRlLmNvbSJ9.gse25ySe4fptGQasIEioL3THSrj1BzQAcGC4EqOsEGzjXeQwf8DG2kHGMmLdNHOID1TF06WlSkJU4lxCK297bxkNJLqdo86rPKOcvCHQMMFtHWYGTbdLgVdPS4CWfK-KIl1WTQNWavna-pSqn_WM-aBGnifqsARbdMMjOLvO2XHY9eKBhn8u0uleaeWobW5oKBTFiUpgO7JaVGbZL23yVOpCPJBil_XzzyaCt1ixodO7yuqOlClJw2IyW0RAO_lJu2cXUVYT8D0fM5KI-qnx6ClxY4j91YmGhcM5vR1yovKCbzND0-1PRrHzxSTi3M-LcqIIRChlsWHdtDik7-DbPA";
 
     public static Boolean esAdmin = false;
+    public static Boolean esAdminWeb = false;
     public static String nombres = "Quille Sucasaca, Alexander";
     public static String codPersona = "0000079580";
 
@@ -118,7 +119,7 @@ public class Utils {
         PersonaPostReservaModel persona = new PersonaPostReservaModel();
         persona.DNI = Utils.codPersona;
         persona.IDPROG = codTicket;
-        persona.NOMBRES = nombres;
+        persona.NOMBRES = ChangeUrl(nombres);
         persona.EMPRESA =GlobalVariables.id_phone ;
         return persona;
     }
@@ -145,7 +146,7 @@ public class Utils {
         PersonaPostReservaModel persona = new PersonaPostReservaModel();
         //persona.CodPersona = pasajero.CodPersona;
         persona.IDPROG= codigoTicket;
-        persona.NOMBRES = pasajero.NOMBRES;
+        persona.NOMBRES = ChangeUrl(pasajero.NOMBRES);
         persona.DNI = pasajero.DNI;
         persona.EMPRESA = GlobalVariables.id_phone;
         persona.CARGO = pasajero.CARGO;

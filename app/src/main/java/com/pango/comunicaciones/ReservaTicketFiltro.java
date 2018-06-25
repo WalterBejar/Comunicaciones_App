@@ -388,7 +388,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
                             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                     finish();
 
-                    break;
+                        break;
                 case "307":
                     Toast.makeText(getApplicationContext(),"Se perdio la conexion al servidor",Toast.LENGTH_SHORT).show();
                     break;

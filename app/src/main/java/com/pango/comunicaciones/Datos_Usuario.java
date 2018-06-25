@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.pango.comunicaciones.controller.UpdateController;
+
 public class Datos_Usuario extends AppCompatActivity {
 TextView nombre,usuario,dni,email;
-Button changepass;
+Button changepass, updateApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +24,7 @@ Button changepass;
         dni=(TextView) findViewById(R.id.user_dni);
         email=(TextView) findViewById(R.id.user_email);
         changepass=(Button) findViewById(R.id.btn_changepass);
-
+        updateApp=(Button) findViewById(R.id.btn_UpdateApp);
         nombre.setText(Utils.nombres);
         usuario.setText(Utils.usuario);
         dni.setText(Utils.codPersona);
@@ -35,15 +37,19 @@ Button changepass;
                 startActivity(intent);
             }
         });
+        if (Utils.esAdminWeb)
+            updateApp.setVisibility(View.VISIBLE);
+        else
+            updateApp.setVisibility(View.GONE);
 
+        updateApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
-
-
-
-
-
-
+                UpdateController Update = new UpdateController(Datos_Usuario.this);
+                Update.execute();
+            }
+        });
     }
 
 
