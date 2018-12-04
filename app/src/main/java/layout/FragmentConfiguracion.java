@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.SplashScreenActivity;
+import com.pango.comunicaciones.Utils;
 
 import java.util.Stack;
 
@@ -88,7 +90,7 @@ public class FragmentConfiguracion extends Fragment {
 
         sw_sonido = (Switch) rootView.findViewById(R.id.switch_sonido);
         //Boolean switchState = sw_sonido.isChecked();
-
+        LinearLayout linearLayout =(LinearLayout) rootView.findViewById(R.id.linearLayout);
         sw_video = (Switch) rootView.findViewById(R.id.switch_video);
         sw_video.setChecked(obtener_estado());
         sw_video.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +108,10 @@ public class FragmentConfiguracion extends Fragment {
         });
 
 
+        if (Utils.esAdmin){
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+        else linearLayout.setVisibility(View.GONE);
         //Boolean sw_hd_video = sw_video.isChecked(); //verificar el estado del video
 
         //sw_video.setChecked(true);

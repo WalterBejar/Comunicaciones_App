@@ -138,7 +138,7 @@ public class ReservaTicketFiltro extends AppCompatActivity {
         progressDialog.setTitle("Conectándose al servidor");
         progressDialog.setMessage("Por favor, espere...");
         progressDialog.setCancelable(false);
-        cantidadTickets = 8;
+        cantidadTickets = 11;
         contTickets=0;
 
         buscar= true;
