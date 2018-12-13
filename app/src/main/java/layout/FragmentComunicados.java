@@ -1,5 +1,6 @@
 package layout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,21 +18,32 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pango.comunicaciones.ActComDetalle;
 import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
+import com.pango.comunicaciones.IActivity;
+import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.ComAdapter;
+import com.pango.comunicaciones.controller.ActivityController;
 import com.pango.comunicaciones.controller.ComController;
 import com.pango.comunicaciones.controller.ImgController;
 import com.pango.comunicaciones.controller.contadorController;
 import com.pango.comunicaciones.controller.noticiacontroller;
 import com.pango.comunicaciones.model.Comunicado;
 
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.pango.comunicaciones.GlobalVariables.comlist;
@@ -44,7 +56,7 @@ import static com.pango.comunicaciones.GlobalVariables.comlist;
  * Use the {@link FragmentComunicados#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentComunicados extends Fragment {
+public class FragmentComunicados extends Fragment implements IActivity {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,6 +67,7 @@ public class FragmentComunicados extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    //List<Comunicado> comList;
 
     public FragmentComunicados() {
         // Required empty public constructor
@@ -96,14 +109,17 @@ public class FragmentComunicados extends Fragment {
     boolean upFlag;
     boolean downFlag;
     boolean listenerFlag;
+    static int paginacion2=1;
 
     SwipeRefreshLayout swipeRefreshLayout;
     TextView textView2;
     boolean loadingTop=false;
     ConstraintLayout constraintLayout;
     boolean flag_enter=true;
-
-
+    String url= "";
+    ComAdapter ca;
+    ProgressBar progressBar;
+    View rootView;
 /*
     public  void success(){
 
@@ -120,23 +136,34 @@ public class FragmentComunicados extends Fragment {
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
 
-        final View rootView = inflater.inflate(R.layout.fragment_comunicados, container, false);
+        rootView = inflater.inflate(R.layout.fragment_comunicados, container, false);
         recListCom = (ListView) rootView.findViewById(R.id.l_frag_com);
+        progressBar=(ProgressBar) rootView.findViewById(R.id.pbar_com);
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout2);
         textView2 =(TextView)rootView.findViewById(R.id.textView2);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
-        constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
+        constraintLayout=(ConstraintLayout) rootView.findViewById(R.id.const_main);
         constraintLayout.setVisibility(View.GONE);
 
 
         if(GlobalVariables.comlist.size()==0) {
-              final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
-        obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+           //   final ComController obj = new ComController(rootView, "url", "get-0", FragmentComunicados.this);
+           // obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+"1"+"/"+GlobalVariables.num_vid+"/TP02/"+GlobalVariables.id_phone;
+            final ActivityController obj = new ActivityController("get-"+ paginacion2, url, FragmentComunicados.this, getActivity());
+            obj.execute("");
+
+
 
         }else {
-            ComAdapter ca = new ComAdapter(context, GlobalVariables.comlist);
-            recListCom.setAdapter(ca);
+
+            success("","-1");
+
+
         }
         recListCom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -148,8 +175,8 @@ public class FragmentComunicados extends Fragment {
                 GlobalVariables.doclic=true;
                 GlobalVariables.pos_item_com=position;
 
-                String titulo=comlist.get(position).getTitulo();
-                String fecha=comlist.get(position).getFecha();
+                String titulo=comlist.get(position).titulo;
+                String fecha=comlist.get(position).fecha;
 
 
                 //se conecta a un activity//
@@ -181,15 +208,25 @@ public class FragmentComunicados extends Fragment {
                         loadingTop=true;
                         textView2.setVisibility(View.VISIBLE);
 
-
                         GlobalVariables.comlist.clear();
                         GlobalVariables.contpublicCom=2;
                         GlobalVariables.flagcom=true;
                         GlobalVariables.flagUpSc=true;
-
                         GlobalVariables.flag_up_toast=true;
+                        flag_enter=false;
+                //recListCom.setVisibility(View.GONE);
+                        /*
                         final ComController obj = new ComController(rootView,"url","get", FragmentComunicados.this);
                         obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop));
+*/                      Toast.makeText(rootView.getContext(),"Actualizando, por favor espere...",Toast.LENGTH_SHORT).show();
+
+                        url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+"1"+"/"+"6"+"/TP02/"+GlobalVariables.id_phone;
+                        final ActivityController obj = new ActivityController("get-0", url, FragmentComunicados.this, getActivity());
+                        obj.execute("0");
+
+
+
+
 
 /*
                     }
@@ -211,7 +248,10 @@ public class FragmentComunicados extends Fragment {
                 if (upFlag && scrollState == SCROLL_STATE_IDLE) {
                     upFlag = false;
                    // Toast.makeText(rootView.getContext(),"ACEPTO UPFLAG",Toast.LENGTH_SHORT).show();
+
                     swipeRefreshLayout.setEnabled( true );
+                    Log.d("srl1", "true"+"up: "+upFlag+"down: "+downFlag);
+
                 }
                 if (downFlag && scrollState == SCROLL_STATE_IDLE) {
                     downFlag = false;
@@ -220,23 +260,16 @@ public class FragmentComunicados extends Fragment {
                     if(GlobalVariables.comlist.size()!=GlobalVariables.contComunicado&&flag_enter) {
                         constraintLayout.setVisibility(View.VISIBLE);
                         flag_enter=false;
-
-                        final ComController obj = new ComController(rootView, "url", "get", FragmentComunicados.this);
+/*
+                        final ComController obj = new ComController(rootView, "url", "get-2", FragmentComunicados.this);
                         obj.execute(String.valueOf(GlobalVariables.contpublicCom), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+*/
 
-                        final Handler h = new Handler();
-                        h.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (obj.getStatus() == AsyncTask.Status.FINISHED) {
-                                    constraintLayout.setVisibility(View.GONE);
-                                    flag_enter=true;
+                        GlobalVariables.contpublicCom+=1;
 
-                                } else {
-                                    h.postDelayed(this, 50);
-                                }
-                            }
-                        }, 250);
+                        url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+GlobalVariables.contpublicCom+"/"+GlobalVariables.num_vid+"/TP02/"+GlobalVariables.id_phone;
+                        final ActivityController obj = new ActivityController("get-2", url, FragmentComunicados.this, getActivity());
+                        obj.execute("2");
 
 
 
@@ -246,6 +279,7 @@ public class FragmentComunicados extends Fragment {
                 if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
                     listenerFlag = true;
                     swipeRefreshLayout.setEnabled( false );
+                    Log.d("srl2", "false");
 
                     Log.d("started","comenzo");
                 }
@@ -266,6 +300,9 @@ public class FragmentComunicados extends Fragment {
                 if (listenerFlag && !view.canScrollVertically(-1)){
                     upFlag = true;
                     downFlag = false;
+
+                    swipeRefreshLayout.setEnabled( false );
+                    Log.d("srl3", "false");
                 }
             }
 
@@ -288,10 +325,6 @@ public class FragmentComunicados extends Fragment {
 
 
         });
-
-        listenerFlag = false;
-
-
         return rootView;
     }
 
@@ -325,6 +358,80 @@ public class FragmentComunicados extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void success(String data, String Tipo) {
+        progressBar.setVisibility(View.GONE);
+        flag_enter=true;
+        listenerFlag = false;
+
+        //comList= new ArrayList<>();
+
+
+        if(Tipo.equals("")) {
+            //flag_enter=true;
+            GlobalVariables.comlist.addAll( dataFromServer(data));
+
+            dataFromServer(data);
+
+            ca = new ComAdapter(getActivity(), GlobalVariables.comlist);
+            recListCom.setAdapter(ca);
+
+            if(GlobalVariables.comlist.size()==0){
+                swipeRefreshLayout.setVisibility(View.INVISIBLE);
+                //tx_mensajeb.setVisibility(View.VISIBLE);
+            }else{
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                //tx_mensajeb.setVisibility(View.GONE);
+            }
+        }else if(Tipo.equals("-1")) {
+
+            ca = new ComAdapter(context, GlobalVariables.comlist);
+            recListCom.setAdapter(ca);
+        }else if(Tipo.equals("0")) {
+            dataFromServer(data);
+            GlobalVariables.comlist.addAll( dataFromServer(data));
+
+            ca = new ComAdapter(getActivity(), GlobalVariables.comlist);
+            recListCom.setAdapter(ca);
+            swipeRefreshLayout.setRefreshing(false);
+            textView2.setVisibility(View.GONE);
+            swipeRefreshLayout.setEnabled(false);
+            Log.d("srl4", "false");
+
+            //recListCom.setVisibility(View.VISIBLE);
+
+
+        }else if (Tipo.equals("2")){
+
+
+            for(Comunicado item:dataFromServer(data))
+                ca.add(item);
+            ca.notifyDataSetChanged();
+            constraintLayout.setVisibility(View.GONE);
+        }
+
+
+
+    }
+
+    @Override
+    public void successpost(String data, String Tipo) {
+        progressBar.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void error(String mensaje, String Tipo) {
+        progressBar.setVisibility(View.GONE);
+        constraintLayout.setVisibility(View.GONE);
+        Toast.makeText(rootView.getContext(),mensaje ,Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -339,4 +446,71 @@ public class FragmentComunicados extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
+
+
+
+
+    public List<Comunicado> dataFromServer(String respstring) {
+        List<Comunicado> comTemp = new ArrayList<>();
+
+        try {
+            JSONObject respJSON = new JSONObject(respstring);
+            JSONArray comunic = respJSON.getJSONArray("Data");
+
+            GlobalVariables.cont_item = comunic.length();
+            GlobalVariables.contComunicado = respJSON.getInt("Count");//obtiene el total de publicaciones en general
+
+
+            int inc = 0;
+            for (int i = 0; i < comunic.length(); i++) {
+                JSONObject c = comunic.getJSONObject(i);
+                //String T =c.getString("Tipo");
+                //String A="TP02"
+
+                //comunicado:2
+                // if(T.equals("TP02")) {
+                inc += 1;
+                String CodRegistro = c.getString("CodRegistro");
+                //String Tipo = c.getString("Tipo");
+                int icon = R.drawable.ic_menu_publicaciones;
+                //String Autor = c.getString("Autor");
+                String Fecha = c.getString("Fecha");
+                String Titulo = c.getString("Titulo");
+                String Descripcion = c.getString("Descripcion");
+
+                JSONObject Files = c.getJSONObject("Files");
+                JSONArray Data2 = Files.getJSONArray("Data");
+
+                JSONObject h = Data2.getJSONObject(0);
+
+                String Urlmin2 = h.getString("Urlmin");
+
+                String[] parts = Urlmin2.split("550px;");
+                //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                //String part2 = parts[1]; //obtiene: 19-A
+
+                String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
+
+                //comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+                comTemp.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+
+
+            }
+
+
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+
+    return comTemp;
+
+
+    }
+
+
+
+
+
 }

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.controller.VersionController;
+import com.pango.comunicaciones.model.Imagen;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -26,6 +27,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,10 +49,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         final NetworkInfo info= cmanager.getActiveNetworkInfo();
       // Boolean red= GlobalVariables.isOnlineNet();
         text_logo=(TextView) findViewById(R.id.text_logo);
+        //GlobalVariables.imagen2 = new ArrayList<>();
+
+
 
         Typeface face1=Typeface.createFromAsset(getAssets(),"fonts/HelveticaIt.ttf");
         text_logo.setTypeface(face1);
         text_logo.setText("Antapaccay móvil");
+
 
         url_version=GlobalVariables.Urlbase+ "membership/getVersion";
 

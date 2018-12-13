@@ -103,6 +103,8 @@ public class noticiacontroller extends AsyncTask<String,Void,Void> {
 
                         String respstring = EntityUtils.toString(response.getEntity());
 
+
+
                         JSONObject respJSON = new JSONObject(respstring);
 
                         JSONArray noticias = respJSON.getJSONArray("Data");

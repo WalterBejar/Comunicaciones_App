@@ -1,4 +1,4 @@
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,86 +6,72 @@
     android:layout_height="match_parent"
     tools:context="layout.FragmentComunicados"
     android:background="@drawable/edit_img"
-    android:orientation="vertical"
     >
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
 
-        >
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal"
+        android:padding="1dp"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5">
 
-            </LinearLayout>
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="0"
-                >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
             <ImageView
+                android:id="@+id/imageView11"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:src="@drawable/ic_evento_final2"
-                android:id="@+id/imageView11"
                 android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
                 android:layout_marginRight="4dp"
-                />
+                android:layout_marginBottom="2dp"
+                android:src="@drawable/ic_evento_final2" />
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:gravity="center"
                 android:text="Eventos"
                 android:textColor="@color/colorNotificacion"
-                android:textSize="30sp"
-                android:gravity="center"
-                />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                >
-
-            </LinearLayout>
+                android:textSize="30sp" />
         </LinearLayout>
 
-    </FrameLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5">
+
+        </LinearLayout>
+    </LinearLayout>
 
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/constraintLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4"
-        app:layout_constraintHorizontal_bias="0.0"
-
-        >
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipelayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -101,52 +87,118 @@
             />
 
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        >
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:text="Actualizando Registros Espere...."
-        android:textAlignment="center"
-        android:gravity="center_horizontal"
-        android:visibility="gone"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Actualizando Registros Espere...."
-        />
-
-
-        <ListView
-            android:id="@+id/l_frag_com"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout5"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="2dp"
-
-            android:background="@android:color/transparent"
-            android:dividerHeight="5dp"
-
-            android:elevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
-
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="center_horizontal"
+                android:text="Actualizando Registros Espere...."
+                android:textAlignment="center"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Actualizando Registros Espere...." />
+
+
+            <ListView
+                android:id="@+id/l_frag_com"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:layout_marginBottom="0dp"
+                android:background="@android:color/transparent"
+                android:dividerHeight="5dp"
+                android:elevation="10dp"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+
+
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+
+                app:layout_constraintVertical_bias="0.0"
+
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+
+
+                />
+
+        </android.support.constraint.ConstraintLayout>
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/const_main"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@color/colorBlanco"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/swipelayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/swipelayout2">
+
+        <android.widget.LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:id="@+id/pbar_main"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/tx_main"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/tx_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:text="Cargando ..."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/pbar_main"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+        </android.widget.LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
-        </FrameLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+
+
     </android.support.constraint.ConstraintLayout>
-</LinearLayout>

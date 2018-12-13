@@ -60,9 +60,9 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
 
         //asignando a las variables los valores obtenidos
         //final String tempNombre=data.get(position).getNom_publicador();
-        final String tempFecha=data.get(position).getFecha();
-        final String tempTitulo=data.get(position).getTitulo();
-        final String tempDescripcion=data.get(position).getDescripcion();
+        final String tempFecha=data.get(position).fecha;
+        final String tempTitulo=data.get(position).titulo;
+        final String tempDescripcion=data.get(position).descripcion;
 
 
         //cargar la data al layout//////
@@ -86,7 +86,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         cDescripcion.setTypeface(face);
         cDescripcion.setText(tempDescripcion);
 
-        int ds=data.get(position).getUrlmin().length();
+        int ds=data.get(position).urlmin.length();
 
         if(ds==0) {
             //cDescs.setVisibility(View.VISIBLE);
@@ -96,7 +96,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
         }else {
 
             Glide.with(context)
-                    .load(GlobalVariables.Urlbase + Utils.ChangeUrl(data.get(position).getUrlmin()))
+                    .load(GlobalVariables.Urlbase + Utils.ChangeUrl(data.get(position).urlmin))
                     .into(cImagNot);
         }
 
@@ -108,7 +108,7 @@ public class ComAdapter extends ArrayAdapter<Comunicado> {
                 GlobalVariables.flag_orienta=true;
                 //   ((ListView) parent).performItemClick(convertView, position, 0);
                 Intent intent=new Intent(v.getContext(), ActImgNot.class);
-                intent.putExtra("codreg",data.get(position).getCod_reg());
+                intent.putExtra("codreg",data.get(position).cod_reg);
 
                 //intent.putExtra("url_img", GlobalVariables.Urlbase + data.get(position).getFiledata().get(1).replaceAll("\\s", "%20"));
                 intent.putExtra("posIn",0);

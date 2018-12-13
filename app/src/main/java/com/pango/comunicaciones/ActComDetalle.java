@@ -77,7 +77,7 @@ public class ActComDetalle extends AppCompatActivity {
             //}
 
             else {
-                obj.execute(GlobalVariables.com_pos.getCod_reg(), titulo, fecha);
+                obj.execute(GlobalVariables.com_pos.cod_reg, titulo, fecha);
 
             }
 

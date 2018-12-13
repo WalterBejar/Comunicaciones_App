@@ -3,15 +3,15 @@ package com.pango.comunicaciones.model;
 import java.util.ArrayList;
 
 public class NoticiaModel {
-    private String cod_reg;
-    private String tipo;
-    private int icon;
-    private String nom_publicador;
-    private String fecha;
-    private String titulo;
-    private String descripcion;
-    private String urlImagen;
-    private ArrayList<String> filedata;
+    public String cod_reg;
+    public String tipo;
+    public int icon;
+    public String nom_publicador;
+    public String fecha;
+    public String titulo;
+    public String descripcion;
+    public String urlImagen;
+    public ArrayList<String> filedata;
 
     private boolean isChecked;
 

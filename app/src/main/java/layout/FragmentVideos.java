@@ -20,15 +20,18 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.ActVid;
 import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
+import com.pango.comunicaciones.IActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.VidAdapter;
+import com.pango.comunicaciones.controller.ActivityController;
 import com.pango.comunicaciones.controller.ImgController;
 import com.pango.comunicaciones.controller.VidController;
 import com.pango.comunicaciones.controller.contadorController;
@@ -36,6 +39,10 @@ import com.pango.comunicaciones.controller.noticiacontroller;
 import com.pango.comunicaciones.model.Imagen;
 import com.pango.comunicaciones.model.Vid_Gal;
 import com.pango.comunicaciones.model.Video;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +55,7 @@ import java.util.List;
  * Use the {@link FragmentVideos#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentVideos extends Fragment {
+public class FragmentVideos extends Fragment implements IActivity {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -103,6 +110,11 @@ public class FragmentVideos extends Fragment {
     boolean loadingTop=false;
     ConstraintLayout constraintLayout;
     boolean flag_enter=true;
+    String url;
+    VidAdapter ca;
+    //List<Video> videoList;
+    ProgressBar progressBar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -116,12 +128,13 @@ public class FragmentVideos extends Fragment {
         recListVid = (ListView) rootView.findViewById(R.id.recycler_vid);
         //LinearLayoutManager llm_vid = new LinearLayoutManager(getActivity());
         //llm_vid.setOrientation(LinearLayoutManager.VERTICAL);
+        progressBar=(ProgressBar) rootView.findViewById(R.id.pbar_vid);
 
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout4);
         textView2 =(TextView)rootView.findViewById(R.id.textView4);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
-        constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
+        constraintLayout=(ConstraintLayout) rootView.findViewById(R.id.const_main);
         constraintLayout.setVisibility(View.GONE);
 
         /*List<Vid_Gal> dataf = new ArrayList<>();
@@ -137,11 +150,26 @@ public class FragmentVideos extends Fragment {
 
 
         if(GlobalVariables.vidlist.size()==0) {
+            /*
             final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
             obj.execute(String.valueOf(1), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+*/
+            progressBar.setVisibility(View.VISIBLE);
+
+            url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+"1"+"/"+GlobalVariables.num_vid+"/TP04/"+GlobalVariables.id_phone;
+            final ActivityController obj = new ActivityController("get", url, FragmentVideos.this, getActivity());
+            obj.execute("");
+
+
+
+
         }else {
+            /*
         VidAdapter ca = new VidAdapter(context, GlobalVariables.vidlist);
         recListVid.setAdapter(ca);
+        */
+            success("","-1");
+
         }
 
         /*final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -194,8 +222,19 @@ public class FragmentVideos extends Fragment {
                         GlobalVariables.contpublicVid=2;
                         GlobalVariables.flagUpSc=true;
                         GlobalVariables.flag_up_toast=true;
+/*
                         final VidController obj = new VidController(rootView,"url","get", FragmentVideos.this);
                         obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop));
+*/
+                //recListVid.setVisibility(View.GONE);
+
+                flag_enter=false;
+
+
+                Toast.makeText(rootView.getContext(),"Actualizando, por favor espere...",Toast.LENGTH_SHORT).show();
+                url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+"1"+"/"+"6"+"/TP04/"+GlobalVariables.id_phone;
+                final ActivityController obj = new ActivityController("get-0", url, FragmentVideos.this, getActivity());
+                obj.execute("0");
                         //new BuscarTickets().execute("1",String.valueOf(tickets.size()));
                         //buscar=true;
 /*
@@ -227,10 +266,19 @@ public class FragmentVideos extends Fragment {
                     if(GlobalVariables.vidlist.size()!=GlobalVariables.contVideos&&flag_enter) {
                         constraintLayout.setVisibility(View.VISIBLE);
                         flag_enter=false;
-
+/*
                         final VidController obj = new VidController(rootView, "url", "get", FragmentVideos.this);
                         obj.execute(String.valueOf(GlobalVariables.contpublicVid), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+*/
 
+                        GlobalVariables.contpublicVid+=1;
+
+                        url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+GlobalVariables.contpublicVid+"/"+GlobalVariables.num_vid+"/TP04/"+GlobalVariables.id_phone;
+                        final ActivityController obj = new ActivityController("get-2", url, FragmentVideos.this, getActivity());
+                        obj.execute("2");
+
+
+                        /*
                         final Handler h = new Handler();
                         h.postDelayed(new Runnable() {
                             @Override
@@ -244,6 +292,10 @@ public class FragmentVideos extends Fragment {
                                 }
                             }
                         }, 250);
+*/
+
+
+
 
                     }
 
@@ -347,6 +399,136 @@ public class FragmentVideos extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void success(String data, String Tipo){
+        progressBar.setVisibility(View.GONE);
+        flag_enter=true;
+        //videoList = new ArrayList<>();
+
+        if(Tipo.equals("")) {
+            GlobalVariables.vidlist.addAll( dataFromServer(data));
+
+            ca = new VidAdapter(getActivity(), GlobalVariables.vidlist);
+            recListVid.setAdapter(ca);
+
+            if(GlobalVariables.vidlist.size()==0){
+                swipeRefreshLayout.setVisibility(View.INVISIBLE);
+                //tx_mensajeb.setVisibility(View.VISIBLE);
+            }else{
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                //tx_mensajeb.setVisibility(View.GONE);
+            }
+        }else if(Tipo.equals("-1")) {
+
+            ca = new VidAdapter(getActivity(), GlobalVariables.vidlist);
+            recListVid.setAdapter(ca);
+
+
+        }else if(Tipo.equals("0")) {
+            GlobalVariables.vidlist.addAll( dataFromServer(data));
+
+            ca = new VidAdapter(getActivity(), GlobalVariables.vidlist);
+            recListVid.setAdapter(ca);
+            swipeRefreshLayout.setRefreshing(false);
+            textView2.setVisibility(View.GONE);
+            swipeRefreshLayout.setEnabled(false);
+            //recListVid.setVisibility(View.VISIBLE);
+
+        }else if (Tipo.equals("2")){
+
+            for(Video item:dataFromServer(data))
+                ca.add(item);
+            ca.notifyDataSetChanged();
+            constraintLayout.setVisibility(View.GONE);
+
+
+        }
+
+
+
+
+
+
+    }
+
+    @Override
+    public void successpost(String data, String Tipo)  {
+        progressBar.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void error(String mensaje, String Tipo) {
+        progressBar.setVisibility(View.GONE);
+        constraintLayout.setVisibility(View.GONE);
+        Toast.makeText(rootView.getContext(),mensaje ,Toast.LENGTH_SHORT).show();
+    }
+
+    public List<Video> dataFromServer(String respstring) {
+        List<Video> videoTemp = new ArrayList<>();
+
+        try {
+
+            JSONObject respJSON = new JSONObject(respstring);
+            JSONArray video = respJSON.getJSONArray("Data");
+
+            GlobalVariables.cont_item = video.length();
+            GlobalVariables.contVideos = respJSON.getInt("Count");
+
+            for (int i = 0; i < video.length(); i++) {
+                JSONObject c = video.getJSONObject(i);
+                //String T = c.getString("Tipo");
+                //String A="TP02";
+                //if (T.equals("TP04")) {
+
+                String CodRegistro = c.getString("CodRegistro");
+                //String Tipo = c.getString("Tipo");
+                int icon = R.drawable.ic_video_final;
+                //String Autor = c.getString("Autor");
+                String Fecha = c.getString("Fecha");
+                String Titulo = c.getString("Titulo");
+
+                JSONObject Files = c.getJSONObject("Files");
+                int CantidadV = Files.getInt("Count");
+                JSONArray Data2 = Files.getJSONArray("Data");
+
+                //GlobalVariables.cant_vid=Files.getInt("count");
+
+                //GlobalVariables.cant_vid=2;
+                List<Vid_Gal> dataf = new ArrayList<>();
+                for (int j = 0; j < Data2.length(); j++) {
+                    JSONObject h = Data2.getJSONObject(j);
+
+                    String Correlativo = Integer.toString(j);
+                    String Url = h.getString("Url");
+                    String Urlmin2 = h.getString("Urlmin");
+
+                    String[] parts = Urlmin2.split("550px;");
+                    //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                    //String part2 = parts[1]; //obtiene: 19-A
+
+                    String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
+
+
+                    dataf.add(new Vid_Gal(Correlativo, Utils.ChangeUrl(Url), Utils.ChangeUrl(Urlmin)));
+
+                }
+                //dataf.get(0);
+                //videoList.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf, CantidadV));
+                videoTemp.add(new Video(CodRegistro, icon, Fecha, Titulo, dataf, CantidadV));
+                // }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return  videoTemp;
+    }
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this

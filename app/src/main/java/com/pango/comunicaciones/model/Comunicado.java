@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 public class Comunicado {
 
-    private String cod_reg;
+    public String cod_reg;
     //private String tipo;
-    private int icon;
+    public int icon;
     //private String nom_publicador;
-    private String fecha;
-    private String titulo;
-    private String descripcion;
-    private String urlmin;
+    public String fecha;
+    public String titulo;
+    public String descripcion;
+    public String urlmin;
 
 
     public Comunicado() {
@@ -29,7 +29,7 @@ public class Comunicado {
         this.descripcion = descripcion;
         this.urlmin = urlmin;
     }
-
+/*
     public String getCod_reg() {
         return cod_reg;
     }
@@ -77,4 +77,5 @@ public class Comunicado {
     public void setUrlmin(String urlmin) {
         this.urlmin = urlmin;
     }
+    */
 }

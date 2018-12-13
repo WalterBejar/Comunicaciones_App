@@ -10,11 +10,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.ComAdapter;
 import com.pango.comunicaciones.model.Comunicado;
+import com.pango.comunicaciones.model.GetComunicado;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -53,12 +55,16 @@ public class ComController extends AsyncTask<String,Void,Void> {
     TextView textView2;
     Boolean loadingTop;
     ProgressBar progressBar;
+    String tipo="";
+    ComAdapter ca;
 
     public ComController(View v,String url,String opcion, FragmentComunicados Frag){
         this.v=v;
         this.url=url;
         this.opcion=opcion;
         this.Frag=Frag;
+        String datos[] = opcion.split("-");
+        tipo= datos[1];
         recListCom=(ListView) v.findViewById(R.id.l_frag_com);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout2);
         textView2 =(TextView)v.findViewById(R.id.textView2);
@@ -68,6 +74,8 @@ public class ComController extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected Void doInBackground(String... params) {
+
+
         try {
             HttpResponse response;
             String a=params[0];
@@ -77,7 +85,7 @@ public class ComController extends AsyncTask<String,Void,Void> {
             //getToken gettoken=new getToken();
             //gettoken.getToken();
 
-            if(opcion=="get"&&GlobalVariables.flagcom==true){
+            if(opcion.contains("get")&&GlobalVariables.flagcom==true){
                 try {
                     HttpClient httpClient = new DefaultHttpClient();
                     HttpGet get = new HttpGet(GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+a+"/"+b+"/TP02/"+GlobalVariables.id_phone);
@@ -94,6 +102,24 @@ public class ComController extends AsyncTask<String,Void,Void> {
 
                         GlobalVariables.cont_item = comunic.length();
                         GlobalVariables.contComunicado = respJSON.getInt("Count");//obtiene el total de publicaciones en general
+
+/*
+                        Gson gson = new Gson();
+                        GetComunicado getComunicado = gson.fromJson(respstring, GetComunicado.class);
+                        for (int i = 0; i < comunic.length(); i++) {
+
+                            String Urlmin2 = getComunicado.Data.get(i).urlmin;
+                            String[] parts = Urlmin2.split("550px;");
+                            //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                            //String part2 = parts[1]; //obtiene: 19-A
+                            getComunicado.Data.get(i).urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
+
+                        }
+                        GlobalVariables.comlist = getComunicado.Data;
+*/
+
+
+
                         int inc = 0;
                         for (int i = 0; i < comunic.length(); i++) {
                             JSONObject c = comunic.getJSONObject(i);
@@ -115,6 +141,7 @@ public class ComController extends AsyncTask<String,Void,Void> {
                             JSONArray Data2 = Files.getJSONArray("Data");
 
                             JSONObject h = Data2.getJSONObject(0);
+
                             String Urlmin2 = h.getString("Urlmin");
 
                             String[] parts = Urlmin2.split("550px;");
@@ -123,11 +150,14 @@ public class ComController extends AsyncTask<String,Void,Void> {
 
                             String Urlmin = parts[0] + GlobalVariables.anchoMovil + "px;" + parts[1];
 
-                            //comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
+                            comList.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
                             GlobalVariables.comlist.add(new Comunicado(CodRegistro, icon, Fecha, Titulo, Descripcion, Urlmin));
 
-                            //}
+
                         }
+
+
+
                     }
 
                 }catch (Exception ex){
@@ -153,7 +183,7 @@ public class ComController extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected void onPreExecute() {
-        if(opcion=="get"&&GlobalVariables.flag_up_toast) {
+        if(opcion.contains("get")&&GlobalVariables.flag_up_toast) {
             super.onPreExecute();
 
             //if(GlobalVariables.comlist.size()<GlobalVariables.num_vid) {
@@ -169,15 +199,48 @@ public class ComController extends AsyncTask<String,Void,Void> {
     }
     @Override
     protected  void onPostExecute(Void result){
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
         try {
-            if (opcion == "get"&&GlobalVariables.con_status==200&&cargaData) {
+            if (opcion.contains("get")&&GlobalVariables.con_status==200&&cargaData) {
+
+
+                if(tipo=="0"){
+                    ca = new ComAdapter(v.getContext(),GlobalVariables.comlist);
+                    recListCom.setAdapter(ca);
+                    //GlobalVariables.flagUpSc=false;
+
+                }else if(tipo == "2"){//add data a la lista
+
+
+                    for(Comunicado item:comList)
+                        ca.add(item);
+                    ca.notifyDataSetChanged();
+                    //constraintLayout.setVisibility(View.GONE);
+                    //flag_enter=true;
+                }
+                */
+
+
+
+/*
                 //if(GlobalVariables.comlist.size()<=GlobalVariables.num_vid){
                 ComAdapter ca = new ComAdapter(v.getContext(),GlobalVariables.comlist);
                 recListCom.setAdapter(ca);
                 //progressDialog.dismiss();
                 //GlobalVariables.comlist=comList;
                 //}
-
                 ca.notifyDataSetChanged();
                 if(GlobalVariables.flagUpSc==true){
                     recListCom.setSelection(0);
@@ -197,6 +260,9 @@ public class ComController extends AsyncTask<String,Void,Void> {
                 progressBar.setVisibility(View.GONE);
 
 
+
+
+
             }else  if(GlobalVariables.con_status!=200){
                 //progressDialog.dismiss();
                 progressBar.setVisibility(View.GONE);
@@ -207,14 +273,33 @@ public class ComController extends AsyncTask<String,Void,Void> {
                 progressBar.setVisibility(View.GONE);
 
                 Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
+
+
+
+
+
+                GlobalVariables.contpublicCom+=1;
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+            }else  if(GlobalVariables.con_status!=200){
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
+                Toast.makeText(v.getContext(),"Error en el servidor",Toast.LENGTH_SHORT).show();
+            }else {
+                //progressDialog.dismiss();
+                progressBar.setVisibility(View.GONE);
+
+                Toast.makeText(v.getContext(),"Revise su conexion a internet",Toast.LENGTH_SHORT).show();
+
             }
+
 
 
 
         }catch (Exception ex){
             Log.w("Error",ex);
         }
-
 
         if(loadingTop)
         {
@@ -223,6 +308,11 @@ public class ComController extends AsyncTask<String,Void,Void> {
             textView2.setVisibility(View.GONE);
             swipeRefreshLayout.setEnabled( false );
         }
+        */
+
+
+
+
 
 
 

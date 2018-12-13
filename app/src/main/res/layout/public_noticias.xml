@@ -78,6 +78,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="200dp"
             android:id="@+id/imag_not"
             android:focusable="false"
             />
@@ -93,14 +94,15 @@
             android:layout_below="@+id/txfecha"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
-            android:lineSpacingExtra="6sp"
+            android:lineSpacingExtra="10dp"
             android:maxLines="5"
             android:textAlignment="viewStart"
 
             android:textColor="@color/cardview_dark_background"
             android:textSize="15sp"
             android:textStyle="normal"
-            tools:text="descripcion" />
+            tools:text="descripcion"
+            android:gravity="start" />
 
     </RelativeLayout>
 

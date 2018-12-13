@@ -18,18 +18,35 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pango.comunicaciones.ActImag;
 import com.pango.comunicaciones.EndlessScrollListener;
 import com.pango.comunicaciones.GlobalVariables;
+import com.pango.comunicaciones.IActivity;
 import com.pango.comunicaciones.R;
+import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.adapter.ImgAdapter;
+import com.pango.comunicaciones.controller.ActivityController;
 import com.pango.comunicaciones.controller.ComController;
 import com.pango.comunicaciones.controller.ImgController;
 import com.pango.comunicaciones.controller.contadorController;
 import com.pango.comunicaciones.controller.noticiacontroller;
+import com.pango.comunicaciones.model.Imagen;
+import com.pango.comunicaciones.model.Img_Gal_List;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.pango.comunicaciones.GlobalVariables.imagen2;
 import static com.pango.comunicaciones.GlobalVariables.noticias2;
@@ -42,7 +59,7 @@ import static com.pango.comunicaciones.GlobalVariables.noticias2;
  * Use the {@link FragmentImagenes#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentImagenes extends Fragment {
+public class FragmentImagenes extends Fragment implements IActivity {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -99,6 +116,10 @@ public class FragmentImagenes extends Fragment {
     boolean loadingTop=false;
     ConstraintLayout constraintLayout;
     boolean flag_enter=true;
+    String url= "";
+    List<Imagen> imagenList;
+    ImgAdapter ca;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,16 +140,30 @@ public class FragmentImagenes extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipelayout3);
         textView2 =(TextView)rootView.findViewById(R.id.textView3);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
-        constraintLayout=(ConstraintLayout) getActivity().findViewById(R.id.const_main);
+        constraintLayout=(ConstraintLayout) rootView.findViewById(R.id.const_main);
         constraintLayout.setVisibility(View.GONE);
+        progressBar=(ProgressBar) rootView.findViewById(R.id.pbar_img);
 
 
         if(GlobalVariables.imagen2.size()==0) {
+
+            /*
             final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
             obj.execute(String.valueOf(1),String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+*/
+            progressBar.setVisibility(View.VISIBLE);
+
+            url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+"1"+"/"+GlobalVariables.num_vid+"/TP03/"+GlobalVariables.id_phone;
+            final ActivityController obj = new ActivityController("get", url, FragmentImagenes.this, getActivity());
+            obj.execute("");
+
+
+
         }else {
-            ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
+            /*ImgAdapter ca = new ImgAdapter(context, GlobalVariables.imagen2);
             recListImag.setAdapter(ca);
+            */
+            success("","-1");
         }
 
         /*final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -151,10 +186,10 @@ public class FragmentImagenes extends Fragment {
                 // if(!GlobalVariables.isScrolling){
                 GlobalVariables.pos_item_img_det=position;
 
-                GlobalVariables.img_get= imagen2.get(position);
+                GlobalVariables.img_get= GlobalVariables.imagen2.get(position);
 
-                String titulo=imagen2.get(position).getTitulo();
-                String fecha=imagen2.get(position).getFecha();
+                String titulo=GlobalVariables.imagen2.get(position).getTitulo();
+                String fecha=GlobalVariables.imagen2.get(position).getFecha();
 
                 //se conecta a un activity//
                 Intent intent = new Intent(getActivity(), ActImag.class);
@@ -189,11 +224,28 @@ public class FragmentImagenes extends Fragment {
 
                         GlobalVariables.imagen2.clear();
                         GlobalVariables.contpublicImg=2;
+
                         GlobalVariables.flagUpSc=true;
                         GlobalVariables.flag_up_toast=true;
-
+/*
                         final ImgController obj = new ImgController(rootView,"url","get", FragmentImagenes.this);
                         obj.execute(String.valueOf(1),String.valueOf(6),String.valueOf(loadingTop),String.valueOf(loadingTop));
+  */
+                //recListImag.setVisibility(View.GONE);
+
+                flag_enter=false;
+
+
+                Toast.makeText(rootView.getContext(),"Actualizando, por favor espere...",Toast.LENGTH_SHORT).show();
+
+                url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+"1"+"/"+"6"+"/TP03/"+GlobalVariables.id_phone;
+                final ActivityController obj = new ActivityController("get-0", url, FragmentImagenes.this, getActivity());
+                obj.execute("0");
+
+
+
+
+
                         //new BuscarTickets().execute("1",String.valueOf(tickets.size()));
                         //buscar=true;
 /*
@@ -228,10 +280,21 @@ public class FragmentImagenes extends Fragment {
                     if(GlobalVariables.imagen2.size()!=GlobalVariables.contFotos&&flag_enter) {
                         constraintLayout.setVisibility(View.VISIBLE);
                         flag_enter=false;
-
+/*
                         final ImgController obj = new ImgController(rootView, "url", "get", FragmentImagenes.this);
                         obj.execute(String.valueOf(GlobalVariables.contpublicImg), String.valueOf(GlobalVariables.num_vid),String.valueOf(loadingTop));
+*/
 
+                        GlobalVariables.contpublicImg+=1;
+                        Log.d("contImg","a="+GlobalVariables.contpublicImg +"b="+GlobalVariables.num_vid);
+
+                        url = GlobalVariables.Urlbase+ GlobalVariables.Urlbase2+GlobalVariables.contpublicImg+"/"+GlobalVariables.num_vid+"/TP03/"+GlobalVariables.id_phone;
+                        final ActivityController obj = new ActivityController("get-2", url, FragmentImagenes.this, getActivity());
+                        obj.execute("2");
+
+
+
+                        /*
                         final Handler h = new Handler();
                         h.postDelayed(new Runnable() {
                             @Override
@@ -245,6 +308,10 @@ public class FragmentImagenes extends Fragment {
                                 }
                             }
                         }, 250);
+
+                        */
+
+
 
 
                     }
@@ -310,6 +377,144 @@ public class FragmentImagenes extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void success(String data, String Tipo){
+
+        progressBar.setVisibility(View.GONE);
+        flag_enter=true;
+        //imagenList = new ArrayList<>();
+
+        if(Tipo.equals("")) {
+            //dataFromServer(data);
+            GlobalVariables.imagen2.addAll( dataFromServer(data));
+            ca = new ImgAdapter(getActivity(), GlobalVariables.imagen2);
+            recListImag.setAdapter(ca);
+
+            if(GlobalVariables.imagen2.size()==0){
+                swipeRefreshLayout.setVisibility(View.INVISIBLE);
+                //tx_mensajeb.setVisibility(View.VISIBLE);
+            }else{
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                //tx_mensajeb.setVisibility(View.GONE);
+            }
+        }else if(Tipo.equals("-1")) {
+
+            ca = new ImgAdapter(getActivity(), GlobalVariables.imagen2);
+            recListImag.setAdapter(ca);
+
+
+        }else if(Tipo.equals("0")) {
+            GlobalVariables.imagen2.addAll( dataFromServer(data));
+
+            ca = new ImgAdapter(getActivity(), GlobalVariables.imagen2);
+            recListImag.setAdapter(ca);
+            swipeRefreshLayout.setRefreshing(false);
+            textView2.setVisibility(View.GONE);
+            swipeRefreshLayout.setEnabled(false);
+            //recListImag.setVisibility(View.VISIBLE);
+
+        }else if (Tipo.equals("2")){
+
+
+            for(Imagen item:dataFromServer(data))
+                ca.add(item);
+            ca.notifyDataSetChanged();
+            constraintLayout.setVisibility(View.GONE);
+
+
+        }
+
+
+
+    }
+
+
+
+    @Override
+    public void successpost(String data, String Tipo) {
+        progressBar.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void error(String mensaje, String Tipo) {
+        progressBar.setVisibility(View.GONE);
+        constraintLayout.setVisibility(View.GONE);
+
+        Toast.makeText(rootView.getContext(),mensaje ,Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    public List<Imagen> dataFromServer(String respstring) {
+        List<Imagen> imagen2 = new ArrayList<>();
+
+        try {
+
+                    JSONObject respJSON = new JSONObject(respstring);
+                    JSONArray image = respJSON.getJSONArray("Data");
+
+                    GlobalVariables.cont_item = image.length();
+                    GlobalVariables.contFotos = respJSON.getInt("Count");
+
+                    for (int i = 0; i < image.length(); i++) {
+                        JSONObject c = image.getJSONObject(i);
+                        //String T = c.getString("Tipo");
+                        //String A="TP02";
+                        // if (T.equals("TP03")) {
+
+                        String CodRegistro = c.getString("CodRegistro");
+                        //String Tipo = c.getString("Tipo");
+                        int icon = R.drawable.ic_menu_noticias;
+                        // String Autor = c.getString("Autor");
+                        String Fecha = c.getString("Fecha");
+                        String Titulo = c.getString("Titulo");
+                        //String Descripcion = c.getString("Descripcion");
+
+                        JSONObject Files = c.getJSONObject("Files");
+                        int cant_img=Files.getInt("Count");
+                        JSONArray Data2 = Files.getJSONArray("Data");
+
+                        List<Img_Gal_List> dataf = new ArrayList<>();
+                        for (int j = 0; j < Data2.length(); j++) {
+                            JSONObject h = Data2.getJSONObject(j);
+
+                            String Correlativo = Integer.toString(j);
+                            //////////////////////////
+                            //String Url = "";
+                            String Urlmin2 = h.getString("Urlmin");
+
+                            String[] parts = Urlmin2.split("550px;");
+                            //String part1 = parts[0]+ GlobalVariables.anchoMovil+"px"; //obtiene: 19
+                            //String part2 = parts[1]; //obtiene: 19-A
+
+                            String Urlmin=parts[0]+ GlobalVariables.anchoMovil+"px;"+parts[1];
+
+
+                            dataf.add(new Img_Gal_List(Correlativo, Utils.ChangeUrl(Urlmin)));
+
+                              /*  dataf.add(Correlativo);
+                                dataf.add(Url);
+                                dataf.add(Urlmin);*/
+                        }
+
+
+                        // dataf.get(0);
+                        //imagenList.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
+                        imagen2.add(new Imagen(CodRegistro, icon, Fecha, Titulo, dataf,cant_img));
+                        // }
+                    }
+
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return imagen2;
+
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
