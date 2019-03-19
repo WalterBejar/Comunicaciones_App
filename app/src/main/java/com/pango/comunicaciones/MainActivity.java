@@ -29,7 +29,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.Util;
+//import com.bumptech.glide.util.Util;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.lang.reflect.Field;
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
 
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
-        GlobalVariables.id_phone= "Android@"+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
+        GlobalVariables.id_phone= "Android@12345";//+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
         //fragmentManager = getSupportFragmentManager();
         //toolbar.setAlpha(1);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -463,7 +463,8 @@ public class MainActivity extends AppCompatActivity
             shiftingMode.setAccessible(false);
             for (int i = 0; i < menuView.getChildCount(); i++) {
                 BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
-                item.setShiftingMode(false);
+                //item.setShiftingMode(false);
+                //item.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
                 // set once again checked value, so view will be updated
                 item.setChecked(item.getItemData().isChecked());
             }
