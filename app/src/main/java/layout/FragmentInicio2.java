@@ -10,16 +10,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 
 import com.pango.comunicaciones.GlobalVariables;
 import com.pango.comunicaciones.MainActivity;
 import com.pango.comunicaciones.R;
 import com.pango.comunicaciones.Utils;
 import com.pango.comunicaciones.controller.AuthController;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -236,7 +240,8 @@ public class FragmentInicio2 extends Fragment {
                 //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://app.antapaccay.com.pe/concursomundial/"));
                 //startActivity(browserIntent);
                 // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentRedesSociales();
+
+            /*    Fragment nuevoFragmento = new FragmentRedesSociales();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.add(R.id.content, nuevoFragmento);
                 //transaction.addToBackStack(null);
@@ -250,7 +255,44 @@ public class FragmentInicio2 extends Fragment {
                 bottomNavigationView.getMenu().findItem(R.id.navigation_inicio).setChecked(true);
 
                 bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);
+                navigationView.getMenu().findItem(R.id.nav_RedesSociales).setChecked(true);*/
+
+
+                try {
+                    Intent sendIntent =   getActivity().getPackageManager().getLaunchIntentForPackage("com.pango.hsec.hsec");
+                    //sendIntent.putExtra("dataApp", true);
+                    startActivity(sendIntent);
+                } catch (Exception e) {
+                    Log.e(TAG, "Aplicación no instalada.");
+
+                    //final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
+                    final String appPackageName = "com.pango.hsec.hsec"; // getPackageName() from Context or Activity object
+
+                    Log.e(TAG, appPackageName);
+
+                    try {
+                        //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        boolean data =URLUtil.isValidUrl("https://play.google.com/store/apps/details?id=" + appPackageName);
+
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+
+                    } catch (android.content.ActivityNotFoundException anfe) {
+                        Log.e(TAG, "mensaje");
+
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                    }
+
+
+
+                    //Abre url de pagina.
+                    //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(urlPageln)));
+                }
+
+
+
+
+
+
             }
         });
 
