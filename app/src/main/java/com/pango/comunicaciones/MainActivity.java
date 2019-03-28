@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
 
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
-        GlobalVariables.id_phone= "Android@12345";//+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
+        GlobalVariables.id_phone= "Android@"+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
         //fragmentManager = getSupportFragmentManager();
         //toolbar.setAlpha(1);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);

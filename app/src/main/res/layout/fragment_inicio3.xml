@@ -211,17 +211,14 @@ android:background="@drawable/edit_img"
                 android:layout_weight="0"
                 >
 
-            <ImageView
-                android:id="@+id/icon5"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-
-                android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_img_hsec3"
-                />
+                <ImageView
+                    android:id="@+id/icon5"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_img_hsec0" />
 
                 <!--android:src="@drawable/ic_russia_2018"
  -->

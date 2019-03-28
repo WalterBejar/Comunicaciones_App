@@ -7,8 +7,8 @@ android {
         applicationId 'com.pango.scom'
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 64
-        versionName '6.4'
+        versionCode 66
+        versionName '6.6'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -33,7 +33,7 @@ public class GlobalVariables {
     public static String Urlbase2 = "entrada/getpaginated/";
     public static String url_token="membership/authenticate?username=antapaccay&password=Tintaya123.&domain=anyaccess";
 
-    public static String versionApk="5.8";
+    public static String versionApk="6.6";
     public static String versionFromServer="";
 
     public static String CodPersona="";
