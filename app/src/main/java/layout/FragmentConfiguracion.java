@@ -131,7 +131,7 @@ public class FragmentConfiguracion extends Fragment {
         SharedPreferences dominio = this.getActivity().getSharedPreferences("dom", Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = url_save.edit();
-        editor.putString("url", "https://app.antapaccay.com.pe/Proportal/SCOM_Service/api/");
+        editor.putString("url", "https://antapaccay.sam.glencore.net/Proportal/SCOM_Service/api/");
 
         SharedPreferences.Editor editor2 = dominio.edit();
         editor2.putString("domain","anyaccess");

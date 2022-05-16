@@ -38,7 +38,7 @@ tools:context="layout.FragmentConfiguracion"
             android:freezesText="true"
             android:imeOptions="actionNext"
             android:inputType="text"
-            android:text="https://app.antapaccay.com.pe/SCOM_Service/api/"
+            android:text="https://antapaccay.sam.glencore.net/SCOM_Service/api/"
             android:textColor="@color/cardview_dark_background"
             />
 

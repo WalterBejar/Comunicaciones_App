@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId 'com.pango.scom'
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 66
-        versionName '6.6'
+        targetSdkVersion 30
+        versionCode 72
+        versionName '7.2'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -41,7 +41,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="2dp"
-                android:src="@drawable/ic_evento_final2" />
+                android:src="@drawable/ic_eventos_new2" />
 
             <TextView
                 android:id="@+id/textView21"

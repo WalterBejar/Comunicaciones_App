@@ -102,8 +102,6 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setTitle("");
         toolbar.setLogo(R.drawable.imagen12345);
 
-
-
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/notificaciones");
         GlobalVariables.id_phone= "Android@"+Secure.getString(getBaseContext().getContentResolver(), Secure.ANDROID_ID);
         //fragmentManager = getSupportFragmentManager();

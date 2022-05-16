@@ -29,7 +29,8 @@ import java.util.regex.Pattern;
 public class GlobalVariables {
 
     public static String token_auth=null;//tendra el token con la autenticacion
-    public static String Urlbase= "https://app.antapaccay.com.pe/SCOM_Service/api/";
+    public static String Urlbase= "https://antapaccay.sam.glencore.net/SCOM_Service/api/";
+    //public static String Urlbase= "https://10.51.64.165/SCOM_Service/api/";
     public static String Urlbase2 = "entrada/getpaginated/";
     public static String url_token="membership/authenticate?username=antapaccay&password=Tintaya123.&domain=anyaccess";
 

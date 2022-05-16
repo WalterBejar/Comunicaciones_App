@@ -135,13 +135,19 @@ public class FragmentInicio2 extends Fragment {
             }
         });
 
-
+        //visitas guiadas
         card2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://antapaccay.sam.glencore.net/antapaccay360p/index.html")));
+
+            }
+        });
+        card3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
                 //getActivity().setTitle("Eventos");
-
-
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentComunicados();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -162,12 +168,43 @@ public class FragmentInicio2 extends Fragment {
 
             }
         });
-        card3.setOnClickListener(new View.OnClickListener(){
+        //innovate
+        card4.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //getActivity().setTitle("Reserva de Buses");
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://antapaccay.sam.glencore.net/Innovate/")));
+
+
+/*
+                bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
+                // Crea el nuevo fragmento y la transacción.
+                Fragment nuevoFragmento = new FragmentTickets();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.add(R.id.content, nuevoFragmento);
+                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+                //transaction.addToBackStack(null);
+                // Commit a la transacción
+                transaction.commit();
+                Utils.apilarFrag(nuevoFragmento);
+*/
+
+//comentar esto
+               /* final AuthController obj = new AuthController(view, "url", "get", FragmentInicio2.this);
+                obj.execute("admin","12345", "anyaccess");*/
+
+
+
+
+            }
+        });
+        card5.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
                 //getActivity().setTitle("Fotos");
-
-
                 // Crea el nuevo fragmento y la transacción.
                 Fragment nuevoFragmento = new FragmentImagenes();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -182,62 +219,31 @@ public class FragmentInicio2 extends Fragment {
                 bottomNavigationView.setVisibility(View.VISIBLE);
                 navigationView.getMenu().findItem(R.id.nav_imagenes).setChecked(true);
 
-            }
-        });
-        card4.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //getActivity().setTitle("Reserva de Buses");
 
-                bottomNavigationView.getMenu().findItem(R.id.navigation_tickets).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_tickets).setChecked(true);
-                // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentTickets();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.add(R.id.content, nuevoFragmento);
-                transaction.hide(GlobalVariables.fragmentStack.lastElement());
-                //transaction.addToBackStack(null);
-                // Commit a la transacción
-                transaction.commit();
-                Utils.apilarFrag(nuevoFragmento);
-
-
-//comentar esto
-               /* final AuthController obj = new AuthController(view, "url", "get", FragmentInicio2.this);
-                obj.execute("admin","12345", "anyaccess");*/
-
-
-
-
-            }
-        });
-        card5.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //getActivity().setTitle("Videos");
-
-                // Crea el nuevo fragmento y la transacción.
-                Fragment nuevoFragmento = new FragmentVideos();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.add(R.id.content, nuevoFragmento);
-               // transaction.addToBackStack(null);
-                // Commit a la transacción
-                transaction.hide(GlobalVariables.fragmentStack.lastElement());
-
-                transaction.commit();
-                Utils.apilarFrag(nuevoFragmento);
-
-                bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
+//                //getActivity().setTitle("Videos");
+//                // Crea el nuevo fragmento y la transacción.
+//                Fragment nuevoFragmento = new FragmentVideos();
+//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//                transaction.add(R.id.content, nuevoFragmento);
+//               // transaction.addToBackStack(null);
+//                // Commit a la transacción
+//                transaction.hide(GlobalVariables.fragmentStack.lastElement());
+//
+//                transaction.commit();
+//                Utils.apilarFrag(nuevoFragmento);
+//
+//                bottomNavigationView.getMenu().findItem(R.id.navigation_videos).setChecked(true);
+//                bottomNavigationView.setVisibility(View.VISIBLE);
+//                navigationView.getMenu().findItem(R.id.nav_videos).setChecked(true);
             }
         });
         card6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                // portal HSEC
+
                 //getActivity().setTitle("Redes Sociales");
-                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://app.antapaccay.com.pe/concursomundial/"));
+                //Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://antapaccay.sam.glencore.net/concursomundial/"));
                 //startActivity(browserIntent);
                 // Crea el nuevo fragmento y la transacción.
 
@@ -289,17 +295,8 @@ public class FragmentInicio2 extends Fragment {
                 }
 
 
-
-
-
-
             }
         });
-
-
-
-
-
 
 
         return view;

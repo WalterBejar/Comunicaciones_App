@@ -56,13 +56,13 @@ android:background="@drawable/edit_img"
             <ImageView
                 android:id="@+id/icon1"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="75dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_notice_prueba2" />
+                android:src="@drawable/ic_noticias_new2" />
 
             <TextView
                 android:id="@+id/tx_menu1"
@@ -137,12 +137,12 @@ android:background="@drawable/edit_img"
             <ImageView
                 android:id="@+id/icon6"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_bus_prueba2"
+                android:src="@drawable/ic_logo_innovate"
                 />
 
             <TextView
@@ -153,7 +153,7 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/icon6"
                 android:layout_marginTop="10dp"
-                android:text="RESERVAS"
+                android:text="INNÓVATE"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorNotificacion"
@@ -289,16 +289,17 @@ android:background="@drawable/edit_img"
                 android:orientation="vertical"
                 android:layout_weight="0"
                 >
-            <ImageView
-                android:id="@+id/icon3"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_video_final2"
 
-                />
+                <ImageView
+                    android:id="@+id/icon3"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:backgroundTint="@color/colorNotificacion"
+                    android:src="@drawable/ic_galeria_new2"
 
-            <TextView
+                    />
+
+                <TextView
                 android:id="@+id/tx_menu3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -306,7 +307,7 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/icon3"
                 android:layout_marginTop="10dp"
-                android:text="VIDEOTECA"
+                android:text="GALERÍA"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorNotificacion"
@@ -370,9 +371,9 @@ android:background="@drawable/edit_img"
             <ImageView
                 android:id="@+id/icon4"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="75dp"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_evento_final2"
+                android:src="@drawable/ic_visitas__1_"
 
                 />
 
@@ -384,7 +385,7 @@ android:background="@drawable/edit_img"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/icon4"
                 android:layout_marginTop="10dp"
-                android:text="EVENTOS"
+                android:text="VISITAS GUIADAS"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
 
@@ -449,9 +450,9 @@ android:background="@drawable/edit_img"
             <ImageView
                 android:id="@+id/icon2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:backgroundTint="@color/colorNotificacion"
-                android:src="@drawable/ic_galeria_prueba2"
+                android:src="@drawable/ic_eventos_new2"
                 />
             <TextView
                 android:id="@+id/tx_menu2"
@@ -459,7 +460,7 @@ android:background="@drawable/edit_img"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/icon2"
                 android:layout_marginTop="10dp"
-                android:text="GALERIA"
+                android:text="EVENTOS"
                 android:gravity="center_horizontal"
                 android:textAlignment="center"
                 android:textColor="@color/colorNotificacion"
